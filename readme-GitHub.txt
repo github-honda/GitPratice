@@ -5,9 +5,9 @@ Subject: github memo.
 本文提供 git hub 主要的備忘說明. 
 只要透過字串查詢, 就可以快速找到需要的語法、範例...等說明.
 
- 
-原文網址: 
+使用指令操作 git, 才能徹底了解 git 的運作細節.
 
+原文網址: https://github.com/github-honda/GitPratice/blob/main/readme-GitHub.txt
 歡迎來信交流.
 
 ----------
@@ -98,6 +98,7 @@ Frequantly used git command reference:
  $ git commit -a --alow-empty-message  | 將變更存入本地資料庫, -a = All, 備註文字為空白.
 *$ git commit -a -m "Description"      | 將變更存入本地資料庫, -a = All, -m 加入備註文字, 否則會要求輸入.
 *$ git config -l | 檢視設定清單.
+*$ git config --list | 檢視設定清單.
  $ git config --global gc.reflogExpire 'never'            | 修改 reflog 保存時間 (存在分支線上，預設 90 天改為無限)
  $ git config --global gc.reflogExpireUnreachable 'never' | 修改 reflog 保存時間 (不存在分支線上，預設 30 天改為無限)
 *$ git config --global init.defaultBranch main | 將預設(建立本地資料庫分支名稱)設為 main.
@@ -269,9 +270,57 @@ git stash create [<message>]
 git stash store [-m|--message <message>] [-q|--quiet] <commit>
 
 ----------
+常用流程、情境、案例
+  2020-12-06
+  越常用的, 越新的放前面.
+
+**** 常用流程: 上傳最新的修改
 2020-12-06
-**** 常用流程
-越常用的, 越新的放前面.
+
+$ git status
+目前只有未納入管理的檔案.
+On branch main
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        picture/
+        readme-GitHub.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+$ git add --all
+$ git status
+將未納入管理的檔案加入後, 現在有可以 commit 的變更檔案了:
+On branch main
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   picture/CreatePublicRepositoryOnGitHubWebSite.jpg
+        new file:   readme-GitHub.txt
+
+$ git commit -a -m "Init add"
+commit 進本地資料庫:
+[main f6225ed] Init add
+ 2 files changed, 1684 insertions(+)
+ create mode 100644 picture/CreatePublicRepositoryOnGitHubWebSite.jpg
+ create mode 100644 readme-GitHub.txt
+
+$ git push origin main
+推送(本地main)到(遠端origin) 
+Enumerating objects: 6, done.
+Counting objects: 100% (6/6), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (5/5), 239.76 KiB | 14.10 MiB/s, done.
+Total 5 (delta 0), reused 0 (delta 0), pack-reused 0
+remote: This repository moved. Please use the new location:
+remote:   https://github.com/github-honda/GitPratice.git
+To https://github.com/github-honda/gitpratice.git
+   5327c25..f6225ed  main -> main
+
+$ git status
+現在沒有新的修改了.
+On branch main
+nothing to commit, working tree clean
+
 
 **** 常用流程: 建立本地目錄, 連接到遠端 repository, 下載最新更新資料.
 2020-12-06
