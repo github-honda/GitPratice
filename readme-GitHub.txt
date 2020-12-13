@@ -93,7 +93,7 @@ Frequantly used git command reference:
  $ git clean -n | 查詢將被 git clean -f 還原的清單 Untracked files. -n=--dry-run Cleans the working tree by recursively removing files that are not under version control, starting from the current directory.
  $ git commit --amend --no-edit        | 將本次commit 併入最後一次 commit 中. --no-edit 代表不修改訊息.
 *$ git commit --amend -m "Description" | 修改最後一次提交的訊息.
-*$ git commit -a                       | 將變更存入本地資料庫, -a = All
+*$ git commit -a                       | 將變更存入本地資料庫, -a = All. 不包含未納入管理的檔案.
  $ git commit -a --alow-empty -m "Description" | 沒有任何檔案變更卻執行提交.
  $ git commit -a --alow-empty-message  | 將變更存入本地資料庫, -a = All, 備註文字為空白.
 *$ git commit -a -m "Description"      | 將變更存入本地資料庫, -a = All, -m 加入備註文字, 否則會要求輸入.
@@ -304,7 +304,7 @@ commit 進本地資料庫:
  create mode 100644 readme-GitHub.txt
 
 $ git push origin main
-推送(本地main)到(遠端origin) 
+推送上傳(本地main)到(遠端origin) 
 Enumerating objects: 6, done.
 Counting objects: 100% (6/6), done.
 Delta compression using up to 4 threads
@@ -317,9 +317,74 @@ To https://github.com/github-honda/gitpratice.git
    5327c25..f6225ed  main -> main
 
 $ git status
-現在沒有新的修改了.
+重新檢查, 現在沒有新的修改了.
 On branch main
 nothing to commit, working tree clean
+
+同樣的概念, 以下示範不同的情境: 
+  修改檔案, 並增加 Untracked files 後上傳推送.
+$ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   picture/CreatePublicRepositoryOnGitHubWebSite.jpg
+        modified:   readme-GitHub.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        picture/CreatePublicRepositoryOnGitHubWebSite-Original.jpg
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+先將 Untracked files 加入管理:
+$ git add --all
+
+檢查沒有 Untracked files 了:
+$ git status
+On branch main
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   picture/CreatePublicRepositoryOnGitHubWebSite-Original.jpg
+        modified:   picture/CreatePublicRepositoryOnGitHubWebSite.jpg
+        modified:   readme-GitHub.txt
+
+commit 進本地資料庫:
+$ git commit -a -m "Commit both tracked and untracked files."
+[main d54a0b4] Commit both tracked and untracked files.
+ 3 files changed, 53 insertions(+), 4 deletions(-)
+ copy picture/{CreatePublicRepositoryOnGitHubWebSite.jpg => CreatePublicRepositoryOnGitHubWebSite-Original.jpg} (100%)
+ rewrite picture/CreatePublicRepositoryOnGitHubWebSite.jpg (86%)
+
+檢查沒有新的變更了:
+$ git status
+On branch main
+nothing to commit, working tree clean
+
+以預設 upstream 名稱推送到遠端資料庫
+$ git push
+fatal: The current branch main has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin main
+回應錯誤: 尚未設定 upstream.
+設定過 upstream, 才能夠執行 "git push", 否則要指定名稱, 例如: "git push origin main"
+
+設定預設 upstream 並 推送到遠端資料庫.
+  下次就可以只輸入 "git push".
+$ git push --set-upstream origin main
+Enumerating objects: 9, done.
+Counting objects: 100% (9/9), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (5/5), 227.54 KiB | 16.25 MiB/s, done.
+Total 5 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+remote: This repository moved. Please use the new location:
+remote:   https://github.com/github-honda/GitPratice.git
+To https://github.com/github-honda/gitpratice.git
+   f6225ed..d54a0b4  main -> main
+Branch 'main' set up to track remote branch 'main' from 'origin'.
 
 
 **** 常用流程: 建立本地目錄, 連接到遠端 repository, 下載最新更新資料.
