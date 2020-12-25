@@ -1,5 +1,5 @@
 Form: hondachen@hotmail.com
-Date: 2020-12-06
+Date: 2020-12-25
 Subject: github memo.
 
 本文提供 git hub 主要的備忘說明. 
@@ -11,7 +11,7 @@ Subject: github memo.
 歡迎來信交流.
 
 ----------
-2020-12-06
+2020-12-02
 基本概念及其他:
 
 Resources:
@@ -269,10 +269,38 @@ git stash clear
 git stash create [<message>]
 git stash store [-m|--message <message>] [-q|--quiet] <commit>
 
+
+----------
+ToDo 問題:
+
+1. 20201223
+$ git pull origin main
+  跟Git Gui 操作不一樣: 在 Git Gui 中使用 Remote.Fetch From origin後, 資料會下載, 但是branch卻會保留在目前分支上, 不會跳到到下載後的最新分支上.
+  待確認 Git Gui 的正確操作為何? 
+  使用指令 git pull 則會下載新資料, 也會跳到最新下載的分支上.
+
 ----------
 常用流程、情境、案例
-  2020-12-06
+  2020-12-22
   越常用的, 越新的放前面.
+
+**** 常用流程: 暫存目前的變更, 下載最新的遠端資料後, 再繼續暫停的工作.
+$ git stash  | 暫存目前的變更
+
+$ git stash list | 查詢已有的變更
+例如:
+stash@{0}: WIP on [branch1]: ...
+stash@{1}: WIP on [branch2]: ...
+stash@{0...n} 為 stash 的編號, WIP=Wrok In Progress 工作進行中.
+
+$ git stash pop stash@{n} | 取回(暫存的變更編號n), 到目前的分支上, 並刪除(暫存的變更編號n). 20201223: ?測試不會刪除?
+$ git stash drop stash@{n} | 刪除(暫存的變更編號n)
+$ git stash apply stash@{n} | 取用(暫存的變更編號n), 到目前的分支上, 並保留(暫存的變更編號n)
+
+$ git pull origin main
+  20201223, 跟Git Gui 操作不一樣: 在 Git Gui 中使用 Remote.Fetch From origin後, 資料會下載, 但是branch卻會保留在目前分支上, 不會跳到到下載後的最新分支上.
+            待確認 Git Gui 的正確操作為何? 使用指令 git pull 則會下載新資料, 也會跳到最新下載的分支上.
+
 
 **** 常用流程: 上傳最新的修改
 2020-12-06
