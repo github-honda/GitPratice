@@ -1,5 +1,5 @@
 Form: hondachen@hotmail.com
-Date: 2020-12-25
+Date: 2020-12-27
 Subject: github memo.
 
 本文提供 git hub 主要的備忘說明. 
@@ -11,7 +11,7 @@ Subject: github memo.
 歡迎來信交流.
 
 ----------
-2020-12-02
+2020-12-27
 基本概念及其他:
 
 Resources:
@@ -45,6 +45,8 @@ Launch Git Bash or Git GUI:
 origin, upstream:  
   習慣上(遠端 repository 位置)  命名為 origin, 
         (原始 Forked repository)命名為 upstream.
+  
+(2020-10-01起)響應黑人平權運動, 預設 master branch 改為 main branch.
   
   
 ----------
@@ -102,6 +104,7 @@ Frequantly used git command reference:
  $ git config --global gc.reflogExpire 'never'            | 修改 reflog 保存時間 (存在分支線上，預設 90 天改為無限)
  $ git config --global gc.reflogExpireUnreachable 'never' | 修改 reflog 保存時間 (不存在分支線上，預設 30 天改為無限)
 *$ git config --global init.defaultBranch main | 將預設(建立本地資料庫分支名稱)設為 main.
+ $ git diff <old commit id> <new commit id> | 查詢 commit 版本的差異.
 *$ git help <command> | Help command.
  $ git help <concept> | Help concept. 例如: attributes, cli, core-tutorial...可從 git help -g 取得 concept 清單ㄡ
  $ git help -a        | Help available subcommands.
@@ -109,10 +112,10 @@ Frequantly used git command reference:
  $ git init | 建立本地 Repository. 目前目錄中會建立 .git 子目錄. 舊版預設建立 master branch, 新版(2020-10-01起)響應黑人平權運動, 改為 main branch.
  $ git init --initial-branch=main | 同 git init -b main
 *$ git init -b main | 建立本地 Repository, branch=main. 目前目錄中會建立 .git 子目錄.
- $ git log                   | 紀錄明細
-*$ git log --oneline --graph | 簡要紀錄文字及圖形. 標示為 * 的就是目前的分支.
- $ git log --oneline -n      | n是最近提交的次數.
- $ git log --stat --summary  | 狀態摘要明細
+ $ git log                   | 查詢 commit 紀錄. 不包含 HEAD 移動紀錄.
+*$ git log --oneline --graph | 查詢 commit 紀錄. 不包含 HEAD 移動紀錄.
+ $ git log --oneline -n      | 查詢 commit 紀錄. n是最近提交的次數.
+ $ git log --stat --summary  | 查詢 commit 紀錄. 狀態摘要明細.
  $ git ls-files | 檔案清單.
  $ git mv <file1> <file2> | 變更檔案名稱並將變更移到 Staging Area. 等於先( $ mv <file1> <file2>), 再 $ git add -A).
  $ git prune [-n] [-v] [--progress] [--expire <time>] [--] [<head>…​] | 清理沒用的物件. 
@@ -121,25 +124,29 @@ Frequantly used git command reference:
 *$ git pull <RemoteBranch> <LocalBranch> | 下載<RemoteBranch>到<LocalBranch>. 
 *$ git pull origin master   | 下載 遠端 origin   到 本地的 master. 
 *$ git pull upstream master | 下載 遠端 upstream 到 本地的 master. 
-*$ git push | 推送(本地變更)到(預設的遠端資料庫upstream). 
+*$ git push    | 推送(本地變更)到(預設的遠端資料庫upstream). 
+*$ git push -f | 強制推送(本地變更)到(預設的遠端資料庫upstream).
 *$ git push <RemoteBranch> <LocalBranch> | 推送 <LocalBranch> 到 <RemoteBranch>. 
 *$ git push origin master                | 推送(本地 master 變更)到(遠端資料庫 origin).
  $ git push origin master:master                | (等於以上的指令, 預設遠端分支名稱與本地分支名稱相同)
  $ git push origin master:NewBranchNameInRemote | (將本地的 master 推上去後, 建立或更新遠端的 NewBranchNameInRemote 進度)
-*$ git push --set-upstream origin master        | 設定預設遠端資料庫(upstream)為本地 master 上傳的位置. 將若未設定過 預設的 upstream, 則需要指定本地分支與遠端節點, 才能 push 或 pull.
- $ git push -u origin master                    | 同時執行 push 及設定 upstream.
- $ git reflog            | 查詢還原紀錄, 所有 HEAD 移動紀錄(例如 切換分支或還原版本). reference log. 預設保存90天的歷史紀錄. 若 commit 物件不在分支線上, 則預設保存30天.
- $ git reflog --date=iso | 查詢還原紀錄及時間, 所有 HEAD 移動紀錄(例如 切換分支或還原版本). reference log. 預設保存90天的歷史紀錄. 若 commit 物件不在分支線上, 則預設保存30天.
+*$ git push --set-upstream origin master        | 設定(預設的遠端資料庫upstream). 將若未設定過 預設的 upstream, 則需要指定本地分支與遠端節點, 才能 push 或 pull.
+*$ git push -u origin master                    | 同時執行 push 及設定(預設的遠端資料庫upstream).
+*$ git reflog            | 查詢 commit 紀錄. 包含 HEAD 移動紀錄. 例如 切換分支或還原版本). 預設保存90天的歷史紀錄, 不在分支線上的 commit, 則保存30天.
+ $ git reflog --date=iso | 查詢 commit 紀錄.
 *$ git remote add origin https://github.com/github-honda/LiteDB.git | 加入遠端的 repository 並指定別名為 origin.   
 *$ git remote add upstream https://github.com/mbdavid/LiteDB.git    | 加入遠端的 repository 並指定別名為 upstream. 
  $ git remote prune origin           | 清理無效檔案. 例如 github 已經刪除, 但是本地仍存在的檔案.
  $ git remote prune origin --dry-run | 列出要修剪的無效檔案. 不執行修剪.
-*$ git remote -v          | 查詢本地資料庫使用的(遠端節點位置與名稱). 
-*$ git reset              | 還原(工作目錄)為(暫存區檔案).
- $ git reset HEAD         | 還原(工作目錄)為(暫存區檔案).
-*$ git reset --hard       | 還原(工作目錄)為(暫存區檔案). --hard 為 放棄工作目錄已變更的檔案. 即 還原為沒有變更的狀態.
- $ git reset --mixed      | 還原(工作目錄)為(暫存區檔案).       --mixed為 保留工作目錄已變更的檔案. --mixed 為預設的模式可以省略. 同 git reset HEAD. 
- $ git reset --soft       | 還原(工作目錄)為(暫存區檔案).       --soft 為 Does not touch the index file or the working tree at all (but resets the head to <commit>, just like all modes do). This leaves all your changed files "Changes to be committed", as git status would put it.
+*$ git remote -v | 查詢本地資料庫使用的(遠端節點位置與名稱). 
+*$ git reset        | 還原工作目錄為 (暫存區 stage)檔案. 保留工作目錄已變更的檔案.
+*$ git reset --hard | 還原工作目錄為 (暫存區 stage)檔案. 放棄工作目錄已變更的檔案.
+*$ git reset <commit id>         | 還原工作目錄為 (指定的 commit 版本). 保留工作目錄已變更的檔案. <commit id> 只要輸入前4碼就可以.
+*$ git reset <commit id> -- hard | 還原工作目錄為 (指定的 commit 版本). 放棄工作目錄已變更的檔案. <commit id> 只要輸入前4碼就可以.
+ $ git reset HEAD         | HEAD 為預設. 同 git reset.
+ $ git reset --hard       | --hard  為 放棄工作目錄已變更的檔案.
+ $ git reset --mixed      | --mixed 為 保留工作目錄已變更的檔案. --mixed 為預設的模式可以省略. 
+ $ git reset --soft       | --soft 為 Does not touch the index file or the working tree at all (but resets the head to <commit>, just like all modes do). This leaves all your changed files "Changes to be committed", as git status would put it.
  $ git reset HEAD^        | 還原(工作目錄)為(暫存區檔案前1個版本).
  $ git reset HEAD^^       | 還原(工作目錄)為(暫存區檔案前2個版本).
  $ git reset HEAD~3       | 還原(工作目錄)為(暫存區檔案前3個版本).
@@ -281,8 +288,37 @@ $ git pull origin main
 
 ----------
 常用流程、情境、案例
-  2020-12-22
+  2020-12-27
   越常用的, 越新的放前面.
+
+**** 常用流程: 切換到 指定的 <commit id>版本.
+檢查 commit 紀錄
+$ git log --oneline --graph
+
+切換到指定的 <commit id>版本
+$ git reset <commit id>
+<commit id> 只要輸入前4碼就可以.
+預設為 --mixed 模式會保留工作目錄已變更的檔案.
+
+或是 切換到指定的 <commit id>版本, 並且放棄工作目錄的檔案變更.
+$ git reset <commit id> --hard
+
+切換後檢查 commit 紀錄, 可能會看不到<commit id> 之後的變更紀錄, 必須改用 git reflog 才能看到 
+$ get reflog 
+
+再切換為(原先未切換前)的版本
+$ git reset <commit id>
+
+切換版本過程中, 可能會多出檔案殘留在工作目錄中. 
+例如: 切換到舊版本時, 會把過去已刪除的檔案還原, 殘留在工作目錄中, 形成 untracked file 待 commit.
+因此解決方法有
+1. 可於切換時加入 --hard 放棄工作目錄的檔案變更, 就不會有殘留於工作目錄的檔案 untracked file.
+$ git reset <commit id> --hard
+
+2. 將殘留的檔案 untracked file commit 
+3. 修改或刪除殘留的檔案.
+
+
 
 **** 常用流程: 暫存目前的變更, 下載最新的遠端資料後, 再繼續暫停的工作.
 $ git stash  | 暫存目前的變更
