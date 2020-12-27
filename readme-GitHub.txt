@@ -130,7 +130,7 @@ Frequantly used git command reference:
 *$ git push origin master                | 推送(本地 master 變更)到(遠端資料庫 origin).
  $ git push origin master:master                | (等於以上的指令, 預設遠端分支名稱與本地分支名稱相同)
  $ git push origin master:NewBranchNameInRemote | (將本地的 master 推上去後, 建立或更新遠端的 NewBranchNameInRemote 進度)
-*$ git push --set-upstream origin master        | 設定(預設的遠端資料庫upstream). 將若未設定過 預設的 upstream, 則需要指定本地分支與遠端節點, 才能 push 或 pull.
+*$ git push --set-upstream origin main          | 設定(預設的遠端資料庫upstream). (設定本地main對應到遠端origin). 若未設定過(預設的遠端資料庫upstream), 則 push 或 pull 時, 都必須指定本地資料庫名稱與遠端資料庫upstream名稱.
 *$ git push -u origin master                    | 同時執行 push 及設定(預設的遠端資料庫upstream).
 *$ git reflog            | 查詢 commit 紀錄. 包含 HEAD 移動紀錄. 例如 切換分支或還原版本). 預設保存90天的歷史紀錄, 不在分支線上的 commit, 則保存30天.
  $ git reflog --date=iso | 查詢 commit 紀錄.
@@ -158,8 +158,10 @@ Frequantly used git command reference:
  $ git reset <SHA-1>~3    | 還原(工作目錄)為(暫存區檔案指定的版本前3個版本).
  $ git rm --cached <file> | 還原(工作目錄)為(暫存區檔案).
  $ git rm <file> |  移除檔案並將變更移到暫存區（工作區域 -> 暫存區. 等於 ($ rm <file> 後再 $ git add <file>).
- $ git stash      | 暫存目前的變更
- $ git stash list | 查詢已有的暫存變更
+ $ git stash      | 暫存工作目錄的檔案變更. 不含 untracked 檔案.
+ $ git stash -u   | 暫存工作目錄的檔案變更. 包含 untracked 檔案.
+ $ git stash clear | 清除暫存變更.
+ $ git stash list  | 查詢暫存變更清單.
  $ git stash pop stash@{n}   | 取回(暫存的變更編號n), 到目前的分支上, 並刪除(暫存的變更編號n)
  $ git stash drop stash@{n}  | 刪除(暫存的變更編號n)
  $ git stash apply stash@{n} | 取用(暫存的變更編號n), 到目前的分支上, 並保留(暫存的變更編號n)
@@ -287,11 +289,27 @@ $ git pull origin main
   使用指令 git pull 則會下載新資料, 也會跳到最新下載的分支上.
 
 ----------
-常用流程、情境、案例
-  2020-12-27
-  越常用的, 越新的放前面.
+**** 常用流程
+**** 常用流程: 2020-12-27 將 Forked repository 跟上原始來源的最新修改.
+1. 檢查確認 upstream 為原始來源的遠端位置.
+$ git remote -v
+origin  https://github.com/github-honda/LiteDB.git (fetch)     <---- Forked fetch 遠端位置
+origin  https://github.com/github-honda/LiteDB.git (push)      <---- Forked push  遠端位置
+upstream        https://github.com/mbdavid/LiteDB.git (fetch)  <---- 原始來源 fetch 遠端位置
+upstream        https://github.com/mbdavid/LiteDB.git (push)   <---- 原始來源 push  遠端位置
 
-**** 常用流程: 切換到 指定的 <commit id>版本.
+2. 若沒有 upstream, 則需新增 upstream 為原始來源的遠端位置:
+$ git remote add upstream https://github.com/mbdavid/LiteDB.git 
+
+3. 將本地資料庫 master 更新為原始來源 upstream 的最新修改:
+$ git pull upstream master
+更新過程需要 Merge 步驟, 會要求輸入修改的訊息, 才能完成 Merge.
+
+4. 更新到 Forked 的遠端資料庫.
+$ git push origin master
+
+
+**** 常用流程: 2020-12-27 切換到<commit id>版本.
 檢查 commit 紀錄
 $ git log --oneline --graph
 
@@ -320,7 +338,7 @@ $ git reset <commit id> --hard
 
 
 
-**** 常用流程: 暫存目前的變更, 下載最新的遠端資料後, 再繼續暫停的工作.
+**** 常用流程: 2020-12-27 暫存目前的變更, 下載最新的遠端資料後, 再繼續暫停的工作.
 $ git stash  | 暫存目前的變更
 
 $ git stash list | 查詢已有的變更
@@ -338,7 +356,7 @@ $ git pull origin main
             待確認 Git Gui 的正確操作為何? 使用指令 git pull 則會下載新資料, 也會跳到最新下載的分支上.
 
 
-**** 常用流程: 上傳最新的修改
+**** 常用流程: 2020-12-27 上傳最新的修改
 2020-12-06
 
 $ git status
@@ -451,7 +469,7 @@ To https://github.com/github-honda/gitpratice.git
 Branch 'main' set up to track remote branch 'main' from 'origin'.
 
 
-**** 常用流程: 建立本地目錄, 連接到遠端 repository, 下載最新更新資料.
+**** 常用流程: 2020-12-27 建立本地目錄, 連接到遠端 repository, 下載最新更新資料.
 2020-12-06
 
 1. 建立本地工作目錄
@@ -504,13 +522,13 @@ From https://github.com/github-honda/gitpratice
  * [new branch]      main       -> origin/main
 
 
-**** 常用流程: Commit目前的變更, 切換到需要優先處理的分支完成後, 再繼續目前的工作.
+**** 常用流程: 2020-12-27 Commit目前的變更, 切換到需要優先處理的分支完成後, 再繼續目前的工作.
 $ git all -all
 $ git commit -m "To be continued"
 然後切到需要優先處理的分支完成後, 再繼續目前的工作:
 $ git reset HEAD^
 
-**** 常用流程: 暫存目前的變更, 切換到需要優先處理的分支完成後, 再繼續目前的工作.
+**** 常用流程: 2020-12-27 暫存目前的變更, 切換到需要優先處理的分支完成後, 再繼續目前的工作.
 $ git stash  | 暫存目前的變更
 
 $ git stash list | 查詢已有的變更
@@ -524,8 +542,7 @@ $ git stash drop stash@{n} | 刪除(暫存的變更編號n)
 $ git stash apply stash@{n} | 取用(暫存的變更編號n), 到目前的分支上, 並保留(暫存的變更編號n)
 
 
-**** 常用流程: commit and push 更新變更的檔案到遠端資料庫.
-20201129
+**** 常用流程: 2020-11-29 commit and push 更新變更的檔案到遠端資料庫.
 $ git status
 $ git add <file>...               to update what will be commited.
 $ git add [subdir]/               新增子目錄.
@@ -536,115 +553,9 @@ $ git push                        更新到遠端資料庫.
 
 
 
-**** 常用流程: 將遠端的 repository 更新到(當初 fork 原始來源的 repository)的最新修改
-1. 增加遠端位置為(原始來源的 repository), 並命名為 upstream.  
-$ git remote add upstream https://github.com/mbdavid/LiteDB.git 
-
-可利用 $ git remote -v 檢查本地資料庫使用的遠端位置及名稱
-$ git remote -v
-origin  https://github.com/github-honda/LiteDB (fetch)
-origin  https://github.com/github-honda/LiteDB (push)
-upstream        https://github.com/mbdavid/LiteDB.git (fetch)
-upstream        https://github.com/mbdavid/LiteDB.git (push)
-
-2. 本地資料庫 master 更新最新的遠端 upstream 修改.
-$ git pull upstream master
-更新過程可能需要 Merge 步驟, 輸入修改的訊息, 才能完成 commit.
-
-3. 本地資料庫 master 更新到自己的遠端資料庫 origin.
-$ git push origin master
-
-實例如下:
-$ git remote add upstream https://github.com/mbdavid/LiteDB.git
-
-$ git remote -v
-origin  https://github.com/github-honda/LiteDB.git (fetch)
-origin  https://github.com/github-honda/LiteDB.git (push)
-upstream        https://github.com/mbdavid/LiteDB.git (fetch)
-upstream        https://github.com/mbdavid/LiteDB.git (push)
-
-$ git pull upstream master
-remote: Enumerating objects: 211, done.
-remote: Counting objects: 100% (211/211), done.
-remote: Compressing objects: 100% (34/34), done.
-remote: Total 373 (delta 194), reused 187 (delta 177), pack-reused 162
-Receiving objects: 100% (373/373), 77.71 KiB | 412.00 KiB/s, done.
-Resolving deltas: 100% (282/282), completed with 78 local objects.
-From https://github.com/mbdavid/LiteDB
- * branch              master     -> FETCH_HEAD
- * [new branch]        master     -> upstream/master
-Merge made by the 'recursive' strategy.
- LiteDB.Shell/Commands/Help.cs                      |   3 +-
- LiteDB.Tests/Database/AutoId_Tests.cs              |   2 +-
- LiteDB.Tests/Database/DbRef_Include_Tests.cs       |   2 +-
- LiteDB.Tests/Database/DbRef_Index_Tests.cs         |   2 +-
- LiteDB.Tests/Document/Json_Tests.cs                |  19 +++
- LiteDB.Tests/Internals/BufferWriter_Tests.cs       |   2 +-
- LiteDB.Tests/Internals/HeaderPage_Tests.cs         |   6 +-
- .../{Issue1585.cs => Issues/Issue1585_Tests.cs}    |   2 +-
- LiteDB.Tests/{ => Issues}/Issue1651_Tests.cs       |  30 ++--
- LiteDB.Tests/Issues/Issue1695_Tests.cs             |  36 +++++
- LiteDB.Tests/Issues/Issue1701_Tests.cs             |  25 ++++
- LiteDB.Tests/Issues/Issue1838_Tests.cs             |  49 +++++++
- LiteDB.Tests/Issues/Issue1860_Tests.cs             | 153 +++++++++++++++++++++
- LiteDB.Tests/Issues/Issue1865_Tests.cs             |  88 ++++++++++++
- LiteDB.Tests/Mapper/CustomMappingCtor_Tests.cs     |  46 +++++++
- LiteDB.Tests/Mapper/CustomMapping_Tests.cs         |  29 ++++
- LiteDB.Tests/Mapper/Enum_Tests.cs                  |  20 +++
- LiteDB.Tests/Mapper/LinqBsonExpression_Tests.cs    |  17 +++
- LiteDB.Tests/Mapper/StructField_Tests.cs           |   2 +-
- LiteDB.sln                                         |   1 +
- LiteDB/Client/Database/Collections/Find.cs         |   2 +-
- LiteDB/Client/Database/LiteDatabase.cs             |  13 +-
- LiteDB/Client/Database/LiteQueryable.cs            |   2 +-
- LiteDB/Client/Database/LiteRepository.cs           |   4 +-
- LiteDB/Client/Mapper/BsonMapper.Deserialize.cs     |  22 +--
- LiteDB/Client/Mapper/BsonMapper.Serialize.cs       |  10 +-
- LiteDB/Client/Mapper/BsonMapper.cs                 |  76 +++++++---
- LiteDB/Client/Mapper/Linq/LinqExpressionVisitor.cs |  15 +-
- LiteDB/Client/Mapper/Reflection/Reflection.cs      |  12 +-
- LiteDB/Client/Structures/ConnectionString.cs       |   6 +
- .../Expression/Parser/BsonExpressionOperators.cs   |  11 +-
- .../Expression/Parser/BsonExpressionParser.cs      |  42 ++++--
- LiteDB/Document/Json/JsonReader.cs                 |  23 +++-
- LiteDB/Engine/Disk/DiskService.cs                  |   6 +-
- LiteDB/Engine/Disk/Serializer/BufferWriter.cs      |   2 +
- LiteDB/Engine/Disk/Streams/AesStream.cs            |   5 +
- LiteDB/Engine/Engine/Transaction.cs                |  27 ++--
- LiteDB/Engine/Engine/Upgrade.cs                    |   5 +-
- LiteDB/Engine/EngineSettings.cs                    |   4 +-
- LiteDB/Engine/Pages/BasePage.cs                    |   5 +
- LiteDB/Engine/Pages/CollectionPage.cs              |   2 +-
- LiteDB/Engine/Pages/HeaderPage.cs                  |  10 +-
- LiteDB/Engine/Query/Pipeline/BasePipe.cs           |   2 +-
- LiteDB/Engine/Query/Structures/IndexCost.cs        |  26 +++-
- LiteDB/Engine/Services/CollectionService.cs        |   4 +-
- LiteDB/Engine/SystemCollections/SysPageList.cs     |  24 ++--
- LiteDB/LiteDB.csproj                               |   8 +-
- LiteDB/Utils/Extensions/BufferSliceExtensions.cs   |   2 +-
- LiteDB/Utils/Extensions/StringExtensions.cs        |   8 +-
- LiteDB/Utils/LiteException.cs                      |  24 ++++
- LiteDB/Utils/Tokenizer.cs                          |   1 +
- 51 files changed, 780 insertions(+), 157 deletions(-)
- rename LiteDB.Tests/{Issue1585.cs => Issues/Issue1585_Tests.cs} (98%)
- rename LiteDB.Tests/{ => Issues}/Issue1651_Tests.cs (83%)
- create mode 100644 LiteDB.Tests/Issues/Issue1695_Tests.cs
- create mode 100644 LiteDB.Tests/Issues/Issue1701_Tests.cs
- create mode 100644 LiteDB.Tests/Issues/Issue1838_Tests.cs
- create mode 100644 LiteDB.Tests/Issues/Issue1860_Tests.cs
- create mode 100644 LiteDB.Tests/Issues/Issue1865_Tests.cs
- 
-$ git push origin master
-Enumerating objects: 1, done.
-Counting objects: 100% (1/1), done.
-Writing objects: 100% (1/1), 249 bytes | 249.00 KiB/s, done.
-Total 1 (delta 0), reused 0 (delta 0)
-To https://github.com/github-honda/LiteDB.git
-   6c1ae08c..5c8f8373  master -> master
 
 
-
-**** 常用流程 - 跟上游同步-將Fork過來的專案, 更新到原作者的修改:
+**** 常用流程: 2020-12-27 跟上游同步-將Fork過來的專案, 更新到原作者的修改:
   在GitHub網站上跟上游同步-將Fork過來的專案, 更新到原作者的修改:
   參考 (在GitHub網站上跟上游同步.PDF)
 第一步：設定原作的遠端節點
@@ -679,7 +590,7 @@ $ git merge dummy-kao/master
 $ git push origin master
 這樣一來，你電腦裡的專案，以及在 GitHub 上從原作那邊 Fork 過來的專案都會是最新進度了。
 
-**** 常用流程 - 查詢是誰改的?
+**** 常用流程: 2020-12-27 查詢是誰改的?
 $ git blame [檔案名稱], 查詢檔案中每一列的 commit 紀錄.
 $ git blame -L 5,10 [檔案名稱], 查詢檔案中第5到10列的 commit 紀錄.
 $ git blame -L 40,+1 foo, 查詢檔案 foo 第 40 列的 commit 紀錄.
@@ -687,7 +598,7 @@ $ git blame -L 40,+21 foo, 查詢檔案 foo 第 40 列到60列的 commit 紀錄.
 $ git blame -L 40,60 foo, 查詢檔案 foo 第 40 列到60列的 commit 紀錄.
 
 
-**** 常用流程 - 合併分支
+**** 常用流程: 2020-12-27 合併分支
 檢查目前的分支
 $ git branch  標示為 * 的就是目前的分支.
 $ git log --oneline --graph 標示為 * 的就是目前的分支.
@@ -708,7 +619,7 @@ $ get merge master --allow-unrelated-histories
 $ git merge DemoCreateFromGitGui/main --allow-unrelated-histories (要全名)
 $ git push 更新到遠端資料庫
 
-**** 常用流程 - 設定本地分支與遠端分支的關聯. 執行 git pull 或 git push 時可不需要指定遠端分支.
+**** 常用流程: 2020-12-27 設定本地分支與遠端分支的關聯. 執行 git pull 或 git push 時可不需要指定遠端分支.
 $ git status 查詢本地分支
 On branch master
 Your branch is up to date with 'DemoCreateFromGitGui/master'.
@@ -727,7 +638,7 @@ $ git pull 執行 git pull 或 git push 時可不需要指定遠端分支.
 Already up to date.
 
 
-**** 常用流程 - 建立新的 Repository, 並將本地 repository 連接到遠端資料庫
+**** 常用流程: 2020-12-27 建立新的 Repository, 並將本地 repository 連接到遠端資料庫
 Steps:
 A. 建立本地Repository, 新增檔案.
 1. 視需求, 先建立根目錄基本控制檔案: 例如 Markdown README.md, .gitignore, .gitattributes. 每一個目錄可以放不同的控制檔案.
