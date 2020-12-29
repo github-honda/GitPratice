@@ -1,5 +1,5 @@
 Form: hondachen@hotmail.com
-Date: 2020-12-27
+Date: 2020-12-29
 Subject: github memo.
 
 本文提供 git hub 主要的備忘說明. 
@@ -11,11 +11,12 @@ Subject: github memo.
 歡迎來信交流.
 
 ----------
-2020-12-27
+2020-12-29
 基本概念及其他:
 
 Resources:
   https://github.com/
+  https://backlog.com/git-tutorial/tw/ 繁體中文(入門、進階、命令參考)
   https://git-scm.com/docs
   https://git-scm.com/download/gui/windows  推薦工具清單
   https://sourcetreeapp.com/  網路上最常使用的工具.
@@ -47,7 +48,16 @@ origin, upstream:
         (原始 Forked repository)命名為 upstream.
   
 (2020-10-01起)響應黑人平權運動, 預設 master branch 改為 main branch.
-  
+ 
+fast-forward merge 快速合併分支
+  若合併分支時沒有衝突, 則將檔案變更直接併入目前的分支.
+  否則為 non fast-forward merge.
+    若合併分支時產生衝突, 必須修改衝突的內容, 並建立(修改衝突內容後的)新的提交.
+
+
+中英對照:
+commit | 提交.
+fast-forward merge | 快速合併分支.
   
 ----------
 2020-12-06
@@ -77,19 +87,20 @@ Frequantly used git command reference:
  $ git blame -L 40,+21 <file>  | 查詢(<file> 第40列到60列)的修改.
  $ git blame -L 40,60 <file>   | 查詢(<file> 第40列到60列)的修改.
  $ git blame -L 5,10 <file>    | 查詢(<file> 第5   到10列)的修改.
- $ git branch | 檢視所有的 branch. 標示為 * 的就是目前的分支.
+ $ git branch | 檢視分支清單. 標示為 * 的就是目前的分支.
  $ git branch -f <branch>      | Shortcut for --force. 
  $ git branch --force <branch> | 強制建立分支 Reset <branch> to <startpoint>, even if <branch> exists already.
  $ git branch -M <branch>      | Shortcut for --move --force 
  $ git branch -m <branch>      | Shortcut for --move
  $ git branch -m <branchOld> <branchNew> | 將本地分支 <branchOld> 改為 <branchNew> 
  $ git branch --move <branch>  | 修改分支名稱及相關的 reflog. Move/rename a branch and the corresponding reflog.
- $ git branch <branch>         | 建立分支 Create a new branch.
+ $ git branch <branch>         | 建立分支. Create a new branch.
+ $ git branch -d <branch>      | 刪除分支. 
  $ git branch -r               | 查詢遠端名稱與分支, List or delete (if used with -d) the remote-tracking branches.
  $ git branch --set-upstream-to=<RemoteBranch> <LocalBranch> | 設定本地分支與遠端分支的關聯. 執行 git pull 或 git push 時可不需要指定遠端分支. 
  $ git branch --unset-upstream [<branchname>]                | 取消本地分支與遠端分支的關聯
  $ git checkout              | 還原已 commit 工作目錄. Switch branches or restore working tree files
- $ git checkout <branchname> | Switch to a branch.
+ $ git checkout <branchname> | 切換到分支. Switch to a branch.
  $ git checkout <file>       | 還原已 commit 檔案.
  $ git clean -f | 還原工作目錄檔案 Untracked files. -f=--force Cleans the working tree by recursively removing files that are not under version control, starting from the current directory.
  $ git clean -n | 查詢將被 git clean -f 還原的清單 Untracked files. -n=--dry-run Cleans the working tree by recursively removing files that are not under version control, starting from the current directory.
@@ -117,10 +128,11 @@ Frequantly used git command reference:
  $ git log --oneline -n      | 查詢 commit 紀錄. n是最近提交的次數.
  $ git log --stat --summary  | 查詢 commit 紀錄. 狀態摘要明細.
  $ git ls-files | 檔案清單.
+*$ git merge <branchname> | 快轉合併 fast-forward. 將 <brahcnname> 併入目前的分支.
  $ git mv <file1> <file2> | 變更檔案名稱並將變更移到 Staging Area. 等於先( $ mv <file1> <file2>), 再 $ git add -A).
  $ git prune [-n] [-v] [--progress] [--expire <time>] [--] [<head>…​] | 清理沒用的物件. 
  $ git prune | 清理沒用的物件. 例如: $ git prune $(cd ../another && git rev-parse --all) , To prune objects not used by your repository or another that borrows from your repository via its ".git/objects/info/alternates"
-*$ git pull | 下載(預設的遠端資料庫upstream)到(本地資料庫). 
+*$ git pull | 下載遠端資料庫. pull = fetch + merge 
 *$ git pull <RemoteBranch> <LocalBranch> | 下載<RemoteBranch>到<LocalBranch>. 
 *$ git pull origin master   | 下載 遠端 origin   到 本地的 master. 
 *$ git pull upstream master | 下載 遠端 upstream 到 本地的 master. 
@@ -282,14 +294,39 @@ git stash store [-m|--message <message>] [-q|--quiet] <commit>
 ----------
 ToDo 問題:
 
-1. 20201223
-$ git pull origin main
-  跟Git Gui 操作不一樣: 在 Git Gui 中使用 Remote.Fetch From origin後, 資料會下載, 但是branch卻會保留在目前分支上, 不會跳到到下載後的最新分支上.
+Q1: 20201223, 跟Git Gui 操作不一樣: 在 Git Gui 中使用 Remote.Fetch From origin後, 資料會下載, 但是branch卻會保留在目前分支上, 不會跳到到下載後的最新分支上?
   待確認 Git Gui 的正確操作為何? 
   使用指令 git pull 則會下載新資料, 也會跳到最新下載的分支上.
+  $ git pull origin main
+  A: 20201229, git fetch 只會取得遠端資料庫的最新歷史紀錄, 不會合併分支.
+      $ git fetch 只會取得遠端資料庫的最新歷史紀錄, 不會合併分支.
+	  $ git pull = fetch + merge 
+    20201229, 需要再執行(快轉合併 fast-forward merge), 將 Fetch 下來的檔案併入目前的分支.
+    待確認 Git Gui 的正確(快轉合併 fast-forward merge)操作為何 ?
+    *$ git merge <branchname> | 快轉合併 fast-forward merge. 將 <brahcnname> 併入目前的分支.
 
 ----------
 **** 常用流程
+
+**** 常用流程: 2020-12-29 切換到別人的branch測試後, 再回到自己的 branch.
+檢查目前的分支, 標示為 * 者為目前的分支.
+$ git branch
+* main
+
+切換到別人的branch測試.
+$ git checkout beaconScore
+Switched to a new branch 'beaconScore'
+Branch 'beaconScore' set up to track remote branch 'beaconScore' from 'origin'.
+
+$ git branch
+* beaconScore
+  main
+
+測試完別人的程式後, 再切換回自己的 branch
+$ git checkout main
+
+
+
 **** 常用流程: 2020-12-27 將 Forked repository 跟上原始來源的最新修改.
 1. 檢查確認 upstream 為原始來源的遠端位置.
 $ git remote -v
