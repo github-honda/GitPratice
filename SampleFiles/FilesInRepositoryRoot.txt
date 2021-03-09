@@ -1,0 +1,21 @@
+Form: hondachen@hotmail.com
+Date: 2020-11-01
+Subject: FilesInRepositoryRoot.txt.
+
+----------
+2020-11-01
+
+.gitignore
+  複製 VisualStudio.gitignore
+  最新版的 Visual Studio .gitignore 檔案, 可放在根目錄或每一個專案根目錄下.
+   ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
+      https://github.com/github/gitignore
+
+.gitattributes
+  指定專案的程式語言分類
+  參考 C#.gitattributes
+
+.README.md
+  每個目錄可以有自己的說明檔案.
+  參考 Init.README.md
+  
