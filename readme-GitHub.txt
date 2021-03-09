@@ -147,8 +147,8 @@ Frequantly used git command reference:
 *$ git push -u origin master                    | 同時執行 push 及設定(預設的遠端資料庫upstream).
 *$ git reflog            | 查詢 commit 紀錄. 包含 HEAD 移動紀錄. 例如 切換分支或還原版本). 預設保存90天的歷史紀錄, 不在分支線上的 commit, 則保存30天.
  $ git reflog --date=iso | 查詢 commit 紀錄.
-*$ git remote                   | 查詢遠端資料庫. 
-*$ git remote -v                | 查詢遠端資料庫明細. 
+*$ git remote                   | 查詢遠端分支名稱. 
+*$ git remote -v                | 查詢遠端分支明細, 包括(fetch 及 push)的遠端 .git 檔案位址. 
 *$ git remote add <name> <uri>  | 增加遠端數據庫<uri>, 命名為<name>. 習慣上命名 origin 為遠端數據庫. upstream 為遠端Forked數據庫.   
  $ git remote prune origin           | 清理無效檔案. 例如 github 已經刪除, 但是本地仍存在的檔案.
  $ git remote prune origin --dry-run | 列出要修剪的無效檔案. 不執行修剪.
@@ -187,14 +187,13 @@ Frequantly used git command reference:
 memo:
 <file> 例如 LiteDB.Studio/LiteDB.Studio.exe.
 <commit id> 只要輸入前4碼.
-<branch> : 例如 遠端分支 origin/master, 本地分支 main. 
+<branch> 例如 origin/main 或 origin/master 代表 遠端分支為 origin, 本地分支為 main 或 master. (2020-10-01起)響應黑人平權運動, 預設 master branch 改為 main branch.
 
 習慣:
   origin, upstream, master, main:
-  (本地資料庫)通常設為 master 或 main.
-    (2020-10-01起)響應黑人平權運動, 預設 master branch 改為 main branch.
-  (遠端資料庫)通常設為 origin.
-  (遠端Forked資料庫)通常設為 upstream.
+  (本地分支)通常設為 master 或 main. (2020-10-01起)響應黑人平權運動, 預設 master branch 改為 main branch.
+  (遠端分支)通常設為 origin.
+  (遠端Forked 分支)通常設為 upstream.
 
 GitMode: (在 $ git ls-files -s 中顯示的第一欄)
   32-bit mode, split into (high to low bits)
