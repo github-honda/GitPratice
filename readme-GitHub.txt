@@ -1,13 +1,13 @@
 Form: hondachen@hotmail.com
-Date: 2020-12-29
+Date: 2021-03-09
 Subject: github memo.
 
-本文提供 git hub 主要的備忘說明. 
-只要透過字串查詢, 就可以快速找到需要的語法、範例...等說明.
+以文字檔提供 git hub 備忘說明.
 
-使用指令操作 git, 才能徹底了解 git 的運作細節.
+以指令操作 git, 才能徹底了解 git 的運作細節.
 
 原文網址: https://github.com/github-honda/GitPratice/blob/main/readme-GitHub.txt
+
 歡迎來信交流.
 
 ----------
@@ -38,17 +38,14 @@ git 三個區域:
   Staging Area(Index Area): 暫存區 或 索引區. 儲存(可準備 commit 提交)的資訊.
   Repository:               儲存檔案變更的資料庫.
 
+HEAD 代表指向(目前的分支)的(commit 指標).
+
 ~.ssh/id_rsa.pub 代表在  c:\使用者\[user]\.ssh\ 下. Private key 檔案為 id_rsa, Public key 檔案為 id_rsa.pub.
 
 Launch Git Bash or Git GUI: 
   檔案總管選擇目錄後, 按滑鼠右鍵, 選擇 Git Bash Here/Git GUI here 可啟動 git bash, 以console 指令模式執行 git 操控.
 
-origin, upstream:  
-  習慣上(遠端 repository 位置)  命名為 origin, 
-        (原始 Forked repository)命名為 upstream.
-  
-(2020-10-01起)響應黑人平權運動, 預設 master branch 改為 main branch.
- 
+
 fast-forward merge 快速合併分支
   若合併分支時沒有衝突, 則將檔案變更直接併入目前的分支.
   否則為 non fast-forward merge.
@@ -60,12 +57,12 @@ commit | 提交.
 fast-forward merge | 快速合併分支.
   
 ----------
-2020-12-06
+2021-03-09
 Quick help:
 
 Frequantly used git command reference: 
 *代表 常用
- $ git  | git usage help.
+ $ git            | git usage help.
  $ git --version  | 檢視 git 版本
 *$ git add        | 將檔案加入(暫存區)管理. Add file contents to the index
  $ git add -A     | 同 git add --all
@@ -87,23 +84,25 @@ Frequantly used git command reference:
  $ git blame -L 40,+21 <file>  | 查詢(<file> 第40列到60列)的修改.
  $ git blame -L 40,60 <file>   | 查詢(<file> 第40列到60列)的修改.
  $ git blame -L 5,10 <file>    | 查詢(<file> 第5   到10列)的修改.
- $ git branch | 檢視分支清單. 標示為 * 的就是目前的分支.
+*$ git branch                  | 查詢本地分支. 標示為 * 的就是目前的分支.
+ $ git branch <branch>         | 建立分支. 
+ $ git branch -d <branch>      | 刪除分支. 
  $ git branch -f <branch>      | Shortcut for --force. 
  $ git branch --force <branch> | 強制建立分支 Reset <branch> to <startpoint>, even if <branch> exists already.
  $ git branch -M <branch>      | Shortcut for --move --force 
  $ git branch -m <branch>      | Shortcut for --move
  $ git branch -m <branchOld> <branchNew> | 將本地分支 <branchOld> 改為 <branchNew> 
  $ git branch --move <branch>  | 修改分支名稱及相關的 reflog. Move/rename a branch and the corresponding reflog.
- $ git branch <branch>         | 建立分支. Create a new branch.
- $ git branch -d <branch>      | 刪除分支. 
- $ git branch -r               | 查詢遠端名稱與分支, List or delete (if used with -d) the remote-tracking branches.
- $ git branch --set-upstream-to=<RemoteBranch> <LocalBranch> | 設定本地分支與遠端分支的關聯. 執行 git pull 或 git push 時可不需要指定遠端分支. 
+*$ git branch -r               | 查詢遠端分支.
+*$ git branch --set-upstream-to=<RemoteBranch> <LocalBranch> | 設定本地分支與遠端分支的關聯. 執行 git pull 或 git push 時可不需要指定遠端分支. 
  $ git branch --unset-upstream [<branchname>]                | 取消本地分支與遠端分支的關聯
- $ git checkout              | 還原已 commit 工作目錄. Switch branches or restore working tree files
- $ git checkout <branchname> | 切換到分支. Switch to a branch.
- $ git checkout <file>       | 還原已 commit 檔案.
+ $ git checkout                   | 還原(已 commit)的所有檔案. Switch branches or restore working tree files
+*$ git checkout <commitId> <file> | 還原(指定版本)的檔案.
+*$ git checkout <branchname>      | 切換到分支. Switch to a branch.
+ $ git checkout <file>            | 還原(已 commit)的檔案.
  $ git clean -f | 還原工作目錄檔案 Untracked files. -f=--force Cleans the working tree by recursively removing files that are not under version control, starting from the current directory.
  $ git clean -n | 查詢將被 git clean -f 還原的清單 Untracked files. -n=--dry-run Cleans the working tree by recursively removing files that are not under version control, starting from the current directory.
+*$ git clone <url> | Clone a repository into a new directory
  $ git commit --amend --no-edit        | 將本次commit 併入最後一次 commit 中. --no-edit 代表不修改訊息.
 *$ git commit --amend -m "Description" | 修改最後一次提交的訊息.
 *$ git commit -a                       | 將變更存入本地資料庫, -a = All. 不包含未納入管理的檔案.
@@ -116,6 +115,7 @@ Frequantly used git command reference:
  $ git config --global gc.reflogExpireUnreachable 'never' | 修改 reflog 保存時間 (不存在分支線上，預設 30 天改為無限)
 *$ git config --global init.defaultBranch main | 將預設(建立本地資料庫分支名稱)設為 main.
  $ git diff <old commit id> <new commit id> | 查詢 commit 版本的差異.
+ $ git fetch origin/master | 只更新一個分支的遠端資料. 例如 origin/master.
 *$ git help <command> | Help command.
  $ git help <concept> | Help concept. 例如: attributes, cli, core-tutorial...可從 git help -g 取得 concept 清單ㄡ
  $ git help -a        | Help available subcommands.
@@ -127,12 +127,13 @@ Frequantly used git command reference:
 *$ git log --oneline --graph | 查詢 commit 紀錄. 不包含 HEAD 移動紀錄.
  $ git log --oneline -n      | 查詢 commit 紀錄. n是最近提交的次數.
  $ git log --stat --summary  | 查詢 commit 紀錄. 狀態摘要明細.
- $ git ls-files | 檔案清單.
-*$ git merge <branchname> | 快轉合併 fast-forward. 將 <brahcnname> 併入目前的分支.
+*$ git log <file>  | 查詢(檔案 commit 紀錄). 建議使用 GitGui 比較容易檢視, 只要在log清單畫面上選擇檔案HighLight.
+*$ git ls-files -s | 檔案清單, 包括GitMode, commit紀錄.
+*$ git merge <branch> | 合併分支. 快轉合併 fast-forward 將 <banch>分支併入目前的分支.
  $ git mv <file1> <file2> | 變更檔案名稱並將變更移到 Staging Area. 等於先( $ mv <file1> <file2>), 再 $ git add -A).
  $ git prune [-n] [-v] [--progress] [--expire <time>] [--] [<head>…​] | 清理沒用的物件. 
  $ git prune | 清理沒用的物件. 例如: $ git prune $(cd ../another && git rev-parse --all) , To prune objects not used by your repository or another that borrows from your repository via its ".git/objects/info/alternates"
-*$ git pull | 下載遠端資料庫. pull = fetch + merge 
+*$ git pull | 下載遠端資料庫且合併分支. git pull = fetch + merge 
 *$ git pull <RemoteBranch> <LocalBranch> | 下載<RemoteBranch>到<LocalBranch>. 
 *$ git pull origin master   | 下載 遠端 origin   到 本地的 master. 
 *$ git pull upstream master | 下載 遠端 upstream 到 本地的 master. 
@@ -146,28 +147,29 @@ Frequantly used git command reference:
 *$ git push -u origin master                    | 同時執行 push 及設定(預設的遠端資料庫upstream).
 *$ git reflog            | 查詢 commit 紀錄. 包含 HEAD 移動紀錄. 例如 切換分支或還原版本). 預設保存90天的歷史紀錄, 不在分支線上的 commit, 則保存30天.
  $ git reflog --date=iso | 查詢 commit 紀錄.
-*$ git remote add origin https://github.com/github-honda/LiteDB.git | 加入遠端的 repository 並指定別名為 origin.   
-*$ git remote add upstream https://github.com/mbdavid/LiteDB.git    | 加入遠端的 repository 並指定別名為 upstream. 
+*$ git remote                   | 查詢遠端資料庫. 
+*$ git remote -v                | 查詢遠端資料庫明細. 
+*$ git remote add <name> <uri>  | 增加遠端數據庫<uri>, 命名為<name>. 習慣上命名 origin 為遠端數據庫. upstream 為遠端Forked數據庫.   
  $ git remote prune origin           | 清理無效檔案. 例如 github 已經刪除, 但是本地仍存在的檔案.
  $ git remote prune origin --dry-run | 列出要修剪的無效檔案. 不執行修剪.
-*$ git remote -v | 查詢本地資料庫使用的(遠端節點位置與名稱). 
-*$ git reset        | 還原工作目錄為 (暫存區 stage)檔案. 保留工作目錄已變更的檔案.
-*$ git reset --hard | 還原工作目錄為 (暫存區 stage)檔案. 放棄工作目錄已變更的檔案.
-*$ git reset <commit id>         | 還原工作目錄為 (指定的 commit 版本). 保留工作目錄已變更的檔案. <commit id> 只要輸入前4碼就可以.
-*$ git reset <commit id> -- hard | 還原工作目錄為 (指定的 commit 版本). 放棄工作目錄已變更的檔案. <commit id> 只要輸入前4碼就可以.
- $ git reset HEAD         | HEAD 為預設. 同 git reset.
- $ git reset --hard       | --hard  為 放棄工作目錄已變更的檔案.
- $ git reset --mixed      | --mixed 為 保留工作目錄已變更的檔案. --mixed 為預設的模式可以省略. 
- $ git reset --soft       | --soft 為 Does not touch the index file or the working tree at all (but resets the head to <commit>, just like all modes do). This leaves all your changed files "Changes to be committed", as git status would put it.
- $ git reset HEAD^        | 還原(工作目錄)為(暫存區檔案前1個版本).
- $ git reset HEAD^^       | 還原(工作目錄)為(暫存區檔案前2個版本).
- $ git reset HEAD~3       | 還原(工作目錄)為(暫存區檔案前3個版本).
- $ git reset HEAD~n       | 還原(工作目錄)為(暫存區檔案前n個版本).
- $ git reset master       | 還原(工作目錄)為(暫存區檔案). 還原為節點 master的版本. 同 git reset HEAD (當節點為 master 時)
-*$ git reset <SHA-1>      | 還原(工作目錄)為(暫存區檔案指定的版本(絕對路徑)). 
- $ git reset <SHA-1>^     | 還原(工作目錄)為(暫存區檔案指定的版本前1個版本).
- $ git reset <SHA-1>^^    | 還原(工作目錄)為(暫存區檔案指定的版本前2個版本). 
- $ git reset <SHA-1>~3    | 還原(工作目錄)為(暫存區檔案指定的版本前3個版本).
+ $ git remote update | 更新所有分支的遠端資料.
+*$ git reset        | 還原工作目錄到目前分支的 HEAD 位置. 保留工作目錄已變更的檔案.
+*$ git reset --hard | 還原工作目錄到目前分支的 HEAD 位置. 放棄工作目錄已變更的檔案.
+ $ git reset HEAD | HEAD 為預設. 同 git reset.
+ $ git reset --hard  | --hard  為 放棄工作目錄已變更的檔案.
+ $ git reset --mixed | --mixed 為 保留工作目錄已變更的檔案. --mixed 為預設的模式可以省略. 
+ $ git reset --soft  | --soft 為 Does not touch the index file or the working tree at all (but resets the head to <commit>, just like all modes do). This leaves all your changed files "Changes to be committed", as git status would put it.
+ $ git reset HEAD^        | 還原工作目錄到目前分支的 HEAD 前1個版本.
+ $ git reset HEAD^^       | 還原工作目錄到目前分支的 HEAD 前2個版本.
+ $ git reset HEAD~3       | 還原工作目錄到目前分支的 HEAD 前3個版本.
+ $ git reset HEAD~n       | 還原工作目錄到目前分支的 HEAD 前n個版本.
+*$ git reset <commit id>         | 還原工作目錄到 <commit id> 位置. 保留工作目錄已變更的檔案. <commit id> 只要輸入前4碼.
+*$ git reset <commit id> -- hard | 還原工作目錄到 <commit id> 位置. 放棄工作目錄已變更的檔案. <commit id> 只要輸入前4碼.
+ $ git reset <commit id>^     | 還原工作目錄到 <commit id> 前1個版本.
+ $ git reset <commit id>^^    | 還原工作目錄到 <commit id> 前2個版本. 
+ $ git reset <commit id>~3    | 還原工作目錄到 <commit id> 前3個版本.
+ $ git restore <file>          | 取消(工作目錄中)的檔案變更. Restore working tree files
+ $ git restore --staged <file> | 取消(暫存區中的)檔案變更.
  $ git rm --cached <file> | 還原(工作目錄)為(暫存區檔案).
  $ git rm <file> |  移除檔案並將變更移到暫存區（工作區域 -> 暫存區. 等於 ($ rm <file> 後再 $ git add <file>).
  $ git stash      | 暫存工作目錄的檔案變更. 不含 untracked 檔案.
@@ -177,9 +179,43 @@ Frequantly used git command reference:
  $ git stash pop stash@{n}   | 取回(暫存的變更編號n), 到目前的分支上, 並刪除(暫存的變更編號n)
  $ git stash drop stash@{n}  | 刪除(暫存的變更編號n)
  $ git stash apply stash@{n} | 取用(暫存的變更編號n), 到目前的分支上, 並保留(暫存的變更編號n)
-*$ git status  | 檢查工作目錄狀態
+*$ git status  | 檢查狀態. 若遠端有新的 commit, 則會提示需要 git pull.
 *$ git version | 取得版本資訊. 例如: git version 2.29.2.windows.2
  $ pwd         | 目前工作目錄
+
+
+memo:
+<file> 例如 LiteDB.Studio/LiteDB.Studio.exe.
+<commit id> 只要輸入前4碼.
+<branch> : 例如 遠端分支 origin/master, 本地分支 main. 
+
+習慣:
+  origin, upstream, master, main:
+  (本地資料庫)通常設為 master 或 main.
+    (2020-10-01起)響應黑人平權運動, 預設 master branch 改為 main branch.
+  (遠端資料庫)通常設為 origin.
+  (遠端Forked資料庫)通常設為 upstream.
+
+GitMode: (在 $ git ls-files -s 中顯示的第一欄)
+  32-bit mode, split into (high to low bits)
+    4-bit object type
+      valid values in binary are 1000 (regular file), 1010 (symbolic link)
+      and 1110 (gitlink)
+
+    3-bit unused
+
+    9-bit unix permission. Only 0755 and 0644 are valid for regular files.
+    Symbolic links and gitlinks have value 0 in this field.
+Also, a directory object type (binary 0100) and group-writeable (0664 permissions) regular file are allowed as indicated by the fsck.c fsck_tree method. The regular non-executable group-writeable file is a non-standard mode that was supported in earlier versions of Git.
+
+This makes valid modes (as binary and octal):
+0100000000000000 (040000): Directory
+1000000110100100 (100644): Regular non-executable file
+1000000110110100 (100664): Regular non-executable group-writeable file
+1000000111101101 (100755): Regular executable file
+1010000000000000 (120000): Symbolic link
+1110000000000000 (160000): Gitlink
+
 
 ----------
 2020-12-06
@@ -210,7 +246,18 @@ git commit [-a | --interactive | --patch] [-s] [-v] [-u<mode>] [--amend]
 	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
 	   [--date=<date>] [--cleanup=<mode>] [--[no-]status]
 	   [-i | -o] [-S[<keyid>]] [--] [<file>…​]
-	   
+	
+git-clone - Clone a repository into a new directory
+git clone [--template=<template_directory>]
+          [-l] [-s] [--no-hardlinks] [-q] [-n] [--bare] [--mirror]
+          [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <repository>]
+          [--dissociate] [--separate-git-dir <git dir>]
+          [--depth <depth>] [--[no-]single-branch] [--no-tags]
+          [--recurse-submodules[=<pathspec>]] [--[no-]shallow-submodules]
+          [--[no-]remote-submodules] [--jobs <n>] [--sparse]
+          [--filter=<filter>] [--] <repository>
+          [<directory>]
+		  
 git-config - Get and set repository or global options
 git config [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] name [value [value_regex]]
 git config [<file-option>] [--type=<type>] --add name value
@@ -277,6 +324,11 @@ git reset (--patch | -p) [<tree-ish>] [--] [<paths>…​]
 EXPERIMENTAL: git reset [-q] [--stdin [-z]] [<tree-ish>]
 git reset [--soft | --mixed [-N] | --hard | --merge | --keep] [-q] [<commit>]
 
+git-restore - Restore working tree files
+git restore [<options>] [--source=<tree>] [--staged] [--worktree] [--] <pathspec>…​
+git restore [<options>] [--source=<tree>] [--staged] [--worktree] --pathspec-from-file=<file> [--pathspec-file-nul]
+git restore (-p|--patch) [<options>] [--source=<tree>] [--staged] [--worktree] [--] [<pathspec>…​]
+
 git-stash - Stash the changes in a dirty working directory away
 git stash list [<options>]
 git stash show [<options>] [<stash>]
@@ -292,21 +344,50 @@ git stash store [-m|--message <message>] [-q|--quiet] <commit>
 
 
 ----------
-ToDo 問題:
+ToDo:
 
-Q1: 20201223, 跟Git Gui 操作不一樣: 在 Git Gui 中使用 Remote.Fetch From origin後, 資料會下載, 但是branch卻會保留在目前分支上, 不會跳到到下載後的最新分支上?
-  待確認 Git Gui 的正確操作為何? 
-  使用指令 git pull 則會下載新資料, 也會跳到最新下載的分支上.
-  $ git pull origin main
-  A: 20201229, git fetch 只會取得遠端資料庫的最新歷史紀錄, 不會合併分支.
-      $ git fetch 只會取得遠端資料庫的最新歷史紀錄, 不會合併分支.
-	  $ git pull = fetch + merge 
-    20201229, 需要再執行(快轉合併 fast-forward merge), 將 Fetch 下來的檔案併入目前的分支.
-    待確認 Git Gui 的正確(快轉合併 fast-forward merge)操作為何 ?
-    *$ git merge <branchname> | 快轉合併 fast-forward merge. 將 <brahcnname> 併入目前的分支.
+https://stackoverflow.com/questions/58003030/what-is-the-git-restore-command-and-what-is-the-difference-between-git-restor
+
+As reset, restore and revert documentation states:
+There are three commands with similar names: git reset, git restore and git revert.
+git reset, git restore and git revert 三者的差異
+$ git revert 是會從一個(舊的commit版本)取得變更後, 建立(新的commit版本).
+  is about making a new commit that reverts the changes made by other commits.
+  
+$ git restore 是會從(暫存區或其他的commit版本)復原工作目錄檔案, 並不會更新目前的分支.
+    白話文簡單如下:
+    $ git restore <file>          | 取消(工作目錄中)的檔案變更. Restore working tree files
+    $ git restore --staged <file> | 取消(暫存區中的)檔案變更.
+  is about restoring files in the working tree from either the index or another commit.
+  This command does not update your branch.
+  The command can also be used to restore files in the index from another commit.
+
+$ git reset 是會更新目前的分支, 移動tip以便新增或移除目前分支中的commit版本.
+  is about updating your branch, moving the tip in order to add or remove commits from the branch. 
+  This operation changes the commit history.
+  git reset can also be used to restore the index, overlapping with git restore.
+
+So:
+To restore a file in the index to match the version in HEAD (this is the same as using git-reset)
+  git restore --staged hello.c
+
+or you can restore both the index and the working tree (this the same as using git-checkout)
+  git restore --source=HEAD --staged --worktree hello.c
+
+or the short form which is more practical but less readable:
+  git restore -s@ -SW hello.c
 
 ----------
 **** 常用流程
+
+**** 常用流程:
+複製既有的遠端數據庫
+
+先到網站上取得 <url>, 再到空白的目錄下執行:  
+$ git clone <url>
+  執行 clone 命令時，會自動設定遠端數據庫為追踪目標。
+  這樣在 push 或 fetch/pull 命令時即使省略 repository，也可以正確的顯示/讀取修改內容。
+
 
 **** 常用流程: 2020-12-29 切換到別人的branch測試後, 再回到自己的 branch.
 檢查目前的分支, 標示為 * 者為目前的分支.
@@ -328,6 +409,13 @@ $ git checkout main
 
 
 **** 常用流程: 2020-12-27 將 Forked repository 跟上原始來源的最新修改.
+簡單的步驟:
+  1. $ git pull upstream master  <---- 下載遠端資料庫 git pull = fetch + merge. 
+  2. $ git push origin master    <---- 更新到 Forked 的遠端資料庫.
+  若($ git remote -v)檢查沒有 upstream, 
+  則可新增, 例如($ git remote add upstream https://github.com...git)
+
+詳細:
 1. 檢查確認 upstream 為原始來源的遠端位置.
 $ git remote -v
 origin  https://github.com/github-honda/LiteDB.git (fetch)     <---- Forked fetch 遠端位置
@@ -339,8 +427,8 @@ upstream        https://github.com/mbdavid/LiteDB.git (push)   <---- 原始來�
 $ git remote add upstream https://github.com/mbdavid/LiteDB.git 
 
 3. 將本地資料庫 master 更新為原始來源 upstream 的最新修改:
-$ git pull upstream master
 更新過程需要 Merge 步驟, 會要求輸入修改的訊息, 才能完成 Merge.
+$ git pull upstream master  <---- 下載遠端資料庫 git pull = fetch + merge
 
 4. 更新到 Forked 的遠端資料庫.
 $ git push origin master
@@ -391,7 +479,7 @@ $ git stash apply stash@{n} | 取用(暫存的變更編號n), 到目前的分支
 $ git pull origin main
   20201223, 跟Git Gui 操作不一樣: 在 Git Gui 中使用 Remote.Fetch From origin後, 資料會下載, 但是branch卻會保留在目前分支上, 不會跳到到下載後的最新分支上.
             待確認 Git Gui 的正確操作為何? 使用指令 git pull 則會下載新資料, 也會跳到最新下載的分支上.
-
+  20210309, 因為 git pull 比 fetch 多了 fast-forward merge 動作, 若合併分支時沒有衝突, 則將變更併入目前的分支. 
 
 **** 常用流程: 2020-12-27 上傳最新的修改
 2020-12-06
@@ -506,11 +594,12 @@ To https://github.com/github-honda/gitpratice.git
 Branch 'main' set up to track remote branch 'main' from 'origin'.
 
 
-**** 常用流程: 2020-12-27 建立本地目錄, 連接到遠端 repository, 下載最新更新資料.
+**** 常用流程: 2021-03-03 建立本地目錄, 連接到遠端 repository, 下載最新更新資料.
 2020-12-06
 
 1. 建立本地工作目錄
 例如: E:\CodeHelper\GitHub\GitPratice
+到本地工作目錄中, 啟動 git Bash command console.
 
 2. 建立本地 repository 及 branch=main 
 $ git init -b main
@@ -720,7 +809,78 @@ You can initialize this repository with code from a Subversion, Mercurial, or TF
 
 
 
+----------
+2021-01-15
 
+遠端操作:
+
+複製既有的遠端數據庫
+$ git clone <url>
+執行 clone 命令時，會自動設定遠端數據庫為追踪目標。
+這樣在 push 或 fetch/pull 命令時即使省略 repository，也可以正確的顯示/讀取修改內容。
+
+添加一個遠端數據庫
+$ git remote add <name> <url>
+
+顯示遠端數據庫清單
+$ git remote
+加上 -v 後即可顯示遠端數據庫的詳細情況。
+
+取遠端數據庫的分支建立本地端數據庫的分支
+$ git checkout <branch>
+在最新的Git版本中，chekout 命令的參數下指定遠端數據庫的分支，就可以從遠端數據庫複製分支到本地端數據庫建立分支。
+如果因為版本太舊不能建立，請按照下面的方法在 branch 命令下建立分支。
+$ git branch <branchname> origin/<branch>
+
+在遠端數據庫建立分支/push修改內容到分支
+$ git push <repository> <refspec>
+加上 -u ，可以將遠端數據庫的分支設為追蹤目標。這樣，在 push 或 fetch/pull 命令時即使省略 repository，也可以正確的顯示/讀取修改內容。
+
+在 <repository>，除了 remote add 命令所添加的數據庫名稱以外，也可以直接指定 URL，省略 <repository> 也可以成為遠端數據庫指定的追踪對象。
+在 <refspec> 可以指定分支名稱。省略 refspec 的話，遠端數據庫和本地端數據庫所存有的分支在預設裡會被列為目標。
+
+
+查看遠端數據庫分支的修改內容
+$ git fetch <repository> <refspec>
+要確認遠端數據庫的修改內容，但不想合併內容到本地端數據庫時，可以使用 fetch 命令。fetch 命令不會修改本地端數據庫的分支。
+
+可以省略 repository 或 refspec。省略 repository 時的動作與 push 的時候是相同的。省略 refspec，所有的分支在默認裡會被列為目標。
+
+合併遠端數據庫的分支的修改內容
+$ git pull <repository> <refspec>
+藉著 pull 命令，可以把遠端數據庫修改的內容合併到本地端數據庫。您只要知道「pull = fetch + merge」就可以了。
+
+可以省略 repository 或 refspec 。省略 repository 名稱時的動作與 push 的時候是相同的。若省略 refspec，會只pull現有的分支。
+
+
+刪除遠端數據庫的分支
+$ git push --delete <repository> <branchname>
+
+在 push 命令加上 --delete 和 <repository> <branchname> ，然後執行。
+Git 1.7之前的版本不能使用 --delete ，所以請用以下的指令：
+$ git push <repository> :<branchname>
+
+在遠端數據庫建立標籤
+$ git push --tags
+加上 --tags ，就可以將在本地端數據庫裡所有的標籤添加到遠端數據庫。
+
+刪除在遠端數據庫的標籤
+$ git push --delete <repository> <tagname>
+在 push 命令加上 --delete 和 <repository> <tagname>，然後執行。
+Git 1.7之前的版本不能使用 --delete ，所以請用以下的指令
+$ git push <repository> :<tagname>
+
+修改已註冊的遠端數據庫的位址
+$ git remote set-url <name> <newurl>
+在 <newurl> 內指定遠端數據庫的新地址。
+
+修改已註冊的遠端數據庫名稱
+$ git remote rename <old> <new>
+將遠端數據庫的名稱從 <old> 改為 <new> 。
+
+
+
+----------------------------------------------------------------------------------------------------
 ------------------------
 以下參考, 確認後移到上面
 ------------------------
