@@ -1,5 +1,5 @@
 Form: hondachen@hotmail.com
-Date: 2021-03-09
+Date: 2021-03-17
 Subject: github memo.
 
 以文字檔提供 git hub 備忘說明.
@@ -153,21 +153,20 @@ Frequantly used git command reference:
  $ git remote prune origin           | 清理無效檔案. 例如 github 已經刪除, 但是本地仍存在的檔案.
  $ git remote prune origin --dry-run | 列出要修剪的無效檔案. 不執行修剪.
  $ git remote update | 更新所有分支的遠端資料.
-*$ git reset        | 還原工作目錄到目前分支的 HEAD 位置. 保留工作目錄已變更的檔案.
-*$ git reset --hard | 還原工作目錄到目前分支的 HEAD 位置. 放棄工作目錄已變更的檔案.
- $ git reset HEAD | HEAD 為預設. 同 git reset.
- $ git reset --hard  | --hard  為 放棄工作目錄已變更的檔案.
+*$ git reset         | 還原工作目錄到目前分支的版本. 保留工作目錄已變更的檔案. --mixed 為預設的模式可以省略.
+ $ git reset HEAD    | HEAD 為預設. 同 git reset.
+*$ git reset --hard  | 還原工作目錄到目前分支的版本, 即放棄已變更的檔案 並恢復到目前分支的版本. --hard 為 放棄工作目錄已變更的檔案.
  $ git reset --mixed | --mixed 為 保留工作目錄已變更的檔案. --mixed 為預設的模式可以省略. 
  $ git reset --soft  | --soft 為 Does not touch the index file or the working tree at all (but resets the head to <commit>, just like all modes do). This leaves all your changed files "Changes to be committed", as git status would put it.
- $ git reset HEAD^        | 還原工作目錄到目前分支的 HEAD 前1個版本.
- $ git reset HEAD^^       | 還原工作目錄到目前分支的 HEAD 前2個版本.
- $ git reset HEAD~3       | 還原工作目錄到目前分支的 HEAD 前3個版本.
- $ git reset HEAD~n       | 還原工作目錄到目前分支的 HEAD 前n個版本.
-*$ git reset <commit id>         | 還原工作目錄到 <commit id> 位置. 保留工作目錄已變更的檔案. <commit id> 只要輸入前4碼.
-*$ git reset <commit id> -- hard | 還原工作目錄到 <commit id> 位置. 放棄工作目錄已變更的檔案. <commit id> 只要輸入前4碼.
- $ git reset <commit id>^     | 還原工作目錄到 <commit id> 前1個版本.
- $ git reset <commit id>^^    | 還原工作目錄到 <commit id> 前2個版本. 
- $ git reset <commit id>~3    | 還原工作目錄到 <commit id> 前3個版本.
+ $ git reset HEAD^   | 還原工作目錄到目前分支的前1個版本.
+ $ git reset HEAD^^  | 還原工作目錄到目前分支的前2個版本.
+ $ git reset HEAD~3  | 還原工作目錄到目前分支的前3個版本.
+ $ git reset HEAD~n  | 還原工作目錄到目前分支的前n個版本.
+*$ git reset <commit id>        | 還原工作目錄到 <commit id> 的版本. 保留工作目錄已變更的檔案. <commit id> 只要輸入前4碼.
+*$ git reset <commit id> --hard | 還原工作目錄到 <commit id> 的版本. 放棄工作目錄已變更的檔案. <commit id> 只要輸入前4碼.
+ $ git reset <commit id>^       | 還原工作目錄到 <commit id> 前1個版本.
+ $ git reset <commit id>^^      | 還原工作目錄到 <commit id> 前2個版本. 
+ $ git reset <commit id>~3      | 還原工作目錄到 <commit id> 前3個版本.
  $ git restore <file>          | 取消(工作目錄中)的檔案變更. Restore working tree files
  $ git restore --staged <file> | 取消(暫存區中的)檔案變更.
  $ git rm --cached <file> | 還原(工作目錄)為(暫存區檔案).
@@ -377,10 +376,16 @@ or the short form which is more practical but less readable:
   git restore -s@ -SW hello.c
 
 ----------
-**** 常用流程
+**** 常用流程: 2021-03-17 恢復到目前分支的原狀
+$ git reset --hard  
+還原工作目錄到目前分支的版本, 即放棄已變更的檔案 並恢復到目前分支的版本. --hard 為 放棄工作目錄已變更的檔案.
 
-**** 常用流程:
-複製既有的遠端數據庫
+或
+$ git reset <commit id> --hard 
+還原工作目錄到 <commit id> 的版本. 放棄工作目錄已變更的檔案. <commit id> 只要輸入前4碼.
+
+
+**** 常用流程: 2021-03-17 複製既有的遠端數據庫
 
 先到網站上取得 <url>, 再到空白的目錄下執行:  
 $ git clone <url>
