@@ -1,5 +1,5 @@
 Form: hondachen@hotmail.com
-Date: 2021-03-17
+Date: 2021-03-26
 Subject: github memo.
 
 以文字檔提供 git hub 備忘說明.
@@ -152,7 +152,7 @@ Frequantly used git command reference:
 *$ git remote add <name> <uri>  | 增加遠端數據庫<uri>, 命名為<name>. 習慣上命名 origin 為遠端數據庫. upstream 為遠端Forked數據庫.   
  $ git remote prune origin           | 清理無效檔案. 例如 github 已經刪除, 但是本地仍存在的檔案.
  $ git remote prune origin --dry-run | 列出要修剪的無效檔案. 不執行修剪.
- $ git remote update | 更新所有分支的遠端資料.
+*$ git remote update | 更新所有分支的遠端參考. 若遠端有新的 commit, 則會提示 git pull 可取得最新遠端資料.
 *$ git reset         | 還原工作目錄到目前分支的版本. 保留工作目錄已變更的檔案. --mixed 為預設的模式可以省略.
  $ git reset HEAD    | HEAD 為預設. 同 git reset.
 *$ git reset --hard  | 還原工作目錄到目前分支的版本, 即放棄已變更的檔案 並恢復到目前分支的版本. --hard 為 放棄工作目錄已變更的檔案.
@@ -178,7 +178,7 @@ Frequantly used git command reference:
  $ git stash pop stash@{n}   | 取回(暫存的變更編號n), 到目前的分支上, 並刪除(暫存的變更編號n)
  $ git stash drop stash@{n}  | 刪除(暫存的變更編號n)
  $ git stash apply stash@{n} | 取用(暫存的變更編號n), 到目前的分支上, 並保留(暫存的變更編號n)
-*$ git status  | 檢查狀態. 若遠端有新的 commit, 則會提示需要 git pull.
+*$ git status  | 檢查狀態. 若遠端有新的 commit, 則會提示 git pull 可取得最新遠端資料.
 *$ git version | 取得版本資訊. 例如: git version 2.29.2.windows.2
  $ pwd         | 目前工作目錄
 
