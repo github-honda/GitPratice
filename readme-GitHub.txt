@@ -1,18 +1,16 @@
-Form: hondachen@hotmail.com
-Date: 2021-03-26
-Subject: github memo.
+From: 011netservice@gmail.com
+Date: 2022-05-02
+Subject: readme-GitHub.txt
 
-以文字檔提供 git hub 備忘說明.
+以指令操作 git, 較能了解 git 的運作細節.
 
-以指令操作 git, 才能徹底了解 git 的運作細節.
-
-原文網址: https://github.com/github-honda/GitPratice/blob/main/readme-GitHub.txt
+本文同時以 github 存放:
+https://github.com/github-honda/GitPratice/blob/main/readme-GitHub.txt
 
 歡迎來信交流.
 
 ----------
-2020-12-29
-基本概念及其他:
+2022-05-02, Summary
 
 Resources:
   https://github.com/
@@ -20,13 +18,13 @@ Resources:
   https://git-scm.com/docs
   https://git-scm.com/download/gui/windows  推薦工具清單
   https://sourcetreeapp.com/  網路上最常使用的工具.
-  https://git-scm.com/ 本文使用這個工具, 包含指令模式 git bash 工具 and Open source.
-    New: 
-	  V 2.29.2
-    Old:
-    git-gui version 0.21.GITGUI
-	git version 2.21.0.windows.1
-	Tcl/Tk version 8.6.9
+  https://git-scm.com/ 本文使用這個工具 git-gui, 包含指令模式 git bash 工具 and Open source. 
+    Git-2.36.0-64-bit.exe
+	  git-gui version 0.21.GITGUI
+	  git version 2.36.0.windows.1
+
+啟動執行方式:
+  檔案總管選擇目錄後, 按滑鼠右鍵, 選擇 Git Bash Here 或 Git GUI here.
 
 git 檔案的三種狀態:
   Modified:  已修改. 檔案已修改.
@@ -40,28 +38,10 @@ git 三個區域:
 
 HEAD 代表指向(目前的分支)的(commit 指標).
 
-~.ssh/id_rsa.pub 代表在  c:\使用者\[user]\.ssh\ 下. Private key 檔案為 id_rsa, Public key 檔案為 id_rsa.pub.
-
-Launch Git Bash or Git GUI: 
-  檔案總管選擇目錄後, 按滑鼠右鍵, 選擇 Git Bash Here/Git GUI here 可啟動 git bash, 以console 指令模式執行 git 操控.
-
-
-fast-forward merge 快速合併分支
-  若合併分支時沒有衝突, 則將檔案變更直接併入目前的分支.
-  否則為 non fast-forward merge.
-    若合併分支時產生衝突, 必須修改衝突的內容, 並建立(修改衝突內容後的)新的提交.
-
-
-中英對照:
-commit | 提交.
-fast-forward merge | 快速合併分支.
-  
 ----------
-2021-03-09
-Quick help:
-
-Frequantly used git command reference: 
+2022-05-02, Frequantly used git command reference: 
 *代表 常用
+
  $ git            | git usage help.
  $ git --version  | 檢視 git 版本
 *$ git add        | 將檔案加入(暫存區)管理. Add file contents to the index
@@ -95,6 +75,7 @@ Frequantly used git command reference:
  $ git branch --move <branch>  | 修改分支名稱及相關的 reflog. Move/rename a branch and the corresponding reflog.
 *$ git branch -r               | 查詢遠端分支.
 *$ git branch --set-upstream-to=<RemoteBranch> <LocalBranch> | 設定本地分支與遠端分支的關聯. 執行 git pull 或 git push 時可不需要指定遠端分支. 
+*$ git branch --set-upstream-to=origin/<branch> main         | 設定本地分支main與遠端分支origin/<branch>的關聯範例.
  $ git branch --unset-upstream [<branchname>]                | 取消本地分支與遠端分支的關聯
  $ git checkout                   | 還原(已 commit)的所有檔案. Switch branches or restore working tree files
 *$ git checkout <commitId> <file> | 還原(指定版本)的檔案.
@@ -103,17 +84,21 @@ Frequantly used git command reference:
  $ git clean -f | 還原工作目錄檔案 Untracked files. -f=--force Cleans the working tree by recursively removing files that are not under version control, starting from the current directory.
  $ git clean -n | 查詢將被 git clean -f 還原的清單 Untracked files. -n=--dry-run Cleans the working tree by recursively removing files that are not under version control, starting from the current directory.
 *$ git clone <url> | Clone a repository into a new directory
+*$ git clone https://github/com/git/git | 取得最新的 git 版本.
  $ git commit --amend --no-edit        | 將本次commit 併入最後一次 commit 中. --no-edit 代表不修改訊息.
 *$ git commit --amend -m "Description" | 修改最後一次提交的訊息.
+ $ git commit --signoff | Sign-off is requirement for getting patches into the Linux kernel, but mot projects don't actually use it.
 *$ git commit -a                       | 將變更存入本地資料庫, -a = All. 不包含未納入管理的檔案.
  $ git commit -a --alow-empty -m "Description" | 沒有任何檔案變更卻執行提交.
  $ git commit -a --alow-empty-message  | 將變更存入本地資料庫, -a = All, 備註文字為空白.
 *$ git commit -a -m "Description"      | 將變更存入本地資料庫, -a = All, -m 加入備註文字, 否則會要求輸入.
-*$ git config -l | 檢視設定清單.
+*$ git config -l | 檢視設定清單. 同 --list
 *$ git config --list | 檢視設定清單.
  $ git config --global gc.reflogExpire 'never'            | 修改 reflog 保存時間 (存在分支線上，預設 90 天改為無限)
  $ git config --global gc.reflogExpireUnreachable 'never' | 修改 reflog 保存時間 (不存在分支線上，預設 30 天改為無限)
 *$ git config --global init.defaultBranch main | 將預設(建立本地資料庫分支名稱)設為 main.
+ $ git config --global user.email "you@example.com"
+ $ git config --global user.name "Your Name"
  $ git diff <old commit id> <new commit id> | 查詢 commit 版本的差異.
  $ git fetch origin/master | 只更新一個分支的遠端資料. 例如 origin/master.
 *$ git help <command> | Help command.
@@ -123,6 +108,7 @@ Frequantly used git command reference:
  $ git init | 建立本地 Repository. 目前目錄中會建立 .git 子目錄. 舊版預設建立 master branch, 新版(2020-10-01起)響應黑人平權運動, 改為 main branch.
  $ git init --initial-branch=main | 同 git init -b main
 *$ git init -b main | 建立本地 Repository, branch=main. 目前目錄中會建立 .git 子目錄.
+*$ git init         | 建立本地 Repository, branch=main. 目前目錄中會建立 .git 子目錄.
  $ git log                   | 查詢 commit 紀錄. 不包含 HEAD 移動紀錄.
 *$ git log --oneline --graph | 查詢 commit 紀錄. 不包含 HEAD 移動紀錄.
  $ git log --oneline -n      | 查詢 commit 紀錄. n是最近提交的次數.
@@ -179,7 +165,7 @@ Frequantly used git command reference:
  $ git stash drop stash@{n}  | 刪除(暫存的變更編號n)
  $ git stash apply stash@{n} | 取用(暫存的變更編號n), 到目前的分支上, 並保留(暫存的變更編號n)
 *$ git status  | 檢查狀態. 若遠端有新的 commit, 則會提示 git pull 可取得最新遠端資料.
-*$ git version | 取得版本資訊. 例如: git version 2.29.2.windows.2
+*$ git version | 取得版本資訊. 例如: git version 2.31.1.windows.1
  $ pwd         | 目前工作目錄
 
 
@@ -213,6 +199,27 @@ This makes valid modes (as binary and octal):
 1000000111101101 (100755): Regular executable file
 1010000000000000 (120000): Symbolic link
 1110000000000000 (160000): Gitlink
+
+----------
+2021-09-14
+**** 常用流程: Unable to obtain your identity
+(更換電腦, 新安裝 Git Gui, 複製 Local repository 到新電腦使用)時.  
+
+ref:
+Picture\UnableToObtainYourIdentity.jpg
+
+Unable to obtain your identity:
+  Committer identity unknown
+  *** Please tell me who you are.
+  Run
+    git config --global user.email "you@example.com"
+	git config --global user.name "Your Name"
+  to set your account's default identity.
+  Omit --global to set the identity only in this repository.
+  
+  fatal: unable to auto-detect email address (got 'honda@GARDEN1.(none)')
+
+
 
 
 ----------
@@ -485,8 +492,27 @@ $ git pull origin main
             待確認 Git Gui 的正確操作為何? 使用指令 git pull 則會下載新資料, 也會跳到最新下載的分支上.
   20210309, 因為 git pull 比 fetch 多了 fast-forward merge 動作, 若合併分支時沒有衝突, 則將變更併入目前的分支. 
 
-**** 常用流程: 2020-12-27 上傳最新的修改
-2020-12-06
+----------
+2022-05-02, **** 常用流程: 上傳最新的修改
+
+以下2種方式都可使用:
+□ 使用指令: 檔案總管選擇目錄後按滑鼠右鍵.Git Bash Here.
+  ○ git status, 檢查檔案狀態. 
+    例如: 已變更 Changes not staged for commit, 未納管 Untracked files...等檔案.
+    △ git add <file>, 或 git add --all, 將未納管的檔案加入納管. 
+	  納管代表(commit 範圍內的檔案清單).
+	  
+  ○ git commit -a -m "備忘說明". 將已變更的檔案, 存入本地資料庫. 若沒輸入"備忘說明", 則執行後會要求輸入.
+  ○ git push, 上傳到遠端資料庫. 
+    △ 或是 git push origin main, 上傳(本地資料庫 main) 到 (遠端資料庫 origin).
+	  預設名稱通常為(本地資料庫 main), (遠端資料庫 origin)
+
+□ 畫面操作: 檔案總管選擇目錄後按滑鼠右鍵.Git GUI Here.
+
+□,○,△,▽,◇,☆,✓,✗,
+
+----------
+2020-12-27, **** 常用流程: 上傳最新的修改 及 相關指令.
 
 $ git status
 目前只有未納入管理的檔案.
@@ -606,7 +632,8 @@ Branch 'main' set up to track remote branch 'main' from 'origin'.
 到本地工作目錄中, 啟動 git Bash command console.
 
 2. 建立本地 repository 及 branch=main 
-$ git init -b main
+$ git init   ----> 新版(2020-10-01起)響應黑人平權運動, 預設已改為 main branch.
+$ git init -b main  ----> 舊版建議要指定建立本地 Branch = main.
 執行後目前工作目錄中會建立 .git 子目錄, 並且建立本地 branch=main.
 指令模式 git bash 可在檔案總管選擇目錄後, 按滑鼠右鍵選單中啟動.
   舊版預設會建立 master branch.
@@ -628,8 +655,100 @@ $ git remote add origin https://github.com/github-honda/gitpratice.git
 習慣上遠端的 branch 命名為 origin. 
 
 5. 下載最新更新資料.
+$ git pull origin/master main
 $ git pull origin main
+$ git pull
 將(遠端的 origin)下載到(本地的 main)
+
+6. **** 常見問題: (20210421, v 2.31.1.windows.1 才碰到)  本地branch建立為 main, 遠端 branch 為 master 且 not-for-merge
+操作過程如下, 最後以 git checkout master 將本地 main 切換到 master 解決.
+切換到 master 後, 再切回 main 則已有錯誤, 表示 main 沒有任何版本紀錄可切回.
+$ git init
+Initialized empty Git repository in E:/CodeHelper/cs/WebSocket/NinjaWebSocketsFork/.git/
+
+$ git remote add origin https://github.com/github-honda/Ninja.WebSockets.git
+
+$ git status
+On branch main
+
+No commits yet
+
+nothing to commit (create/copy files and use "git add" to track)
+
+$ git remote -v
+origin  https://github.com/github-honda/Ninja.WebSockets.git (fetch)
+origin  https://github.com/github-honda/Ninja.WebSockets.git (push)
+
+$ git pull
+remote: Enumerating objects: 349, done.
+remote: Counting objects: 100% (39/39), done.
+remote: Compressing objects: 100% (29/29), done.
+remote: Total 349 (delta 15), reused 25 (delta 9), pack-reused 310
+Receiving objects: 100% (349/349), 124.09 KiB | 1.48 MiB/s, done.
+Resolving deltas: 100% (206/206), done.
+From https://github.com/github-honda/Ninja.WebSockets
+ * [new branch]      master     -> origin/master
+ * [new branch]      pr/2       -> origin/pr/2
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/<branch> main
+
+
+$ git branch --set-upstream-to=origin/master main
+fatal: branch 'main' does not exist
+
+$ git branch --set-upstream-to=origin/master master
+fatal: branch 'master' does not exist
+
+$ git status
+On branch main
+
+No commits yet
+
+nothing to commit (create/copy files and use "git add" to track)
+
+$ git branch --set-upstream-to=origin/master master
+fatal: branch 'master' does not exist
+
+$ git branch --set-upstream-to=origin/master main
+fatal: branch 'main' does not exist
+
+$ git branch --set-upstream-to=origin/master main
+fatal: branch 'main' does not exist
+
+最後以 git checkout master 將本地 main 切換到 master 解決.
+$ git checkout master
+Switched to a new branch 'master'
+Branch 'master' set up to track remote branch 'master' from 'origin'.
+
+切換到 master 後, 再切回 main 則已有錯誤, 表示 main 沒有任何版本紀錄可切回.
+$ git checkout main
+error: pathspec 'main' did not match any file(s) known to git
+
+
+**** 常見問題:  預設Branch關聯未設定
+即未設定 (遠端 origin Branch master 到本地 branch main) 的預設 Pull/Push 關聯.
+$ git pull
+錯誤訊息:
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=master/<branch> main
+
+解決方法: 
+  git branch --set-upstream-to=origin/master main
+
 
 實例如下:
 $ git init -b main
@@ -768,7 +887,7 @@ $ git pull 執行 git pull 或 git push 時可不需要指定遠端分支.
 Already up to date.
 
 
-**** 常用流程: 2020-12-27 建立新的 Repository, 並將本地 repository 連接到遠端資料庫
+**** 常用流程: 2020-12-27 建立本地新的 Repository, 並將本地 repository 連接到遠端資料庫
 Steps:
 A. 建立本地Repository, 新增檔案.
 1. 視需求, 先建立根目錄基本控制檔案: 例如 Markdown README.md, .gitignore, .gitattributes. 每一個目錄可以放不同的控制檔案.
@@ -1971,4 +2090,24 @@ Commit Changes 確認變更:
     1. Commit All. (更新本機資料庫)
 	2. Commit All and Push. (更新遠端資料庫)
 	3. Commit All and Sync. (更新遠端資料庫 且 取得遠端資料庫的最新變更)
+	
+----------
+2022-05-02
+
+中英對照:
+commit | 提交.
+fast-forward merge | 快速合併分支.
+
+----------
+2022-05-02, todo 待整理
+
+~.ssh/id_rsa.pub 代表在  c:\使用者\[user]\.ssh\ 下. Private key 檔案為 id_rsa, Public key 檔案為 id_rsa.pub.
+
+fast-forward merge 快速合併分支
+  若合併分支時沒有衝突, 則將檔案變更直接併入目前的分支.
+  否則為 non fast-forward merge.
+    若合併分支時產生衝突, 必須修改衝突的內容, 並建立(修改衝突內容後的)新的提交.
+
+□,○,△,▽,◇,☆,✓,✗,
+
 
