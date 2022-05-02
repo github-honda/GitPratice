@@ -86,12 +86,12 @@ HEAD 代表指向(目前的分支)的(commit 指標).
 *$ git clone <url> | Clone a repository into a new directory
 *$ git clone https://github/com/git/git | 取得最新的 git 版本.
  $ git commit --amend --no-edit        | 將本次commit 併入最後一次 commit 中. --no-edit 代表不修改訊息.
-*$ git commit --amend -m "Description" | 修改最後一次提交的訊息.
- $ git commit --signoff | Sign-off is requirement for getting patches into the Linux kernel, but mot projects don't actually use it.
+*$ git commit --amend -m "Commit Message" | 修改最後一次提交的訊息.
+ $ git commit --signoff | Sign-off is requirement for getting patches into the Linux kernel, but most projects don't actually use it.
 *$ git commit -a                       | 將變更存入本地資料庫, -a = All. 不包含未納入管理的檔案.
- $ git commit -a --alow-empty -m "Description" | 沒有任何檔案變更卻執行提交.
+ $ git commit -a --alow-empty -m "Commit Message" | 沒有任何檔案變更卻執行提交.
  $ git commit -a --alow-empty-message  | 將變更存入本地資料庫, -a = All, 備註文字為空白.
-*$ git commit -a -m "Description"      | 將變更存入本地資料庫, -a = All, -m 加入備註文字, 否則會要求輸入.
+*$ git commit -a -m "Commit Message"      | 將變更存入本地資料庫, -a = All, -m 加入備註文字, 否則會要求輸入.
 *$ git config -l | 檢視設定清單. 同 --list
 *$ git config --list | 檢視設定清單.
  $ git config --global gc.reflogExpire 'never'            | 修改 reflog 保存時間 (存在分支線上，預設 90 天改為無限)
@@ -199,6 +199,15 @@ This makes valid modes (as binary and octal):
 1000000111101101 (100755): Regular executable file
 1010000000000000 (120000): Symbolic link
 1110000000000000 (160000): Gitlink
+
+----------
+2022-05-02, Sign-Off, 簽名
+
+Sign-off 用於 Linux kernel 的 patches, 大多數專案不常用.
+
+Sign-off is a requirement for getting patches into the Linux kernel and a few other projects, but most projects don't actually use it.
+
+It was introduced in the wake of the SCO lawsuit, (and other accusations of copyright infringement from SCO, most of which they never actually took to court), as a Developers Certificate of Origin. It is used to say that you certify that you have created the patch in question, or that you certify that to the best of your knowledge, it was created under an appropriate open-source license, or that it has been provided to you by someone else under those terms. This can help establish a chain of people who take responsibility for the copyright status of the code in question, to help ensure that copyrighted code not released under an appropriate free software (open source) license is not included in the kernel.
 
 ----------
 2021-09-14
@@ -495,22 +504,31 @@ $ git pull origin main
 ----------
 2022-05-02, **** 常用流程: 上傳最新的修改
 
-以下2種方式都可使用:
+以下2種方式都可使用, 建議畫面操作方式最簡單:
 □ 使用指令: 檔案總管選擇目錄後按滑鼠右鍵.Git Bash Here.
   ○ git status, 檢查檔案狀態. 
-    例如: 已變更 Changes not staged for commit, 未納管 Untracked files...等檔案.
+    例如: 已變更檔案 Changes not staged for commit, 未納管檔案 Untracked files...等.
     △ git add <file>, 或 git add --all, 將未納管的檔案加入納管. 
 	  納管代表(commit 範圍內的檔案清單).
 	  
-  ○ git commit -a -m "備忘說明". 將已變更的檔案, 存入本地資料庫. 若沒輸入"備忘說明", 則執行後會要求輸入.
-  ○ git push, 上傳到遠端資料庫. 
+  ○ git commit -a -m "Commit Message". 將已變更的檔案, 存入本地資料庫. 若沒有輸入 Commit Message, 則會要求輸入
+  ○ git push, 將(本地資料庫)上傳到(遠端資料庫). 
     △ 或是 git push origin main, 上傳(本地資料庫 main) 到 (遠端資料庫 origin).
-	  預設名稱通常為(本地資料庫 main), (遠端資料庫 origin)
+	  (資料庫Repository)預設名稱, 習慣為(本地資料庫 main), (遠端資料庫 origin). 舊版的遠端資料庫為 master.
 
 □ 畫面操作: 檔案總管選擇目錄後按滑鼠右鍵.Git GUI Here.
-
-□,○,△,▽,◇,☆,✓,✗,
-
+  操作最簡單, 用久了會忘記指令該怎麼敲.
+  ○ 啟動畫面後顯示
+   上面(已變更檔案清單 Unstaged Changes), 及
+   下面(已存入本地資料庫檔案清單(Staged Changes(Will Commit)).
+   右上(Portions staged for commit)為選擇(Unstaged Changes檔案)內容變更明細.
+    △ 按鍵 Rescan: 重新查詢最新檔案狀態. 若檔案有變更, 就隨時給他來按一下看看最新的狀態.
+    △ 按鍵 Stage Changed: 將上面(已變更檔案清單 Unstaged Changes), 存入下面(已存入本地資料庫檔案清單(Staged Changes(Will Commit)).
+    △ 按鍵 Sign Off: 不常用. Sign-off is requirement for getting patches into the Linux kernel, but most projects don't actually use it.
+    △ 按鍵 Commit: 將下面(已存入本地資料庫檔案清單(Staged Changes(Will Commit)), 存入本地資料庫.
+	               若沒有輸入 Commit Message, 則會要求輸入.
+    △ 按鍵 Push: 將將(本地資料庫)上傳到(遠端資料庫).
+	
 ----------
 2020-12-27, **** 常用流程: 上傳最新的修改 及 相關指令.
 
@@ -796,7 +814,7 @@ $ git status
 $ git add <file>...               to update what will be commited.
 $ git add [subdir]/               新增子目錄.
 $ git commit -a                   commit 所有最新變更的檔案, 並使用 vi 介面工具填寫變更說明. (-a = All) 
-$ git commit -a -m "Description"  commit 所有最新變更的檔案, 並使用 -m 參數填寫變更說明. (-a = All) 
+$ git commit -a -m "Commit Message"  commit 所有最新變更的檔案, 並使用 -m 參數填寫變更說明. (-a = All) 
 $ git push                        更新到遠端資料庫.
 建議用 Git GUI 比較快.
 
@@ -1372,7 +1390,7 @@ git add .
   將該目錄及其子目錄下所有異動放入暫存區、
   git add --all 將整個 Git 版控範圍異動放入暫存區
 
-git commit -m "Commit 說明" 
+git commit -m "Commit Message" 
   將暫存區異動提交到儲存庫
 
 git log --oneline --graph 
@@ -1605,15 +1623,15 @@ $ git add .
 若需將( add 檔案之後, 又修改的檔案)更新加入到 staged版本, 則重新執行 git add 即可.
 
 將(Staging Area 中檔案)存入本地資料庫
-$ git commit -m "Description"
+$ git commit -m "Commit Message"
 必須提供說明本次commit 的訊息, 才能 commit.
 若沒有提供訊息, 則會啟動 Vim 編輯器, 要求輸入.
 
 若沒有檔案變更也要 commit的話:
-$ git commit --alow-empty -m "Description"
+$ git commit --alow-empty -m "Commit Message"
 
 同時執行2個指令: add 跟 commit.
-$ git commit -a -m "Description"
+$ git commit -a -m "Commit Message"
   只對已經存在 repository的檔案有效.
   新加入的檔案(Untracked file)無效.  
 
