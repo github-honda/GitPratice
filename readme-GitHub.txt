@@ -1,16 +1,13 @@
 From: 011netservice@gmail.com
-Date: 2022-05-02
+Date: 2022-07-08
 Subject: readme-GitHub.txt
+
+歡迎來信交流, 訂購軟體需求.
 
 以指令操作 git, 較能了解 git 的運作細節.
 
 本文同時以 github 存放:
 https://github.com/github-honda/GitPratice/blob/main/readme-GitHub.txt
-
-歡迎來信交流.
-
-----------
-2022-05-02, Summary
 
 Resources:
   https://github.com/
@@ -38,8 +35,10 @@ git 三個區域:
 
 HEAD 代表指向(目前的分支)的(commit 指標).
 
-----------
-2022-05-02, Frequantly used git command reference: 
+以下 #### 標記段落, **** 標記常用流程.
+
+
+---------- 2022-05-02 #### Frequantly used git command reference: 
 *代表 常用
 
  $ git            | git usage help.
@@ -200,8 +199,7 @@ This makes valid modes (as binary and octal):
 1010000000000000 (120000): Symbolic link
 1110000000000000 (160000): Gitlink
 
-----------
-2022-05-02, Sign-Off, 簽名
+---------- 2022-05-02 #### Sign-Off, 簽名
 
 Sign-off 用於 Linux kernel 的 patches, 大多數專案不常用.
 
@@ -209,8 +207,7 @@ Sign-off is a requirement for getting patches into the Linux kernel and a few ot
 
 It was introduced in the wake of the SCO lawsuit, (and other accusations of copyright infringement from SCO, most of which they never actually took to court), as a Developers Certificate of Origin. It is used to say that you certify that you have created the patch in question, or that you certify that to the best of your knowledge, it was created under an appropriate open-source license, or that it has been provided to you by someone else under those terms. This can help establish a chain of people who take responsibility for the copyright status of the code in question, to help ensure that copyrighted code not released under an appropriate free software (open source) license is not included in the kernel.
 
-----------
-2021-09-14
+---------- 2021-09-14 #### 常用流程
 **** 常用流程: Unable to obtain your identity
 (更換電腦, 新安裝 Git Gui, 複製 Local repository 到新電腦使用)時.  
 
@@ -231,8 +228,7 @@ Unable to obtain your identity:
 
 
 
-----------
-2020-12-06
+---------- 2020-12-06 #### Syntax
 git-add - Add file contents to the index
 git add [--verbose | -v] [--dry-run | -n] [--force | -f] [--interactive | -i] [--patch | -p]
 	  [--edit | -e] [--[no-]all | --[no-]ignore-removal | [--update | -u]]
@@ -357,8 +353,7 @@ git stash create [<message>]
 git stash store [-m|--message <message>] [-q|--quiet] <commit>
 
 
-----------
-ToDo:
+---------- #### ToDo
 
 https://stackoverflow.com/questions/58003030/what-is-the-git-restore-command-and-what-is-the-difference-between-git-restor
 
@@ -391,7 +386,7 @@ or you can restore both the index and the working tree (this the same as using g
 or the short form which is more practical but less readable:
   git restore -s@ -SW hello.c
 
-----------
+---------- #### 常用流程 
 **** 常用流程: 2021-03-17 恢復到目前分支的原狀
 $ git reset --hard  
 還原工作目錄到目前分支的版本, 即放棄已變更的檔案 並恢復到目前分支的版本. --hard 為 放棄工作目錄已變更的檔案.
@@ -501,7 +496,7 @@ $ git pull origin main
             待確認 Git Gui 的正確操作為何? 使用指令 git pull 則會下載新資料, 也會跳到最新下載的分支上.
   20210309, 因為 git pull 比 fetch 多了 fast-forward merge 動作, 若合併分支時沒有衝突, 則將變更併入目前的分支. 
 
-----------
+---------- 2022-05-02 #### 常用流程 
 2022-05-02, **** 常用流程: 上傳最新的修改
 
 以下2種方式都可使用, 建議畫面操作方式最簡單:
@@ -529,7 +524,7 @@ $ git pull origin main
 	               若沒有輸入 Commit Message, 則會要求輸入.
     △ 按鍵 Push: 將將(本地資料庫)上傳到(遠端資料庫).
 	
-----------
+---------- 2020-12-27 #### 常用流程
 2020-12-27, **** 常用流程: 上傳最新的修改 及 相關指令.
 
 $ git status
@@ -950,10 +945,7 @@ You can initialize this repository with code from a Subversion, Mercurial, or TF
 
 
 
-----------
-2021-01-15
-
-遠端操作:
+---------- 2021-01-15 #### 遠端操作:
 
 複製既有的遠端數據庫
 $ git clone <url>
@@ -1020,14 +1012,7 @@ $ git remote rename <old> <new>
 將遠端數據庫的名稱從 <old> 改為 <new> 。
 
 
-
-----------------------------------------------------------------------------------------------------
-------------------------
-以下參考, 確認後移到上面
-------------------------
-
-----------
-2020-11-28
+---------- 2020-11-28 #### 以下參考舊資料, 確認後移到上面
 
 
 更新
