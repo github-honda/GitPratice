@@ -1,5 +1,5 @@
 From: 011netservice@gmail.com
-Date: 2022-07-08
+Date: 2022-10-09
 Subject: readme-GitHub.txt
 
 歡迎來信交流, 訂購軟體需求.
@@ -19,6 +19,10 @@ Resources:
     Git-2.36.0-64-bit.exe
 	  git-gui version 0.21.GITGUI
 	  git version 2.36.0.windows.1
+	指令更新版本: 
+	  winget install --id Git.Git -e --source winget
+	    2.37.2
+	  
 
 啟動執行方式:
   檔案總管選擇目錄後, 按滑鼠右鍵, 選擇 Git Bash Here 或 Git GUI here.
@@ -35,8 +39,11 @@ git 三個區域:
 
 HEAD 代表指向(目前的分支)的(commit 指標).
 
-以下 #### 標記段落, **** 標記常用流程.
+以下 
+#### 標記段落, 
+**** 標記常用(流程、設定、備忘)
 
+□,○,△,▽,◇,☆,
 
 ---------- 2022-05-02 #### Frequantly used git command reference: 
 *代表 常用
@@ -207,25 +214,6 @@ Sign-off is a requirement for getting patches into the Linux kernel and a few ot
 
 It was introduced in the wake of the SCO lawsuit, (and other accusations of copyright infringement from SCO, most of which they never actually took to court), as a Developers Certificate of Origin. It is used to say that you certify that you have created the patch in question, or that you certify that to the best of your knowledge, it was created under an appropriate open-source license, or that it has been provided to you by someone else under those terms. This can help establish a chain of people who take responsibility for the copyright status of the code in question, to help ensure that copyrighted code not released under an appropriate free software (open source) license is not included in the kernel.
 
----------- 2021-09-14 #### 常用流程
-**** 常用流程: Unable to obtain your identity
-(更換電腦, 新安裝 Git Gui, 複製 Local repository 到新電腦使用)時.  
-
-ref:
-Picture\UnableToObtainYourIdentity.jpg
-
-Unable to obtain your identity:
-  Committer identity unknown
-  *** Please tell me who you are.
-  Run
-    git config --global user.email "you@example.com"
-	git config --global user.name "Your Name"
-  to set your account's default identity.
-  Omit --global to set the identity only in this repository.
-  
-  fatal: unable to auto-detect email address (got 'honda@GARDEN1.(none)')
-
-
 
 
 ---------- 2020-12-06 #### Syntax
@@ -385,8 +373,98 @@ or you can restore both the index and the working tree (this the same as using g
 
 or the short form which is more practical but less readable:
   git restore -s@ -SW hello.c
+  
+  
 
----------- #### 常用流程 
+---------- #### 常用(流程、設定、備忘)段落 
+**** 常用設定: 2022-10-09 設定 Git Gui Client Encoding UTF-8 on Windows  
+ref: https://support.huaweicloud.com/intl/en-us/usermanual-codehub/devcloud_hlp_0954.html
+UTF-8 is the default encoding on Linux and code hosting websites, but not on Windows. Therefore, Chinese characters may become garbled on the Git client on Windows. Set the encoding to UTF-8 to address this problem.
+UTF-8 是 Linux 和代碼託管網站上的默認編碼，但在 Windows 上不是。 因此，在 Windows 的 Git 客戶端上，漢字可能會出現亂碼。 將編碼設置為 UTF-8 以解決此問題。
+
+以指令設定的方式:
+$ git config --global core.quotepath false # encoding of status output 
+$ git config --global gui.encoding utf-8 # GUI encoding
+$ git config --global i18n.commit.encoding utf-8 # encoding of commit messages
+$ git config --global i18n.logoutputencoding utf-8 # encoding of log outputs
+$ export LESSCHARSET=utf-8 # Git uses the less pager by default. This command is to convert the encoding of less commands to UTF-8.
+
+以操作方式同上設定:
+注意這兩個檔案(etc\gitconfig, /etc/profile) 都在 Git 安裝目錄下. 
+Alternately, you can perform the following operations to convert the encoding:
+Add the following lines to etc\gitconfig:
+[core]    quotepath = false 
+[gui]    encoding = utf-8 
+[i18n]    commitencoding = utf-8 
+          logoutputencoding = utf-8
+
+Add the following line to /etc/profile:
+export LESSCHARSET=utf-8
+
+以下說明相關設定參數:
+NOTE:
+gui.encoding = utf-8
+It addresses the garbled characters in Git GUI and Gitk. If comments in the code contain garbled characters, add [gui] encoding = utf-8 to git/config in the root directory of the project.
+
+i18n.commitencoding = utf-8
+It converts commit log messages to the UTF-8 format to avoid garbled characters on the server.
+
+i18n.logoutputencoding = utf-8
+It converts git logs to the UTF-8 format.
+
+export LESSCHARSET=utf-8 , together with i18n.logoutputencoding, ensures that Chinese characters are properly displayed in git logs.
+
+Add the following line to etc\git-completion.bash so that Chinese names can be properly displayed:
+alias ls="ls --show-control-chars --color
+
+**** 常用設定: 2022-10-09 設定 Repository language.
+    可於(repository).gitattributes 設定如下
+	  * linguist-language=C# 
+	  指定整個(repository)為 C#, 確認OK! 參考檔案: SampleLinguist.gitattributes
+
+**** 常用流程: 2022-08-27 建立本地目錄 (多個專案 Visual Studio 2022).
+
+□ 建立遠端 Repository
+  ○ 在 github 網站上, 登入帳號後, 選擇右上方的 New repository 按下
+  ○ 在 Create a new repository 的網頁中, 填寫:
+    △ Repository name: VS2022Pratice
+    △ Public 或 Private repository: Public, 完全公開
+    △ .gitignore template: 選擇 VisualStudio
+    △ License: 選擇 Unlicense, 無版權聲明.
+  ○ 按下 Create Repository 按鍵, 完成建立 Repository.
+
+□ 取得 (Repository web URL)
+  ○ 在 github 網站上選擇 Repository後,  按下畫面上(Code)按鍵, 可取得(Repository web URL).
+    例如: https://github.com/github-honda/VS2022Pratice.git
+
+□ 複製遠端 Repository 到本地目錄
+  ○ 以檔案總管選擇一個目錄, 例如: CodeHelper\cs\vs2022\Pratice\, 按滑鼠右鍵選單, 選擇 Git Bash Here.
+  ○ 指令 git clone <url> 可複製遠端 Repository 到本地目錄
+    git clone https://github.com/github-honda/VS2022Pratice.git
+
+  完成後, 在本地目錄中, 變更任何檔案(包括 Visual Studio 建立的專案檔案), 已可由 git 版本控制.
+
+**** 常用流程: Unable to obtain your identity
+(更換電腦, 新安裝 Git Gui, 複製 Local repository 到新電腦使用)時.  
+
+ref:
+Picture\UnableToObtainYourIdentity.jpg
+
+Unable to obtain your identity:
+  Committer identity unknown
+  *** Please tell me who you are.
+  Run
+    git config --global user.email "you@example.com"
+	git config --global user.name "Your Name"
+  to set your account's default identity.
+  Omit --global to set the identity only in this repository.
+  
+  fatal: unable to auto-detect email address (got 'honda@GARDEN1.(none)')
+
+
+
+
+
 **** 常用流程: 2021-03-17 恢復到目前分支的原狀
 $ git reset --hard  
 還原工作目錄到目前分支的版本, 即放棄已變更的檔案 並恢復到目前分支的版本. --hard 為 放棄工作目錄已變更的檔案.
@@ -496,7 +574,6 @@ $ git pull origin main
             待確認 Git Gui 的正確操作為何? 使用指令 git pull 則會下載新資料, 也會跳到最新下載的分支上.
   20210309, 因為 git pull 比 fetch 多了 fast-forward merge 動作, 若合併分支時沒有衝突, 則將變更併入目前的分支. 
 
----------- 2022-05-02 #### 常用流程 
 2022-05-02, **** 常用流程: 上傳最新的修改
 
 以下2種方式都可使用, 建議畫面操作方式最簡單:
@@ -524,7 +601,6 @@ $ git pull origin main
 	               若沒有輸入 Commit Message, 則會要求輸入.
     △ 按鍵 Push: 將將(本地資料庫)上傳到(遠端資料庫).
 	
----------- 2020-12-27 #### 常用流程
 2020-12-27, **** 常用流程: 上傳最新的修改 及 相關指令.
 
 $ git status
@@ -637,8 +713,7 @@ To https://github.com/github-honda/gitpratice.git
 Branch 'main' set up to track remote branch 'main' from 'origin'.
 
 
-**** 常用流程: 2021-03-03 建立本地目錄, 連接到遠端 repository, 下載最新更新資料.
-2020-12-06
+**** 常用流程: 2022-08-27 建立本地目錄, 連接到遠端 repository, 下載最新更新資料.
 
 1. 建立本地工作目錄
 例如: E:\CodeHelper\GitHub\GitPratice
@@ -1773,14 +1848,6 @@ Further reading
 "Setting guidelines for repository contributors"
 
 
-
-----------
-2020-04-07
-
-## 變更 repository 的 language
-    可於.gitattributes 設定
-	  * linguist-language=C# 
-	指定整個 repository 為 C#, 確認OK! 參考檔案: SampleLinguist.gitattributes
 
 ----------
 20190802
