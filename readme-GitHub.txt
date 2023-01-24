@@ -1,13 +1,12 @@
 From: 011netservice@gmail.com
-Date: 2022-10-09
-Subject: readme-GitHub.txt
+Date: 2023-01-24
+Subject: git, github 備忘
+File: https://github.com/github-honda/GitPratice/blob/main/readme-GitHub.txt
+CodeHelper\GitHub\readme-GitHub.txt
 
 歡迎來信交流, 訂購軟體需求.
 
 以指令操作 git, 較能了解 git 的運作細節.
-
-本文同時以 github 存放:
-https://github.com/github-honda/GitPratice/blob/main/readme-GitHub.txt
 
 Resources:
   https://github.com/
@@ -16,13 +15,11 @@ Resources:
   https://git-scm.com/download/gui/windows  推薦工具清單
   https://sourcetreeapp.com/  網路上最常使用的工具.
   https://git-scm.com/ 本文使用這個工具 git-gui, 包含指令模式 git bash 工具 and Open source. 
-    Git-2.36.0-64-bit.exe
-	  git-gui version 0.21.GITGUI
-	  git version 2.36.0.windows.1
-	指令更新版本: 
-	  winget install --id Git.Git -e --source winget
-	    2.37.2
-	  
+	版本更新指令: 
+	  winget install --id Git.Git -e --source winget, 更新 git-gui, git bash 工具
+    $ git --version
+      git version 2.39.0.windows.1, 2022-12-14
+      git version 2.36.0.windows.1
 
 啟動執行方式:
   檔案總管選擇目錄後, 按滑鼠右鍵, 選擇 Git Bash Here 或 Git GUI here.
@@ -39,24 +36,22 @@ git 三個區域:
 
 HEAD 代表指向(目前的分支)的(commit 指標).
 
-以下 
-#### 標記段落, 
-**** 標記常用(流程、設定、備忘)
+以下 #### 標記段落, **** 標記常用(流程、設定、備忘)
 
-□,○,△,▽,◇,☆,
-
----------- 2022-05-02 #### Frequantly used git command reference: 
+#### 2023-01-24 git command reference: 
 *代表 常用
+CLI (Command-Line Interface) 指令下載及使用方式, 可參考 https://cli.github.com/ 
 
  $ git            | git usage help.
- $ git --version  | 檢視 git 版本
+*$ git --version  | 檢視 git 版本
 *$ git add        | 將檔案加入(暫存區)管理. Add file contents to the index
  $ git add -A     | 同 git add --all
 *$ git add --all  | 將檔案及路徑加入(暫存區)管理. Update the index not only where the working tree has a file matching <pathspec> but also where the index already has an entry. This adds, modifies, and removes index entries to match the working tree.
  $ git add --no-ignore-removal | 同 git add --all
 *$ git add <file> | 將<file>加入(暫存區)管理.
 *$ git add *.html | 將所有的.html檔案加入(暫存區)管理. 
-*$ git add .      | 將目前的工作目錄加入(暫存區)管理. 空目錄是無法被提交的. 空目錄習慣上可以放一個.keep 或 .gitkeep 檔案後進行提交.
+*$ git add .      | 將資料夾中所有檔案加入(暫存區)管理. 不包含空目錄. 空目錄習慣上可以放一個.keep 或 .gitkeep 檔案後進行提交.
+*$ git add . && git commit -m "Message" | 將資料夾中所有新檔案, 加入本地資料庫後, 再 Commit 目前所有的變更.
 *$ git add <path> | 將<path>加入(暫存區)管理. 空目錄是無法被提交的. 空目錄習慣上可以放一個.keep 或 .gitkeep 檔案後進行提交.
 *$ git add -f <file> | 將<file>加入(暫存區)管理. -f為忽略 .gitignore 設定.
 *$ git add -f <path> | 將<path>加入(暫存區)管理. -f為忽略 .gitignore 設定.
@@ -70,8 +65,8 @@ HEAD 代表指向(目前的分支)的(commit 指標).
  $ git blame -L 40,+21 <file>  | 查詢(<file> 第40列到60列)的修改.
  $ git blame -L 40,60 <file>   | 查詢(<file> 第40列到60列)的修改.
  $ git blame -L 5,10 <file>    | 查詢(<file> 第5   到10列)的修改.
-*$ git branch                  | 查詢本地分支. 標示為 * 的就是目前的分支.
- $ git branch <branch>         | 建立分支. 
+*$ git branch                  | 查詢本地分支. 標示為綠色*就是目前的分支.
+*$ git branch <branch>         | 建立分支. 
  $ git branch -d <branch>      | 刪除分支. 
  $ git branch -f <branch>      | Shortcut for --force. 
  $ git branch --force <branch> | 強制建立分支 Reset <branch> to <startpoint>, even if <branch> exists already.
@@ -82,22 +77,26 @@ HEAD 代表指向(目前的分支)的(commit 指標).
 *$ git branch -r               | 查詢遠端分支.
 *$ git branch --set-upstream-to=<RemoteBranch> <LocalBranch> | 設定本地分支與遠端分支的關聯. 執行 git pull 或 git push 時可不需要指定遠端分支. 
 *$ git branch --set-upstream-to=origin/<branch> main         | 設定本地分支main與遠端分支origin/<branch>的關聯範例.
+ $ git branch --show-current | 查詢目前本地分支, 建議使用 git branch 就好.
  $ git branch --unset-upstream [<branchname>]                | 取消本地分支與遠端分支的關聯
- $ git checkout                   | 還原(已 commit)的所有檔案. Switch branches or restore working tree files
+*$ git branch -vv | 檢視 upstream 設定, -vv = doubly verbose. 輸出綠色*代表本地分支, 藍色代表遠端分支. 範例: * master 28b359c1 [origin/master] CodeHelper memo. 以上綠色為(* master), 藍色為 origin/master.
+ $ git checkout                   | 還原目前本地分支所有(已 commit)的檔案. Switch branches or restore working tree files
 *$ git checkout <commitId> <file> | 還原(指定版本)的檔案.
-*$ git checkout <branchname>      | 切換到分支. Switch to a branch.
+*$ git checkout <branch>      | 切換到分支. Switch to a branch. 若分支不存在, 則錯誤訊息.
+*$ git checkout -b <newBranch>      | 切換到新分支, 若新分支不存在, 則建立新分支.
  $ git checkout <file>            | 還原(已 commit)的檔案.
  $ git clean -f | 還原工作目錄檔案 Untracked files. -f=--force Cleans the working tree by recursively removing files that are not under version control, starting from the current directory.
  $ git clean -n | 查詢將被 git clean -f 還原的清單 Untracked files. -n=--dry-run Cleans the working tree by recursively removing files that are not under version control, starting from the current directory.
-*$ git clone <url> | Clone a repository into a new directory
-*$ git clone https://github/com/git/git | 取得最新的 git 版本.
+*$ git clone <url> | 複製遠端資料庫到新子目錄(專案名稱)中. GitPratice. Clone a repository into a new directory
+*$ git clone https://github/com/git/git | 下載更新 git 軟體為最新版本, 若需要一併更新 git-gui, git bash 工具, 則應使用 winget install 指令. 
  $ git commit --amend --no-edit        | 將本次commit 併入最後一次 commit 中. --no-edit 代表不修改訊息.
-*$ git commit --amend -m "Commit Message" | 修改最後一次提交的訊息.
+*$ git commit --amend -m "Message" | 修改最後一次提交的訊息.
  $ git commit --signoff | Sign-off is requirement for getting patches into the Linux kernel, but most projects don't actually use it.
 *$ git commit -a                       | 將變更存入本地資料庫, -a = All. 不包含未納入管理的檔案.
  $ git commit -a --alow-empty -m "Commit Message" | 沒有任何檔案變更卻執行提交.
  $ git commit -a --alow-empty-message  | 將變更存入本地資料庫, -a = All, 備註文字為空白.
-*$ git commit -a -m "Commit Message"      | 將變更存入本地資料庫, -a = All, -m 加入備註文字, 否則會要求輸入.
+*$ git commit -a -m "Message"      | 將變更存入本地資料庫, -a = All, -m 加入備註文字, 否則會要求輸入.
+*$ git commit -m "Message" | Commit 目前變更進本地資料庫.
 *$ git config -l | 檢視設定清單. 同 --list
 *$ git config --list | 檢視設定清單.
  $ git config --global gc.reflogExpire 'never'            | 修改 reflog 保存時間 (存在分支線上，預設 90 天改為無限)
@@ -106,50 +105,50 @@ HEAD 代表指向(目前的分支)的(commit 指標).
  $ git config --global user.email "you@example.com"
  $ git config --global user.name "Your Name"
  $ git diff <old commit id> <new commit id> | 查詢 commit 版本的差異.
- $ git fetch origin/master | 只更新一個分支的遠端資料. 例如 origin/master.
+*$ git fetch origin/master | 下載指定的分支, 但是不會 merge
 *$ git help <command> | Help command.
  $ git help <concept> | Help concept. 例如: attributes, cli, core-tutorial...可從 git help -g 取得 concept 清單ㄡ
  $ git help -a        | Help available subcommands.
  $ git help -g        | Help concept guides. 
- $ git init | 建立本地 Repository. 目前目錄中會建立 .git 子目錄. 舊版預設建立 master branch, 新版(2020-10-01起)響應黑人平權運動, 改為 main branch.
  $ git init --initial-branch=main | 同 git init -b main
-*$ git init -b main | 建立本地 Repository, branch=main. 目前目錄中會建立 .git 子目錄.
-*$ git init         | 建立本地 Repository, branch=main. 目前目錄中會建立 .git 子目錄.
+*$ git init -b main | 建立本地資料庫, branch=main. 舊版預設建立 master branch, 新版Git 2.28.0(2020-10-01起)響應黑人平權運動, 將 master 改為 main. 
+*$ git init         | 建立本地資料庫及預設branch=main. 
  $ git log                   | 查詢 commit 紀錄. 不包含 HEAD 移動紀錄.
 *$ git log --oneline --graph | 查詢 commit 紀錄. 不包含 HEAD 移動紀錄.
  $ git log --oneline -n      | 查詢 commit 紀錄. n是最近提交的次數.
  $ git log --stat --summary  | 查詢 commit 紀錄. 狀態摘要明細.
 *$ git log <file>  | 查詢(檔案 commit 紀錄). 建議使用 GitGui 比較容易檢視, 只要在log清單畫面上選擇檔案HighLight.
 *$ git ls-files -s | 檔案清單, 包括GitMode, commit紀錄.
-*$ git merge <branch> | 合併分支. 快轉合併 fast-forward 將 <banch>分支併入目前的分支.
+*$ git merge <branch> | 將<branch>合併入目前分支. 快轉合併 fast-forward 將 <banch>分支併入目前的分支.
+*$ git merge <branch> --allow-unrelated-histories | 將<branch>合併入目前分支. 允許合併沒有共同祖先的分支. 
  $ git mv <file1> <file2> | 變更檔案名稱並將變更移到 Staging Area. 等於先( $ mv <file1> <file2>), 再 $ git add -A).
  $ git prune [-n] [-v] [--progress] [--expire <time>] [--] [<head>…​] | 清理沒用的物件. 
  $ git prune | 清理沒用的物件. 例如: $ git prune $(cd ../another && git rev-parse --all) , To prune objects not used by your repository or another that borrows from your repository via its ".git/objects/info/alternates"
-*$ git pull | 下載遠端資料庫且合併分支. git pull = fetch + merge 
-*$ git pull <RemoteBranch> <LocalBranch> | 下載<RemoteBranch>到<LocalBranch>. 
-*$ git pull origin master   | 下載 遠端 origin   到 本地的 master. 
-*$ git pull upstream master | 下載 遠端 upstream 到 本地的 master. 
-*$ git push    | 推送(本地變更)到(預設的遠端資料庫upstream). 
-*$ git push -f | 強制推送(本地變更)到(預設的遠端資料庫upstream).
-*$ git push <RemoteBranch> <LocalBranch> | 推送 <LocalBranch> 到 <RemoteBranch>. 
-*$ git push origin master                | 推送(本地 master 變更)到(遠端資料庫 origin).
- $ git push origin master:master                | (等於以上的指令, 預設遠端分支名稱與本地分支名稱相同)
- $ git push origin master:NewBranchNameInRemote | (將本地的 master 推上去後, 建立或更新遠端的 NewBranchNameInRemote 進度)
-*$ git push --set-upstream origin main          | 設定(預設的遠端資料庫upstream). (設定本地main對應到遠端origin). 若未設定過(預設的遠端資料庫upstream), 則 push 或 pull 時, 都必須指定本地資料庫名稱與遠端資料庫upstream名稱.
-*$ git push -u origin master                    | 同時執行 push 及設定(預設的遠端資料庫upstream).
+*$ git pull | 下載(預設遠端分支)到本地資料庫, 同時合併分支, git pull = fetch + merge. 
+*$ git pull <RemoteBranch> <LocalBranch> | 下載(遠端分支<RemoteBranch>)到本地資料庫<LocalBranch>, 同時合併分支, git pull = fetch + merge. 例如: $ git pull origin master
+*$ git push    | 上傳本地資料庫到預設的遠端資料庫. 預設遠端資料庫設定請參考 git branch --set-upstream-to
+*$ git push -f | 強制上傳(本地資料庫)到(預設的遠端資料庫).
+*$ git push <RemoteBranch> <LocalBranch> | 上傳本地資料庫LocalBranch到遠端資料庫RemoteBranch. 
+*$ git push origin master                | 上傳本地資料庫master到遠端資料庫origin.
+ $ git push origin master:master                | 上傳本地資料庫master:master到遠端資料庫origin. 預設遠端分支名稱與本地資料庫名稱相同.
+ $ git push origin master:NewBranchNameInRemote | 上傳本地分支NewBranchNameInRemote到遠端資料庫origin. 同時建立或更新遠端的 NewBranchNameInRemote.
+*$ git push --set-upstream origin main          | 上傳本地資料庫到預設的遠端資料庫. 同時指定預設遠端資料庫設定.
+*$ git push -u origin master                    | 同 git push --set-upstream origin main, (-u 是 --set-upstream 的簡寫).
+*$ git rebase <branch> | 將目前分支改以 <branch> 為準. 這個好用!
 *$ git reflog            | 查詢 commit 紀錄. 包含 HEAD 移動紀錄. 例如 切換分支或還原版本). 預設保存90天的歷史紀錄, 不在分支線上的 commit, 則保存30天.
  $ git reflog --date=iso | 查詢 commit 紀錄.
-*$ git remote                   | 查詢遠端分支名稱. 
-*$ git remote -v                | 查詢遠端分支明細, 包括(fetch 及 push)的遠端 .git 檔案位址. 
-*$ git remote add <name> <uri>  | 增加遠端數據庫<uri>, 命名為<name>. 習慣上命名 origin 為遠端數據庫. upstream 為遠端Forked數據庫.   
+*$ git remote                   | 查詢遠端分支清單. 
+*$ git remote -v                | 查詢遠端分支清單, 內容包含(fetch 及 push)的遠端 .git 網址<uri>. 
+*$ git remote add <name> <uri>  | 增加遠端分支<uri>. 習慣上命名 origin 為遠端數據庫. upstream 為遠端Forked數據庫.   
  $ git remote prune origin           | 清理無效檔案. 例如 github 已經刪除, 但是本地仍存在的檔案.
  $ git remote prune origin --dry-run | 列出要修剪的無效檔案. 不執行修剪.
-*$ git remote update | 更新所有分支的遠端參考. 若遠端有新的 commit, 則會提示 git pull 可取得最新遠端資料.
-*$ git reset         | 還原工作目錄到目前分支的版本. 保留工作目錄已變更的檔案. --mixed 為預設的模式可以省略.
+*$ git remote update | 下載(全部分支)到本地資料庫, 不會 merge. 遠端資料庫若有多個分支變更檔案, 則應使用這個指令同時下載其他人的變更內容.
+*$ git reset         | 還原到前一次的 Commit. 保留工作目錄已變更的檔案. --mixed 為預設的模式可以省略.
+*$ git reset --hard  | 還原到前一次的 Commit. 放棄已變更的檔案 並恢復到目前分支的版本. --hard 為 放棄工作目錄已變更的檔案.
+ $ git reset --mixed | 還原到前一次的 Commit. 保留工作目錄已變更的檔案. --mixed 為預設的模式可以省略. 
+ $ git reset --soft  | 還原到前一次的 Commit. --soft 為 Does not touch the index file or the working tree at all (but resets the head to <commit>, just like all modes do). This leaves all your changed files "Changes to be committed", as git status would put it.
  $ git reset HEAD    | HEAD 為預設. 同 git reset.
-*$ git reset --hard  | 還原工作目錄到目前分支的版本, 即放棄已變更的檔案 並恢復到目前分支的版本. --hard 為 放棄工作目錄已變更的檔案.
- $ git reset --mixed | --mixed 為 保留工作目錄已變更的檔案. --mixed 為預設的模式可以省略. 
- $ git reset --soft  | --soft 為 Does not touch the index file or the working tree at all (but resets the head to <commit>, just like all modes do). This leaves all your changed files "Changes to be committed", as git status would put it.
+*$ git reset HEAD~   | 取消前一次的 Commit
  $ git reset HEAD^   | 還原工作目錄到目前分支的前1個版本.
  $ git reset HEAD^^  | 還原工作目錄到目前分支的前2個版本.
  $ git reset HEAD~3  | 還原工作目錄到目前分支的前3個版本.
@@ -170,21 +169,25 @@ HEAD 代表指向(目前的分支)的(commit 指標).
  $ git stash pop stash@{n}   | 取回(暫存的變更編號n), 到目前的分支上, 並刪除(暫存的變更編號n)
  $ git stash drop stash@{n}  | 刪除(暫存的變更編號n)
  $ git stash apply stash@{n} | 取用(暫存的變更編號n), 到目前的分支上, 並保留(暫存的變更編號n)
-*$ git status  | 檢查狀態. 若遠端有新的 commit, 則會提示 git pull 可取得最新遠端資料.
+*$ git status  | 檢查狀態、本地分支、檢查變更. 若有異動, 則會提示.
+ $ git switch <branch> | 同 git checkout <branch> 
 *$ git version | 取得版本資訊. 例如: git version 2.31.1.windows.1
+*$ winget install --id Git.Git -e --source winget, 更新為最新版本的 git, 包含 git-gui, git bash 工具.
  $ pwd         | 目前工作目錄
-
+ $ gh repo create | CLI. 以詢問方式建立遠端資料庫並 push 目前資料夾已Commit的內容.
+ $ gh repo create --source=. --public --push --remote <RepositoryName> | CLI. 建立遠端資料庫並 push 目前資料夾已Commit的內容.
 
 memo:
 <file> 例如 LiteDB.Studio/LiteDB.Studio.exe.
 <commit id> 只要輸入前4碼.
 <branch> 例如 origin/main 或 origin/master 代表 遠端分支為 origin, 本地分支為 main 或 master. (2020-10-01起)響應黑人平權運動, 預設 master branch 改為 main branch.
 
-習慣:
-  origin, upstream, master, main:
-  (本地分支)通常設為 master 或 main. (2020-10-01起)響應黑人平權運動, 預設 master branch 改為 main branch.
-  (遠端分支)通常設為 origin.
-  (遠端Forked 分支)通常設為 upstream.
+習慣命名:
+  資料庫分支 (資料庫分支名稱可以為任意名稱, 只是習慣上如下命名)
+    main: 本地資料庫分支, 本文大多數簡稱為本地資料庫.
+    origin: 遠端資料庫分支. 本文大多數簡稱為遠端資料庫.
+    master: 舊版的本地資料庫分支. 2020-10-01起, 響應黑人平權運動, 預設 master branch 改為 main branch.
+    upstream: 遠端 Forked 分支.
 
 GitMode: (在 $ git ls-files -s 中顯示的第一欄)
   32-bit mode, split into (high to low bits)
@@ -206,7 +209,7 @@ This makes valid modes (as binary and octal):
 1010000000000000 (120000): Symbolic link
 1110000000000000 (160000): Gitlink
 
----------- 2022-05-02 #### Sign-Off, 簽名
+#### 2022-05-02 Sign-Off, 簽名
 
 Sign-off 用於 Linux kernel 的 patches, 大多數專案不常用.
 
@@ -216,7 +219,15 @@ It was introduced in the wake of the SCO lawsuit, (and other accusations of copy
 
 
 
----------- 2020-12-06 #### Syntax
+#### 2020-12-06 Syntax
+git - the stupid content tracker
+git [--version] [--help] [-C <path>] [-c <name>=<value>]
+    [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+    [-p|--paginate|-P|--no-pager] [--no-replace-objects] [--bare]
+    [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+    [--super-prefix=<path>]
+    <command> [<args>]
+
 git-add - Add file contents to the index
 git add [--verbose | -v] [--dry-run | -n] [--force | -f] [--interactive | -i] [--patch | -p]
 	  [--edit | -e] [--[no-]all | --[no-]ignore-removal | [--update | -u]]
@@ -229,13 +240,23 @@ git blame [-c] [-b] [-l] [--root] [-t] [-f] [-n] [-s] [-e] [-p] [-w] [--incremen
 	    [--progress] [--abbrev=<n>] [<rev> | --contents <file> | --reverse <rev>..<rev>]
 	    [--] <file>
 
-git - the stupid content tracker
-git [--version] [--help] [-C <path>] [-c <name>=<value>]
-    [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
-    [-p|--paginate|-P|--no-pager] [--no-replace-objects] [--bare]
-    [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
-    [--super-prefix=<path>]
-    <command> [<args>]
+
+git branch [--color[=<when>] | --no-color] [--show-current]
+        [-v [--abbrev=<n> | --no-abbrev]]
+        [--column[=<options>] | --no-column] [--sort=<key>]
+        [--merged [<commit>]] [--no-merged [<commit>]]
+        [--contains [<commit>]] [--no-contains [<commit>]]
+        [--points-at <object>] [--format=<format>]
+        [(-r | --remotes) | (-a | --all)]
+        [--list] [<pattern>…​]
+git branch [--track[=(direct|inherit)] | --no-track] [-f]
+        [--recurse-submodules] <branchname> [<start-point>]
+git branch (--set-upstream-to=<upstream> | -u <upstream>) [<branchname>]
+git branch --unset-upstream [<branchname>]
+git branch (-m | -M) [<oldbranch>] <newbranch>
+git branch (-c | -C) [<oldbranch>] <newbranch>
+git branch (-d | -D) [-r] <branchname>…​
+git branch --edit-description [<branchname>]
 
 git-commit - Record changes to the repository
 git commit [-a | --interactive | --patch] [-s] [-v] [-u<mode>] [--amend]
@@ -301,17 +322,16 @@ git push [--all | --mirror | --tags] [--follow-tags] [--atomic] [-n | --dry-run]
 	   [--force-with-lease[=<refname>[:<expect>]]]
 	   [--no-verify] [<repository> [<refspec>…​]]
 
-git-remote - Manage set of tracked repositories
 git remote [-v | --verbose]
-git remote add [-t <branch>] [-m <master>] [-f] [--[no-]tags] [--mirror=<fetch|push>] <name> <url>
-git remote rename <old> <new>
+git remote add [-t <branch>] [-m <master>] [-f] [--[no-]tags] [--mirror=(fetch|push)] <name> <URL>
+git remote rename [--[no-]progress] <old> <new>
 git remote remove <name>
 git remote set-head <name> (-a | --auto | -d | --delete | <branch>)
 git remote set-branches [--add] <name> <branch>…​
 git remote get-url [--push] [--all] <name>
 git remote set-url [--push] <name> <newurl> [<oldurl>]
 git remote set-url --add [--push] <name> <newurl>
-git remote set-url --delete [--push] <name> <url>
+git remote set-url --delete [--push] <name> <URL>
 git remote [-v | --verbose] show [-n] <name>…​
 git remote prune [-n | --dry-run] <name>…​
 git remote [-v | --verbose] update [-p | --prune] [(<group> | <remote>)…​]	
@@ -340,8 +360,13 @@ git stash clear
 git stash create [<message>]
 git stash store [-m|--message <message>] [-q|--quiet] <commit>
 
+git switch [<options>] [--no-guess] <branch>
+git switch [<options>] --detach [<start-point>]
+git switch [<options>] (-c|-C) <new-branch> [<start-point>]
+git switch [<options>] --orphan <new-branch>
 
----------- #### ToDo
+
+#### ToDo
 
 https://stackoverflow.com/questions/58003030/what-is-the-git-restore-command-and-what-is-the-difference-between-git-restor
 
@@ -376,7 +401,198 @@ or the short form which is more practical but less readable:
   
   
 
----------- #### 常用(流程、設定、備忘)段落 
+#### 常用(流程、設定、備忘)段落 
+**** 常用流程: 2023-01-24 複製遠端資料庫到新子目錄(專案名稱)中
+*$ git clone <url> | 複製遠端資料庫到新子目錄(專案名稱)中. GitPratice. Clone a repository into a new directory
+例如: git clone https://github.com/github-honda/MassTransitPratice.git, 會建立新的子目錄名稱為 MassTransitPratice.
+
+若是要更新本地資料庫, 則不適用本方法, 請參考(更新本地資料庫)
+
+
+**** 常用流程: 2023-01-23 fix a Git detached head
+https://stackoverflow.com/questions/10228760/how-do-i-fix-a-git-detached-head
+Detached head means you are no longer on a branch, you have checked out a single commit in the history (in this case the commit previous to HEAD, i.e. HEAD^).
+
+□ If you want to delete your changes associated with the detached HEAD
+○ You only need to checkout the branch you were on, e.g.
+$ git checkout master
+
+Next time you have changed a file and want to restore it to the state it is in the index, don't delete the file first, just do
+$ git checkout -- path/to/foo
+This will restore the file foo to the state it is in the index.
+
+□ If you want to keep your changes associated with the detached HEAD
+○ save your changes in a new branch called tmp
+$ git branch tmp 
+
+○ Run 
+$ git checkout master
+If you would like to incorporate the changes you made into master, run git merge tmp from the master branch. 
+You should be on the master branch after running git checkout master.
+
+
+
+
+**** 常用流程: 2023-01-23 將本機檔案夾/資料庫 新增到 github 網站.
+本段流程參考: Adding locally hosted code to GitHub
+https://docs.github.com/en/get-started/importing-your-projects-to-github/importing-source-code-to-github/adding-locally-hosted-code-to-github
+
+有三種方式, 摘要如下:
+  第1種方式狀況比較多, 要注意執行環境和權限設定正確, 才能成功.
+  若不想敲指令, 則使用第3種方式.
+□ 方式1. 在本地建立遠端新資料庫
+注意: 
+1. 這個方式狀況比較多, 要注意執行環境和權限設定正確, 才能成功.
+2. gh 指令必須先下載 CLI 才能使用. https://cli.github.com/ 
+Adding a local repository to GitHub with GitHub CLI
+1. 在(專案根目錄)資料夾中開啟 Git Bash.
+In the command line, navigate to the root directory of your project.
+
+2. 建立本地資料庫
+Initialize the local directory as a Git repository.
+git init
+
+3. 將資料夾中所有檔案 Commit 進本地資料庫 
+Stage and commit all the files in your project.
+$ git add . && git commit -m "Init" | 將資料夾中所有新檔案, 加入本地資料庫後, 再 Commit 目前所有的變更.
+
+
+4. 建立遠端新資料庫 
+建立遠端新資料庫
+  ○ 輸入指令: 
+    先別急著執行! 因為這個指令要回答問題. 後面有不需要互動問答, 可直接完成的指令.
+    $ gh repo create 
+	  gh 指令必須先下載 CLI 才能使用. https://cli.github.com/ 
+  ○ 執行後, 選擇 Push an existing local repository to GitHub, 並輸入遠端資料庫名稱.
+  ○ 遠端資料庫名稱可以 organization-name/project-name 格式, 選擇組織名稱及資料庫名稱>
+To create a repository for your project on GitHub, use the gh repo create subcommand. 
+When prompted, select Push an existing local repository to GitHub and enter the desired name for your repository. 
+If you want your project to belong to an organization instead of your user account, specify the organization name and project name with organization-name/project-name.
+
+5. 回應是否上傳本地資料庫
+Follow the interactive prompts. 
+To add the remote and push the repository, confirm yes when asked to add the remote and push the commits to the current branch.
+
+6. 不需要互動問答, 可直接完成的指令
+例如: 
+$ gh repo create --source=. --public --push --remote MassTransitPratice
+$ gh repo create --source=. --public --push --remote <RepositoryName> | CLI. 建立遠端資料庫並 push 目前資料夾已Commit的內容.
+  gh 指令必須先下載 CLI 才能使用. https://cli.github.com/
+
+7. 狀況題:
+○ 執行 gh 指令前必須先登入帳號
+$ gh auth login
+目前的終端機無法提示:
+? What account do you want to log into?  [Use arrows to move, type to filter]
+> GitHub.com
+  GitHub Enterprise Server
+could not prompt: Incorrect function.
+You appear to be running in MinTTY without pseudo terminal support.
+To learn about workarounds for this error, run:  gh help mintty
+
+$ gh help mintty
+重灌 Git for Windows、改用其他終端機 或 加前綴字元 winpty..., 算了! 等成熟一點再用 gh !
+MinTTY is the terminal emulator that comes by default with Git
+for Windows. It has known issues with gh's ability to prompt a
+user for input.
+
+There are a few workarounds to make gh work with MinTTY:
+
+- Reinstall Git for Windows, checking "Enable experimental support for pseudo consoles".
+
+- Use a different terminal emulator with Git for Windows like Windows Terminal.
+  You can run "C:\Program Files\Git\bin\bash.exe" from any terminal emulator to continue
+  using all of the tooling in Git For Windows without MinTTY.
+
+- Prefix invocations of gh with winpty, eg: "winpty gh auth login".
+  NOTE: this can lead to some UI bugs.
+
+
+  
+Alternatively, to skip all the prompts, supply the path to the repository with the --source flag and pass a visibility flag (--public, --private, or --internal). 
+For example, 
+gh repo create --source=. --public. 
+Specify a remote with the --remote flag. 
+To push your commits, pass the --push flag. 
+For more information about possible arguments, see the GitHub CLI manual.
+
+□ 方式 2. 先在 GitHub.com 網站上新建 repository 後, 再上傳本地資料.
+Adding a local repository to GitHub using Git
+
+分兩種分法:
+方式a: 官網提供的步驟
+可將現有專案根目錄以下檔案, 直接建立到遠端資料庫中.
+
+方式b: 筆者建議的步驟
+這個方式較順, 不容易出錯.
+先建立全新的遠端及本地端資料庫, 再將複製檔案到本地端資料庫中, 最後才更新到遠端資料庫.
+
+1a. 在 GitHub.com 網站上新建 repository.
+  1. 建立時為了避免錯誤, 最好不要選擇加入任何檔案, 例如 README, license, or gitignore 等檔案, 等完成後再加入.
+  2. 建立後, 取得 <REMOTE_URL>, 例如: https://github.com/github-honda/MassTransitPratice.git
+Create a new repository on GitHub.com. 
+To avoid errors, do not initialize the new repository with README, license, or gitignore files. 
+You can add these files after your project has been pushed to GitHub.
+Create New Repository drop-down
+
+2a. 建立本地資料庫
+在專案根目錄中, 開啟 Git Bash, 輸入指令:
+$ git init
+
+Open Git Bash.
+Change the current working directory to your local project.
+Use the init command to initialize the local directory as a Git repository. 
+By default, the initial branch is called main.
+If you’re using Git 2.28.0 or a later version, you can set the name of the default branch using -b.
+
+3a. 將目前資料夾中所有檔案 Commit 進本地資料庫 
+Stage and commit all the files in your project.
+git add . && git commit -m "Init"
+$ git add . && git commit -m "Init" | 將資料夾中所有新檔案, 加入本地資料庫後, 再 Commit 目前所有的變更.
+
+4a. 將本地資料庫連結到遠端 <REMOTE_URL>
+At the top of your repository on GitHub.com's Quick Setup page, click  to copy the remote repository URL.
+Copy remote repository URL field
+
+然後在專案根目錄中, 開啟 Git Bash, 輸入指令:
+$ git remote add origin <REMOTE_URL>, 例如 $ git remote add origin https://github.com/github-honda/MassTransitPratice.git
+In the Command prompt, add the URL for the remote repository where your local repository will be pushed.
+$ git remote add origin <REMOTE_URL>
+# Sets the new remote
+
+你可以用以下指令檢查遠端 <REMOTE_URL> 是否正確?
+$ git remote -v
+# Verifies the new remote URL
+例如:
+$ git remote -v
+origin  https://github.com/github-honda/MassTransitPratice.git (fetch)
+origin  https://github.com/github-honda/MassTransitPratice.git (push)
+
+5a. 將已 Commit 的本地資料庫推送到遠端資料庫
+Push the changes in your local repository to GitHub.com.
+$ git push origin main
+# Pushes the changes in your local repository up to the remote repository you specified as the origin
+
+
+1b. 在 GitHub.com 網站上新建 repository.
+建立時, 請選擇需要加入檔案, 例如 README, license, or gitignore 等檔案, 作為初始版本的檔案.
+
+2b. 複製遠端資料庫到新子目錄(專案名稱)中
+*$ git clone <url> | 複製遠端資料庫到新子目錄(專案名稱)中. GitPratice. Clone a repository into a new directory
+例如: git clone https://github.com/github-honda/MassTransitPratice.git, 會建立新的子目錄名稱為 MassTransitPratice.
+新子目錄(專案名稱)不但已有最新的檔案, 也已設定正確的設定值, 一步到位!
+
+3b. 複製檔案到本地端資料庫中
+將需要版本控制的檔案複製進新子目錄, 或是將新子目錄(專案名稱)依需求改名或搬移位置, 本機中可存放多個相同的資料庫, 各自獨立運作, 互不影響.   
+後續可依 git 的 commit, push 的上傳檔案步驟, 將檔案更新到遠端資料庫中.
+
+□ 方式 3. 使用 GitHub Desktop 
+使用 GitHub Desktop 可不用如上敲指令.
+Adding a repository from your local computer to GitHub Desktop
+1. In the File menu, click Add local repository.
+2. Click Choose... and, using Windows Explorer, navigate to the local repository you want to add.
+3. Click Add repository.
+
 **** 常用設定: 2022-10-09 設定 Git Gui Client Encoding UTF-8 on Windows  
 ref: https://support.huaweicloud.com/intl/en-us/usermanual-codehub/devcloud_hlp_0954.html
 UTF-8 is the default encoding on Linux and code hosting websites, but not on Windows. Therefore, Chinese characters may become garbled on the Git client on Windows. Set the encoding to UTF-8 to address this problem.
@@ -422,6 +638,48 @@ alias ls="ls --show-control-chars --color
 	  * linguist-language=C# 
 	  指定整個(repository)為 C#, 確認OK! 參考檔案: SampleLinguist.gitattributes
 
+
+**** 常見問題: 2022-12-30 檢查
+$ git branch -vv
+* master 28b359c1 [origin/master] CodeHelper memo.
+
+
+**** 常見問題: 2022-12-30 檢查遠端是否有新資料
+todo:
+檢查遠端是否有新資料待更新?
+檢查遠端與本地的差異?
+
+
+**** 常見問題: 2022-12-30 git remote update, git fetch, git pull 三者差異
+git remote update, git fetch, git pull 三者差異:
+$ git remote update : 下載全部的分支, 但是不會 merge.
+$ git fetch         : 下載指定的分支, 但是不會 merge.
+$ git pull          : 下載目前的分支並merge.
+What Is The Difference Between Git Remote Update, Git Fetch And Git Pull?
+To update your Git remote you can follow the below command:
+git remote update can update all of your branches set to track remote ones, however it cannot merge any changes in it.
+git fetch can update only the branch you are on, however not merge any changes in.
+git pull can update and merge any remote changes of the present branch you are on.
+This would be the one you use to update a local branch.
+
+**** 常用流程: 2023-01-24 更新本地資料庫.
+□ pull = fetch + merge 最簡單
+從 <RemoteBranch> 下載到 <LocalBranch>, 同時合併分支, git pull = fetch + merge. 
+若已設定(預設 upstream)
+$ git pull
+
+否則
+$ git pull <RemoteBranch> <LocalBranch>  
+例如: $ git pull origin master
+
+□ 分解步驟下載全部分支
+$ git remote update  <--- 下載全部分支, 無 merge.
+$ git merge <branch> <--- 合併分支. 快轉合併 fast-forward 將 <banch>分支併入目前的分支
+
+□ 分解步驟下載指定分支
+$ git fetch <RemoteBranch>  <--- 下載指定分支, 無 merge.
+$ git merge <branch> <--- 合併分支. 快轉合併 fast-forward 將 <banch>分支併入目前的分支
+
 **** 常用流程: 2022-08-27 建立本地目錄 (多個專案 Visual Studio 2022).
 
 □ 建立遠端 Repository
@@ -437,10 +695,16 @@ alias ls="ls --show-control-chars --color
   ○ 在 github 網站上選擇 Repository後,  按下畫面上(Code)按鍵, 可取得(Repository web URL).
     例如: https://github.com/github-honda/VS2022Pratice.git
 
-□ 複製遠端 Repository 到本地目錄
+□ 複製遠端資料庫到新子目錄(專案名稱)中
   ○ 以檔案總管選擇一個目錄, 例如: CodeHelper\cs\vs2022\Pratice\, 按滑鼠右鍵選單, 選擇 Git Bash Here.
-  ○ 指令 git clone <url> 可複製遠端 Repository 到本地目錄
+  ○ 複製遠端資料庫到新子目錄(專案名稱)中
     git clone https://github.com/github-honda/VS2022Pratice.git
+	
+    *$ git clone <url> | 複製遠端資料庫到目前工作目錄中, 並自動新目錄. 
+    例如: git clone https://github.com/github-honda/GitPratice, 
+	或    git clone https://github.com/github-honda/GitPratice.git 
+	  均會自動建立新目錄為 GitPratice(<url>的最後一層名稱).
+	
 
   完成後, 在本地目錄中, 變更任何檔案(包括 Visual Studio 建立的專案檔案), 已可由 git 版本控制.
 
@@ -474,57 +738,103 @@ $ git reset <commit id> --hard
 還原工作目錄到 <commit id> 的版本. 放棄工作目錄已變更的檔案. <commit id> 只要輸入前4碼.
 
 
-**** 常用流程: 2021-03-17 複製既有的遠端數據庫
+**** 常用流程: 2023-01-04 查詢本地分支、遠端分支. 
+□ 查詢狀態也可以看到本地分支
+$ git status   查詢狀態也可以看到本地分支
+On branch master
+Your branch is up to date with 'DemoCreateFromGitGui/master'.
+Your branch is up to date with 'origin/master'.
 
-先到網站上取得 <url>, 再到空白的目錄下執行:  
-$ git clone <url>
-  執行 clone 命令時，會自動設定遠端數據庫為追踪目標。
-  這樣在 push 或 fetch/pull 命令時即使省略 repository，也可以正確的顯示/讀取修改內容。
+□ 查詢本地分支
+$ git branch   <--- 查詢本地分支, 標示為綠色*目前本地分支
+* ZLib         <--- 目前本地分支
+  master
 
 
-**** 常用流程: 2020-12-29 切換到別人的branch測試後, 再回到自己的 branch.
-檢查目前的分支, 標示為 * 者為目前的分支.
-$ git branch
+□ 查詢遠端分支
+$ git branch -r  查詢遠端分支 
+  Sample output 1: 
+    2個遠端分支
+  origin/ZLib  <---- 目前本地分支
+  origin/v3
+  origin/v4
+  origin/v5
+  upstream/master
+  upstream/v3
+  upstream/v4
+  upstream/v5.1
+
+  Sample output 2: 
+  origin/1637
+  origin/2694
+  origin/HEAD -> origin/master            <--- 目前遠端分支  
+  origin/anurse/3625-hanging-onconnected
+  origin/anurse/4100-try-hard
+  : <---- 待輸入 
+
+**** 常用流程: 2023-01-04 建立 <NewBranch>
+□ 方法1: 2個指令完成.
+先建立新分支, 再切換到新分支
+*$ git branch <NewBranch>        <--- 建立分支. 
+*$ git checkout <NewBranch>      <--- 切換到分支. Switch to a branch. 若分支不存在, 則錯誤訊息.
+
+□ 方法2: 1個指令完成.
+切換到新分支, 若新分支不存在, 則建立新分支.
+*$ git checkout -b <newBranch>   <--- 切換到新分支, 若新分支不存在, 則建立新分支.
+
+**** 常用流程: 2023-01-04 切換到其他 <OtherBranch> 工作後, 再回到自己的 <SelfBranch>.
+□ 查詢本地分支. 標示為綠色*就是目前的分支.
+$ git branch   <---- 查詢本地分支. 標示為綠色*就是目前的分支.
 * main
 
-切換到別人的branch測試.
-$ git checkout beaconScore
-Switched to a new branch 'beaconScore'
-Branch 'beaconScore' set up to track remote branch 'beaconScore' from 'origin'.
+□ 切換到<OtherBranch>工作.
+$ git checkout OtherBranch   <--- 切換到<OtherBranch>
+Switched to a new branch 'OtherBranch'
+Branch 'OtherBranch' set up to track remote branch 'OtherBranch' from 'origin'.
 
-$ git branch
-* beaconScore
+若<OtherBranch>不存在, 要建立的話, 則參考 (常用流程: 建立 <NewBranch>).
+
+□ 查詢本地分支. 標示為綠色*就是目前的分支.
+$ git branch   <---- 查詢本地分支. 標示為綠色*就是目前的分支.
+* OtherBranch
   main
+  
+□ 使用後, 切換回到自己的 <SelfBranch>
+$ git checkout main   <--- 切換回到自己的 <SelfBranch>
 
-測試完別人的程式後, 再切換回自己的 branch
-$ git checkout main
 
 
+**** 常用流程: 2023-01-03 將 Forked repository 跟上原始來源的最新修改.
+□ 2023-01-03 新方法:
+發現在自己的 Forked repository 首頁上, 已經有(Sync fork)的下拉連結可使用.
+下拉之後, 若跟原始來源一致, 可以看到 
+  This branch is not behind the upstream <source:branch>
+    以及兩個按鍵 Compare 或 Update branch(關閉).
+否則, 應該是
+  This branch is out-of-date
+    以及兩個按鍵 Discard 1 commit 或 Update branch(啟用).
+	
+因此應該可以直接在網站上同步原始來源後, 在下載到本地資料庫. 
+而不是舊方法(先下載到本地資料庫後, 再更新到自己的遠端資料庫).
 
-**** 常用流程: 2020-12-27 將 Forked repository 跟上原始來源的最新修改.
-簡單的步驟:
-  1. $ git pull upstream master  <---- 下載遠端資料庫 git pull = fetch + merge. 
-  2. $ git push origin master    <---- 更新到 Forked 的遠端資料庫.
-  若($ git remote -v)檢查沒有 upstream, 
-  則可新增, 例如($ git remote add upstream https://github.com...git)
+□ 2022-12-31 前舊方法: (先下載到本地資料庫後, 再更新到自己的遠端資料庫)
+1. 確認已增加(遠端原始來源分支) 
+  檢查是否已有(遠端原始來源分支)
+  $ git remote -v
+    習慣上:
+      origin = Forked repository. (你自己的遠端分支 origin).
+      upstream = Original source repository. (遠端原始來源分支).
+	  資料庫分支可以為任意名稱, 可以自訂名稱, 不需要叫做upstream.
 
-詳細:
-1. 檢查確認 upstream 為原始來源的遠端位置.
-$ git remote -v
-origin  https://github.com/github-honda/LiteDB.git (fetch)     <---- Forked fetch 遠端位置
-origin  https://github.com/github-honda/LiteDB.git (push)      <---- Forked push  遠端位置
-upstream        https://github.com/mbdavid/LiteDB.git (fetch)  <---- 原始來源 fetch 遠端位置
-upstream        https://github.com/mbdavid/LiteDB.git (push)   <---- 原始來源 push  遠端位置
+  若沒有的話, 則須新增 upstream
+  $ git remote add upstream https://github.com/github-honda/LiteDB.git 
+ 
+2. 從(遠端原始來源分支 upstream)下載到(本地資料庫 master).
+  $ git pull upstream master 
 
-2. 若沒有 upstream, 則需新增 upstream 為原始來源的遠端位置:
-$ git remote add upstream https://github.com/mbdavid/LiteDB.git 
+3. 從(本地資料庫 master) 上傳到 (你自己的遠端分支 origin)
+  $ git push origin master 
 
-3. 將本地資料庫 master 更新為原始來源 upstream 的最新修改:
-更新過程需要 Merge 步驟, 會要求輸入修改的訊息, 才能完成 Merge.
-$ git pull upstream master  <---- 下載遠端資料庫 git pull = fetch + merge
-
-4. 更新到 Forked 的遠端資料庫.
-$ git push origin master
 
 
 **** 常用流程: 2020-12-27 切換到<commit id>版本.
@@ -574,7 +884,7 @@ $ git pull origin main
             待確認 Git Gui 的正確操作為何? 使用指令 git pull 則會下載新資料, 也會跳到最新下載的分支上.
   20210309, 因為 git pull 比 fetch 多了 fast-forward merge 動作, 若合併分支時沒有衝突, 則將變更併入目前的分支. 
 
-2022-05-02, **** 常用流程: 上傳最新的修改
+**** 常用流程: 2022-05-02 上傳最新的修改
 
 以下2種方式都可使用, 建議畫面操作方式最簡單:
 □ 使用指令: 檔案總管選擇目錄後按滑鼠右鍵.Git Bash Here.
@@ -601,7 +911,7 @@ $ git pull origin main
 	               若沒有輸入 Commit Message, 則會要求輸入.
     △ 按鍵 Push: 將將(本地資料庫)上傳到(遠端資料庫).
 	
-2020-12-27, **** 常用流程: 上傳最新的修改 及 相關指令.
+**** 常用流程: 2020-12-27 上傳最新的修改 及 相關指令.
 
 $ git status
 目前只有未納入管理的檔案.
@@ -748,7 +1058,7 @@ $ git pull origin main
 $ git pull
 將(遠端的 origin)下載到(本地的 main)
 
-6. **** 常見問題: (20210421, v 2.31.1.windows.1 才碰到)  本地branch建立為 main, 遠端 branch 為 master 且 not-for-merge
+**** 常見問題: (20210421, v 2.31.1.windows.1 才碰到)  本地branch建立為 main, 遠端 branch 為 master 且 not-for-merge
 操作過程如下, 最後以 git checkout master 將本地 main 切換到 master 解決.
 切換到 master 後, 再切回 main 則已有錯誤, 表示 main 沒有任何版本紀錄可切回.
 $ git init
@@ -937,7 +1247,7 @@ $ git blame -L 40,60 foo, 查詢檔案 foo 第 40 列到60列的 commit 紀錄.
 
 **** 常用流程: 2020-12-27 合併分支
 檢查目前的分支
-$ git branch  標示為 * 的就是目前的分支.
+$ git branch  查詢本地分支. 標示為綠色*就是目前的分支.
 $ git log --oneline --graph 標示為 * 的就是目前的分支.
   標示為 * 的就是目前的分支.
  
@@ -956,25 +1266,25 @@ $ get merge master --allow-unrelated-histories
 $ git merge DemoCreateFromGitGui/main --allow-unrelated-histories (要全名)
 $ git push 更新到遠端資料庫
 
-**** 常用流程: 2020-12-27 設定本地分支與遠端分支的關聯. 執行 git pull 或 git push 時可不需要指定遠端分支.
-$ git status 查詢本地分支
-On branch master
-Your branch is up to date with 'DemoCreateFromGitGui/master'.
+**** 常用流程: 2023-01-04 查詢/設定 upstream. 
+若設定 upstream後, 則執行 git pull 或 git push 時, 會自動使用預設的 upstream 分支, 不需要指定分支.
+□ 查詢 upstream 
+*$ git branch -vv     <--- 檢視 upstream 設定, -vv = doubly verbose. 輸出綠色*代表本地分支, 藍色代表遠端分支. 範例: * master 28b359c1 [origin/master] CodeHelper memo. 以上綠色為(* master), 藍色為 origin/master.
+○ Sample output:
+* master 10e72174 [origin/master] Extend CodeQL3000 in signalr-SignalR-official-build (#4654)
 
-$ git branch -r 查詢遠端分支
-  DemoCreateFromGitGui/main
-  DemoCreateFromGitGui/master
+○ Sample output:
+* ZLib   7580d066 Correct links.
+  master 9843b507 [origin/master] Merge branch 'master' of https://github.com/mbdavid/LiteDB
 
-$ git branch --set-upstream-to=DemoCreateFromGitGui/master master  設定本地分支與遠端分支的關聯
+□ 設定 upstream 
+$ git branch --set-upstream-to=DemoCreateFromGitGui/master master  設定 upstream 
 Branch 'master' set up to track remote branch 'master' from 'DemoCreateFromGitGui'.
 
-$ git push 執行 git pull 或 git push 時可不需要指定遠端分支.
-Everything up-to-date
+□ 取消 upstream 設定
+$ git branch --unset-upstream [<branchname>]  <--- 取消 upstream 設定
 
-$ git pull 執行 git pull 或 git push 時可不需要指定遠端分支.
-Already up to date.
-
-
+  
 **** 常用流程: 2020-12-27 建立本地新的 Repository, 並將本地 repository 連接到遠端資料庫
 Steps:
 A. 建立本地Repository, 新增檔案.
@@ -1020,7 +1330,7 @@ You can initialize this repository with code from a Subversion, Mercurial, or TF
 
 
 
----------- 2021-01-15 #### 遠端操作:
+#### 2021-01-15 遠端操作:
 
 複製既有的遠端數據庫
 $ git clone <url>
@@ -1087,7 +1397,7 @@ $ git remote rename <old> <new>
 將遠端數據庫的名稱從 <old> 改為 <new> 。
 
 
----------- 2020-11-28 #### 以下參考舊資料, 確認後移到上面
+#### 2020-11-28 以下參考舊資料, 確認後移到上面
 
 
 更新
@@ -2178,6 +2488,6 @@ fast-forward merge 快速合併分支
   否則為 non fast-forward merge.
     若合併分支時產生衝突, 必須修改衝突的內容, 並建立(修改衝突內容後的)新的提交.
 
-□,○,△,▽,◇,☆,✓,✗,
+
 
 
