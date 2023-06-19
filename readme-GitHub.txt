@@ -1,5 +1,5 @@
 From: 011netservice@gmail.com
-Date: 2023-01-24
+Date: 2023-03-28
 Subject: git, github 備忘
 File: https://github.com/github-honda/GitPratice/blob/main/readme-GitHub.txt
 CodeHelper\GitHub\readme-GitHub.txt
@@ -66,7 +66,7 @@ CLI (Command-Line Interface) 指令下載及使用方式, 可參考 https://cli.
  $ git blame -L 40,60 <file>   | 查詢(<file> 第40列到60列)的修改.
  $ git blame -L 5,10 <file>    | 查詢(<file> 第5   到10列)的修改.
 *$ git branch                  | 查詢本地分支. 標示為綠色*就是目前的分支.
-*$ git branch <branch>         | 建立分支. 
+*$ git branch <branch>         | 建立分支. 建立新分支後, 記得要切換到新分支(git checkout <branch>), 否則仍在原分支不變.
  $ git branch -d <branch>      | 刪除分支. 
  $ git branch -f <branch>      | Shortcut for --force. 
  $ git branch --force <branch> | 強制建立分支 Reset <branch> to <startpoint>, even if <branch> exists already.
@@ -87,7 +87,7 @@ CLI (Command-Line Interface) 指令下載及使用方式, 可參考 https://cli.
  $ git checkout <file>            | 還原(已 commit)的檔案.
  $ git clean -f | 還原工作目錄檔案 Untracked files. -f=--force Cleans the working tree by recursively removing files that are not under version control, starting from the current directory.
  $ git clean -n | 查詢將被 git clean -f 還原的清單 Untracked files. -n=--dry-run Cleans the working tree by recursively removing files that are not under version control, starting from the current directory.
-*$ git clone <url> | 複製遠端資料庫到新子目錄(專案名稱)中. GitPratice. Clone a repository into a new directory
+*$ git clone <url> | 複製遠端資料庫到新子目錄(專案名稱)中. Clone a repository into a new directory. 本機中可存放多個相同的資料庫, 各自獨立運作, 互不影響.
 *$ git clone https://github/com/git/git | 下載更新 git 軟體為最新版本, 若需要一併更新 git-gui, git bash 工具, 則應使用 winget install 指令. 
  $ git commit --amend --no-edit        | 將本次commit 併入最後一次 commit 中. --no-edit 代表不修改訊息.
 *$ git commit --amend -m "Message" | 修改最後一次提交的訊息.
@@ -402,9 +402,14 @@ or the short form which is more practical but less readable:
   
 
 #### 常用(流程、設定、備忘)段落 
-**** 常用流程: 2023-01-24 複製遠端資料庫到新子目錄(專案名稱)中
-*$ git clone <url> | 複製遠端資料庫到新子目錄(專案名稱)中. GitPratice. Clone a repository into a new directory
-例如: git clone https://github.com/github-honda/MassTransitPratice.git, 會建立新的子目錄名稱為 MassTransitPratice.
+
+**** 常用流程: 2023-01-25 複製遠端資料庫到新子目錄(專案名稱)中
+□ 以檔案總管選擇工作目錄後, 按滑鼠右鍵選擇 Git Bash Here, 啟動 Git Bash.
+
+□ 輸入指令 git clone <url>
+*$ git clone <url> | 複製遠端資料庫到新子目錄(專案名稱)中. Clone a repository into a new directory. 本機中可存放多個相同的資料庫, 各自獨立運作, 互不影響.
+<url> 可從遠端資料庫網站上取得, 例如: git clone https://github.com/github-honda/MassTransitPratice.git
+會建立新的子目錄名稱為 MassTransitPratice 在目前工作目錄下.
 
 若是要更新本地資料庫, 則不適用本方法, 請參考(更新本地資料庫)
 
@@ -578,7 +583,7 @@ $ git push origin main
 建立時, 請選擇需要加入檔案, 例如 README, license, or gitignore 等檔案, 作為初始版本的檔案.
 
 2b. 複製遠端資料庫到新子目錄(專案名稱)中
-*$ git clone <url> | 複製遠端資料庫到新子目錄(專案名稱)中. GitPratice. Clone a repository into a new directory
+*$ git clone <url> | 複製遠端資料庫到新子目錄(專案名稱)中. Clone a repository into a new directory. 本機中可存放多個相同的資料庫, 各自獨立運作, 互不影響.
 例如: git clone https://github.com/github-honda/MassTransitPratice.git, 會建立新的子目錄名稱為 MassTransitPratice.
 新子目錄(專案名稱)不但已有最新的檔案, 也已設定正確的設定值, 一步到位!
 
@@ -633,10 +638,31 @@ export LESSCHARSET=utf-8 , together with i18n.logoutputencoding, ensures that Ch
 Add the following line to etc\git-completion.bash so that Chinese names can be properly displayed:
 alias ls="ls --show-control-chars --color
 
-**** 常用設定: 2022-10-09 設定 Repository language.
-    可於(repository).gitattributes 設定如下
-	  * linguist-language=C# 
-	  指定整個(repository)為 C#, 確認OK! 參考檔案: SampleLinguist.gitattributes
+**** 常用設定: 指定程式語言
+.gitattributes 設定如下:
+* linguist-language=C# 
+指定整個 repository 為 C#.
+參考檔案: SampleLinguist.gitattributes
+
+**** 常用設定: 選擇 .gitignore
+https://github.com/github/gitignore
+
+例如: https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
+
+例如: 參考 VisualStudio.gitignore 中, 忽略 NuGet Packages 的段落如下:
+# NuGet Packages
+*.nupkg
+# NuGet Symbol Packages
+*.snupkg
+# The packages folder can be ignored because of Package Restore
+**/[Pp]ackages/*
+# except build/, which is used as an MSBuild target.
+!**/[Pp]ackages/build/
+# Uncomment if necessary however generally it will be regenerated when needed
+#!**/[Pp]ackages/repositories.config
+# NuGet v3's project.json files produces more ignorable files
+*.nuget.props
+*.nuget.targets	
 
 
 **** 常見問題: 2022-12-30 檢查
@@ -670,7 +696,7 @@ $ git pull
 
 否則
 $ git pull <RemoteBranch> <LocalBranch>  
-例如: $ git pull origin master
+例如: $ git pull origin main, 或 $ git pull origin master
 
 □ 分解步驟下載全部分支
 $ git remote update  <--- 下載全部分支, 無 merge.
@@ -698,7 +724,7 @@ $ git merge <branch> <--- 合併分支. 快轉合併 fast-forward 將 <banch>分
 □ 複製遠端資料庫到新子目錄(專案名稱)中
   ○ 以檔案總管選擇一個目錄, 例如: CodeHelper\cs\vs2022\Pratice\, 按滑鼠右鍵選單, 選擇 Git Bash Here.
   ○ 複製遠端資料庫到新子目錄(專案名稱)中
-    git clone https://github.com/github-honda/VS2022Pratice.git
+    git clone <url> | 複製遠端資料庫到新子目錄(專案名稱)中. Clone a repository into a new directory. 本機中可存放多個相同的資料庫, 各自獨立運作, 互不影響.
 	
     *$ git clone <url> | 複製遠端資料庫到目前工作目錄中, 並自動新目錄. 
     例如: git clone https://github.com/github-honda/GitPratice, 
@@ -772,9 +798,23 @@ $ git branch -r  查詢遠端分支
   origin/anurse/4100-try-hard
   : <---- 待輸入 
 
-**** 常用流程: 2023-01-04 建立 <NewBranch>
+**** 常用流程: 2023-02-06 切換 GitHub 網站上遠端資料庫的預設分支
+變更GitHub網站上遠端資料庫的預設分支, 可能會有無法預期的結果...
+https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-branches-in-your-repository/changing-the-default-branch
+
+Changing the default branch
+1. On GitHub.com, navigate to the main page of the repository.
+2. Under your repository name, click  Settings.
+3. In the "Code and automation" section of the sidebar, click  Branches.
+4. Under "Default branch", to the right of the default branch name, click Switch icon with two arrows to the right of current default branch name
+5. Use the drop-down, then click a branch name.
+6. Click Update. "Update" button after choosing a new default branch
+7. Read the warning, then click I understand, update the default branch. "I understand, update the default branch." button to perform the update
+
+**** 常用流程: 2023-01-25 建立分支 和 切換分支
 □ 方法1: 2個指令完成.
-先建立新分支, 再切換到新分支
+先建立新分支, 再切換到新分支.
+別忘了要切換到哪個分支繼續工作!
 *$ git branch <NewBranch>        <--- 建立分支. 
 *$ git checkout <NewBranch>      <--- 切換到分支. Switch to a branch. 若分支不存在, 則錯誤訊息.
 
@@ -804,21 +844,23 @@ $ git checkout main   <--- 切換回到自己的 <SelfBranch>
 
 
 
-**** 常用流程: 2023-01-03 將 Forked repository 跟上原始來源的最新修改.
-□ 2023-01-03 新方法:
-發現在自己的 Forked repository 首頁上, 已經有(Sync fork)的下拉連結可使用.
-下拉之後, 若跟原始來源一致, 可以看到 
-  This branch is not behind the upstream <source:branch>
-    以及兩個按鍵 Compare 或 Update branch(關閉).
-否則, 應該是
-  This branch is out-of-date
-    以及兩個按鍵 Discard 1 commit 或 Update branch(啟用).
+**** 常用流程: 2023-02-08 將 Forked repository 跟上原始來源的最新修改.
+□ 新方法: (比較順暢)
+先在 github 網站上, 跟上原始來源的最新修改後, 再更新本地資料庫.
+○ 在自己的 Forked repository 首頁上, 找到(Sync fork)的下拉連結.
+○ 下拉之後, 
+  若跟原始來源一致, 則看到 
+    This branch is not behind the upstream <source:branch>
+  否則, 應該是
+    This branch is out-of-date, 以及(Update branch)按鍵可使用.
+  按下(Update branch)按鍵, 可直接在 github 網站上直接將 branch 跟上原始來源的最新修改.
+  
+○ 若本地資料庫也需要最新的修改, 則更新本地資料庫
+$ git pull
 	
-因此應該可以直接在網站上同步原始來源後, 在下載到本地資料庫. 
-而不是舊方法(先下載到本地資料庫後, 再更新到自己的遠端資料庫).
-
-□ 2022-12-31 前舊方法: (先下載到本地資料庫後, 再更新到自己的遠端資料庫)
-1. 確認已增加(遠端原始來源分支) 
+□ 舊方法: 
+先在本地資料庫上, 跟上原始來源的最新修改後, 再更新到Forked的遠端資料庫.
+○ 確認已增加(遠端原始來源分支) 
   檢查是否已有(遠端原始來源分支)
   $ git remote -v
     習慣上:
@@ -829,10 +871,10 @@ $ git checkout main   <--- 切換回到自己的 <SelfBranch>
   若沒有的話, 則須新增 upstream
   $ git remote add upstream https://github.com/github-honda/LiteDB.git 
  
-2. 從(遠端原始來源分支 upstream)下載到(本地資料庫 master).
+○ 從(遠端原始來源分支 upstream)下載到(本地資料庫 master).
   $ git pull upstream master 
 
-3. 從(本地資料庫 master) 上傳到 (你自己的遠端分支 origin)
+○ 從(本地資料庫 master) 上傳到 (你自己的遠端分支 origin)
   $ git push origin master 
 
 
@@ -1397,7 +1439,7 @@ $ git remote rename <old> <new>
 將遠端數據庫的名稱從 <old> 改為 <new> 。
 
 
-#### 2020-11-28 以下參考舊資料, 確認後移到上面
+#### **** 以下舊資料, 確認後移到上面
 
 
 更新
