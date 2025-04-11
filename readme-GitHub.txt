@@ -1,11 +1,13 @@
 From: 011netservice@gmail.com
-Date: 2023-03-28
+Date: 2025-04-11
 Subject: git, github 備忘
 File: https://github.com/github-honda/GitPratice/blob/main/readme-GitHub.txt
 CodeHelper\GitHub\readme-GitHub.txt
-
 歡迎來信交流, 訂購軟體需求.
 
+以下 #### 標記段落, **** 標記常用(流程、設定、備忘)
+
+#### 摘要
 以指令操作 git, 較能了解 git 的運作細節.
 
 Resources:
@@ -34,14 +36,15 @@ git 三個區域:
   Staging Area(Index Area): 暫存區 或 索引區. 儲存(可準備 commit 提交)的資訊.
   Repository:               儲存檔案變更的資料庫.
 
-HEAD 代表指向(目前的分支)的(commit 指標).
+HEAD 代表(目前最新的分支)的(最新 commit 的指標).
 
-以下 #### 標記段落, **** 標記常用(流程、設定、備忘)
 
-#### 2023-01-24 git command reference: 
+#### git command reference, 2025-04-11
 *代表 常用
-CLI (Command-Line Interface) 指令下載及使用方式, 可參考 https://cli.github.com/ 
+- CLI (Command-Line Interface) 指令下載及使用方式, 可參考 https://cli.github.com/ 
+- 所有的指令均可以 Pipeline 將結果倒出為檔案, 例如: git diff --name-status d54a0b4 HEAD > c:\temp\ChangeList.txt
 
+git command reference
  $ git            | git usage help.
 *$ git --version  | 檢視 git 版本
 *$ git add        | 將檔案加入(暫存區)管理. Add file contents to the index
@@ -87,7 +90,7 @@ CLI (Command-Line Interface) 指令下載及使用方式, 可參考 https://cli.
  $ git checkout <file>            | 還原(已 commit)的檔案.
  $ git clean -f | 還原工作目錄檔案 Untracked files. -f=--force Cleans the working tree by recursively removing files that are not under version control, starting from the current directory.
  $ git clean -n | 查詢將被 git clean -f 還原的清單 Untracked files. -n=--dry-run Cleans the working tree by recursively removing files that are not under version control, starting from the current directory.
-*$ git clone <url> | 複製遠端資料庫到新子目錄(專案名稱)中. Clone a repository into a new directory. 本機中可存放多個相同的資料庫, 各自獨立運作, 互不影響.
+*$ git clone <url.git> | Fork 複製遠端資料庫 到 新子目錄(遠端資料庫名稱)中. Clone a repository into a new directory. 本機中可存放多個相同的資料庫, 各自獨立運作, 互不影響.
 *$ git clone https://github/com/git/git | 下載更新 git 軟體為最新版本, 若需要一併更新 git-gui, git bash 工具, 則應使用 winget install 指令. 
  $ git commit --amend --no-edit        | 將本次commit 併入最後一次 commit 中. --no-edit 代表不修改訊息.
 *$ git commit --amend -m "Message" | 修改最後一次提交的訊息.
@@ -104,7 +107,10 @@ CLI (Command-Line Interface) 指令下載及使用方式, 可參考 https://cli.
 *$ git config --global init.defaultBranch main | 將預設(建立本地資料庫分支名稱)設為 main.
  $ git config --global user.email "you@example.com"
  $ git config --global user.name "Your Name"
- $ git diff <old commit id> <new commit id> | 查詢 commit 版本的差異.
+ $ git diff <old commit id> <new commit id> | 查詢版本的差異.
+*$ git diff --name-status <old commit id> <new commit id> | 查詢版本之間的檔案差異.(Added, Deleted, Modified, Renamed...)
+*$ git diff --name-status HEAD | 取得 最新檔案變更差異清單. (Added, Deleted, Modified, Renamed...)
+*$ git diff --name-status <old commit id> HEAD > c:\\temp\\ChangeList.txt | 取得 最新 與 指定版本 的檔案變更差異清單.(Added, Deleted, Modified, Renamed...)
 *$ git fetch origin/master | 下載指定的分支, 但是不會 merge
 *$ git help <command> | Help command.
  $ git help <concept> | Help concept. 例如: attributes, cli, core-tutorial...可從 git help -g 取得 concept 清單ㄡ
@@ -113,9 +119,9 @@ CLI (Command-Line Interface) 指令下載及使用方式, 可參考 https://cli.
  $ git init --initial-branch=main | 同 git init -b main
 *$ git init -b main | 建立本地資料庫, branch=main. 舊版預設建立 master branch, 新版Git 2.28.0(2020-10-01起)響應黑人平權運動, 將 master 改為 main. 
 *$ git init         | 建立本地資料庫及預設branch=main. 
- $ git log                   | 查詢 commit 紀錄. 不包含 HEAD 移動紀錄.
-*$ git log --oneline --graph | 查詢 commit 紀錄. 不包含 HEAD 移動紀錄.
- $ git log --oneline -n      | 查詢 commit 紀錄. n是最近提交的次數.
+ $ git log                   | 查詢 commit 紀錄.
+*$ git log --oneline --graph | 查詢 commit 紀錄.
+*$ git log --oneline -n      | 查詢 commit 紀錄. n是最近提交的次數.
  $ git log --stat --summary  | 查詢 commit 紀錄. 狀態摘要明細.
 *$ git log <file>  | 查詢(檔案 commit 紀錄). 建議使用 GitGui 比較容易檢視, 只要在log清單畫面上選擇檔案HighLight.
 *$ git ls-files -s | 檔案清單, 包括GitMode, commit紀錄.
@@ -209,17 +215,8 @@ This makes valid modes (as binary and octal):
 1010000000000000 (120000): Symbolic link
 1110000000000000 (160000): Gitlink
 
-#### 2022-05-02 Sign-Off, 簽名
 
-Sign-off 用於 Linux kernel 的 patches, 大多數專案不常用.
-
-Sign-off is a requirement for getting patches into the Linux kernel and a few other projects, but most projects don't actually use it.
-
-It was introduced in the wake of the SCO lawsuit, (and other accusations of copyright infringement from SCO, most of which they never actually took to court), as a Developers Certificate of Origin. It is used to say that you certify that you have created the patch in question, or that you certify that to the best of your knowledge, it was created under an appropriate open-source license, or that it has been provided to you by someone else under those terms. This can help establish a chain of people who take responsibility for the copyright status of the code in question, to help ensure that copyrighted code not released under an appropriate free software (open source) license is not included in the kernel.
-
-
-
-#### 2020-12-06 Syntax
+#### Syntax, 2025-04-11
 git - the stupid content tracker
 git [--version] [--help] [-C <path>] [-c <name>=<value>]
     [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
@@ -366,53 +363,27 @@ git switch [<options>] (-c|-C) <new-branch> [<start-point>]
 git switch [<options>] --orphan <new-branch>
 
 
-#### ToDo
 
-https://stackoverflow.com/questions/58003030/what-is-the-git-restore-command-and-what-is-the-difference-between-git-restor
+#### **** 常用(流程、設定、備忘), 2025-04-11
 
-As reset, restore and revert documentation states:
-There are three commands with similar names: git reset, git restore and git revert.
-git reset, git restore and git revert 三者的差異
-$ git revert 是會從一個(舊的commit版本)取得變更後, 建立(新的commit版本).
-  is about making a new commit that reverts the changes made by other commits.
-  
-$ git restore 是會從(暫存區或其他的commit版本)復原工作目錄檔案, 並不會更新目前的分支.
-    白話文簡單如下:
-    $ git restore <file>          | 取消(工作目錄中)的檔案變更. Restore working tree files
-    $ git restore --staged <file> | 取消(暫存區中的)檔案變更.
-  is about restoring files in the working tree from either the index or another commit.
-  This command does not update your branch.
-  The command can also be used to restore files in the index from another commit.
+**** 取得不同版本的檔案變更清單
+- 檢視版本清單
+$ git log --oneline --graph 
 
-$ git reset 是會更新目前的分支, 移動tip以便新增或移除目前分支中的commit版本.
-  is about updating your branch, moving the tip in order to add or remove commits from the branch. 
-  This operation changes the commit history.
-  git reset can also be used to restore the index, overlapping with git restore.
+- 取得 最新檔案變更差異清單
+$ git diff --name-status HEAD
 
-So:
-To restore a file in the index to match the version in HEAD (this is the same as using git-reset)
-  git restore --staged hello.c
+- 取得 最新 與 指定版本 的檔案變更差異清單
+$ git diff --name-status d54a0b4 HEAD > c:\\temp\\ChangeList.txt
 
-or you can restore both the index and the working tree (this the same as using git-checkout)
-  git restore --source=HEAD --staged --worktree hello.c
 
-or the short form which is more practical but less readable:
-  git restore -s@ -SW hello.c
-  
-  
+**** 常用流程: Fork 複製遠端資料庫 為 本機新子資料夾. 
+- 以檔案總管選擇工作目錄後, 按滑鼠右鍵選擇 Git Bash Here, 啟動 Git Bash.
 
-#### 常用(流程、設定、備忘)段落 
-
-**** 常用流程: 2023-01-25 複製遠端資料庫到新子目錄(專案名稱)中
-□ 以檔案總管選擇工作目錄後, 按滑鼠右鍵選擇 Git Bash Here, 啟動 Git Bash.
-
-□ 輸入指令 git clone <url>
-*$ git clone <url> | 複製遠端資料庫到新子目錄(專案名稱)中. Clone a repository into a new directory. 本機中可存放多個相同的資料庫, 各自獨立運作, 互不影響.
-<url> 可從遠端資料庫網站上取得, 例如: git clone https://github.com/github-honda/MassTransitPratice.git
-會建立新的子目錄名稱為 MassTransitPratice 在目前工作目錄下.
-
-若是要更新本地資料庫, 則不適用本方法, 請參考(更新本地資料庫)
-
+- 輸入指令 git clone <url.git>
+  $ git clone <url.git> 
+  <url.git> 可從遠端資料庫網站上取得.
+  例如: git clone https://github.com/github-honda/MassTransitPratice.git 會建立新子資料夾名稱為 MassTransitPratice 在目前工作目錄下.
 
 **** 常用流程: 2023-01-23 fix a Git detached head
 https://stackoverflow.com/questions/10228760/how-do-i-fix-a-git-detached-head
@@ -688,7 +659,7 @@ git fetch can update only the branch you are on, however not merge any changes i
 git pull can update and merge any remote changes of the present branch you are on.
 This would be the one you use to update a local branch.
 
-**** 常用流程: 2023-01-24 更新本地資料庫.
+**** 常用流程: 更新本地資料庫, 2024-09-22 
 □ pull = fetch + merge 最簡單
 從 <RemoteBranch> 下載到 <LocalBranch>, 同時合併分支, git pull = fetch + merge. 
 若已設定(預設 upstream)
@@ -844,19 +815,12 @@ $ git checkout main   <--- 切換回到自己的 <SelfBranch>
 
 
 
-**** 常用流程: 2023-02-08 將 Forked repository 跟上原始來源的最新修改.
-□ 新方法: (比較順暢)
-先在 github 網站上, 跟上原始來源的最新修改後, 再更新本地資料庫.
-○ 在自己的 Forked repository 首頁上, 找到(Sync fork)的下拉連結.
-○ 下拉之後, 
-  若跟原始來源一致, 則看到 
-    This branch is not behind the upstream <source:branch>
-  否則, 應該是
-    This branch is out-of-date, 以及(Update branch)按鍵可使用.
-  按下(Update branch)按鍵, 可直接在 github 網站上直接將 branch 跟上原始來源的最新修改.
+**** 常用流程: 更新 Forked repository 跟上原始來源的最新修改. 2024-09-29
+- 在 Forked repository 首頁上, 找到 Sync fork.Update branch 按下去就更新.
+  若按下 Sync fork 之後出現 This branch it out-of-date, 才可 Update branch.
   
-○ 若本地資料庫也需要最新的修改, 則更新本地資料庫
-$ git pull
+- 若本地資料庫也需要最新的修改, 則可再更新本地資料庫:
+  $ git pull
 	
 □ 舊方法: 
 先在本地資料庫上, 跟上原始來源的最新修改後, 再更新到Forked的遠端資料庫.
@@ -1372,7 +1336,10 @@ You can initialize this repository with code from a Subversion, Mercurial, or TF
 
 
 
-#### 2021-01-15 遠端操作:
+
+#### 以下舊資料, 確認後移到上面, 2025-04-11
+
+#### 遠端操作, 2025-04-11
 
 複製既有的遠端數據庫
 $ git clone <url>
@@ -1439,9 +1406,54 @@ $ git remote rename <old> <new>
 將遠端數據庫的名稱從 <old> 改為 <new> 。
 
 
-#### **** 以下舊資料, 確認後移到上面
+
+#### Sign-Off, 簽名, 2025-04-11
+
+Sign-off 用於 Linux kernel 的 patches, 大多數專案不常用.
+
+Sign-off is a requirement for getting patches into the Linux kernel and a few other projects, but most projects don't actually use it.
+
+It was introduced in the wake of the SCO lawsuit, (and other accusations of copyright infringement from SCO, most of which they never actually took to court), as a Developers Certificate of Origin. It is used to say that you certify that you have created the patch in question, or that you certify that to the best of your knowledge, it was created under an appropriate open-source license, or that it has been provided to you by someone else under those terms. This can help establish a chain of people who take responsibility for the copyright status of the code in question, to help ensure that copyrighted code not released under an appropriate free software (open source) license is not included in the kernel.
 
 
+
+
+#### ToDo
+
+https://stackoverflow.com/questions/58003030/what-is-the-git-restore-command-and-what-is-the-difference-between-git-restor
+
+As reset, restore and revert documentation states:
+There are three commands with similar names: git reset, git restore and git revert.
+git reset, git restore and git revert 三者的差異
+$ git revert 是會從一個(舊的commit版本)取得變更後, 建立(新的commit版本).
+  is about making a new commit that reverts the changes made by other commits.
+  
+$ git restore 是會從(暫存區或其他的commit版本)復原工作目錄檔案, 並不會更新目前的分支.
+    白話文簡單如下:
+    $ git restore <file>          | 取消(工作目錄中)的檔案變更. Restore working tree files
+    $ git restore --staged <file> | 取消(暫存區中的)檔案變更.
+  is about restoring files in the working tree from either the index or another commit.
+  This command does not update your branch.
+  The command can also be used to restore files in the index from another commit.
+
+$ git reset 是會更新目前的分支, 移動tip以便新增或移除目前分支中的commit版本.
+  is about updating your branch, moving the tip in order to add or remove commits from the branch. 
+  This operation changes the commit history.
+  git reset can also be used to restore the index, overlapping with git restore.
+
+So:
+To restore a file in the index to match the version in HEAD (this is the same as using git-reset)
+  git restore --staged hello.c
+
+or you can restore both the index and the working tree (this the same as using git-checkout)
+  git restore --source=HEAD --staged --worktree hello.c
+
+or the short form which is more practical but less readable:
+  git restore -s@ -SW hello.c
+  
+  
+
+----
 更新
 https://marcus116.blogspot.com/2019/04/git-github-sync-fork-repository.html
 在 GitHub 網站上 並未提供功能同步 fork 來源的 repository，因此可以透過以下步驟進行
