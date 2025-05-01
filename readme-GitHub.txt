@@ -1,5 +1,5 @@
 From: 011netservice@gmail.com
-Date: 2025-04-21
+Date: 2025-04-22
 Subject: git, github 備忘
 File: https://github.com/github-honda/GitPratice/blob/main/readme-GitHub.txt
 CodeHelper\GitHub\readme-GitHub.txt
@@ -8,10 +8,6 @@ CodeHelper\GitHub\readme-GitHub.txt
 以下 #### 標記段落, **** 標記常用(流程、設定、備忘)
 
 #### 摘要
-- 觀念
-1. 工具軟體可以簡化某些 git 指令的輸入, 但是不同的工具軟體操作方式、名詞定義不一致, 容易造成混淆.
-2. 以指令操作 git, 較能了解 git 的運作細節. 指令也可以編寫為 script 自動化執行.
-
 - Resources:
   https://git-scm.com/ 本文使用這個工具 git-gui, 包含指令模式 git bash 工具 and Open source. 
     全新下載: 
@@ -29,9 +25,21 @@ CodeHelper\GitHub\readme-GitHub.txt
   https://git-scm.com/download/gui/windows  推薦工具清單
   https://sourcetreeapp.com/  網路上最常使用的工具.
 
-
 - 啟動執行方式:
-  檔案總管選擇目錄後, 按滑鼠右鍵, 選擇 Git Bash Here 或 Git GUI here.
+  檔案總管選擇目錄後, 按滑鼠右鍵, 選擇 Open Git Bash Here 或 Open Git GUI here.
+  
+- 指令與工具軟體比較
+  工具軟體
+    工具軟體操作方便, 可以簡化某些 git 指令的輸入, 
+    缺點是: 不同的工具軟體的操作方式或名詞定義不一致, 容易造成混淆.
+ 
+  指令 
+    以指令操作 git, 較能了解 git 的運作細節. 指令也可以編寫為 script 自動化執行, 並且可以 Pipeline 導出結果.
+    缺點是: 
+     不常用的話, 不熟練, 並且久了一定會忘記!
+	 多指令才能完成的任務, 不如操作工具軟體方便.
+
+   Pipeline 例: git diff --name-status d54a0b4 HEAD > c:\temp\ChangeList.txt
 
 - git 檔案的三種狀態:
   Modified:  已修改. 檔案已修改.
@@ -46,10 +54,9 @@ CodeHelper\GitHub\readme-GitHub.txt
 - HEAD 代表(目前最新的分支)的(最新 commit 的指標).
 
 
-#### git command reference, 2025-04-21
+#### git command reference, 2025-04-22
 *代表 常用
 - CLI (Command-Line Interface) 指令下載及使用方式, 可參考 https://cli.github.com/ 
-- 所有的指令均可以 Pipeline 將結果倒出為檔案, 例如: git diff --name-status d54a0b4 HEAD > c:\temp\ChangeList.txt
 
 git command reference
  $ git            | git usage help.
@@ -114,10 +121,17 @@ git command reference
 *$ git config --global init.defaultBranch main | 將預設(建立本地資料庫分支名稱)設為 main.
  $ git config --global user.email "you@example.com"
  $ git config --global user.name "Your Name"
- $ git diff <old commit id> <new commit id> | 查詢版本的差異.
-*$ git diff --name-status <old commit id> <new commit id> | 查詢版本之間的檔案差異.(Added, Deleted, Modified, Renamed...)
-*$ git diff --name-status HEAD | 取得 最新檔案變更差異清單. (Added, Deleted, Modified, Renamed...)
-*$ git diff --name-status <old commit id> HEAD > c:\\temp\\ChangeList.txt | 取得 最新 與 指定版本 的檔案變更差異清單.(Added, Deleted, Modified, Renamed...)
+ $ git diff <old commit id> <new commit id> | 查詢新舊 commit 版本的差異.
+*$ git diff            | 查詢(未 Commit 前的)工作版本差異明細. Changes in the working tree not yet staged for the next commit.
+*$ git diff --cached   | 查詢 Changes between the index and your last commit
+*$ git diff HEAD       | 查詢(最後 Commit 後的)工作版本差異明細. Changes in the working tree since your last commit.
+ $ git diff AUTO_MERGE | 查詢 Changes in the working tree you’ve made to resolve textual conflicts so far.
+ $ git diff HEAD -- ./test | 待測試確認, 2025-04-28
+*$ git diff HEAD^ HEAD | 查詢(最後 Commit)與(前一版的)差異明細. Compare the version before the last commit and the last commit.
+*$ git diff --name-status HEAD | 查詢(最後 Commit 後的)檔案變更清單.
+*$ git diff --name-status <old commit id> HEAD > c:\\temp\\ChangeList.txt | 查詢(<old commit id>)版本與(最新)的檔案變更清單., 並匯出為檔案.
+
+
 *$ git fetch origin/master | 下載指定的分支, 但是不會 merge
 *$ git help <command> | Help command. 輔助文件, 存放位置: C:\Program Files\Git\mingw64\share\doc\git-doc\index.html
  $ git help <concept> | Help concept. 例如: attributes, cli, core-tutorial...可從 git help -g 取得 concept 清單.
@@ -182,7 +196,8 @@ git command reference
  $ git stash pop stash@{n}   | 取回(暫存的變更編號n), 到目前的分支上, 並刪除(暫存的變更編號n)
  $ git stash drop stash@{n}  | 刪除(暫存的變更編號n)
  $ git stash apply stash@{n} | 取用(暫存的變更編號n), 到目前的分支上, 並保留(暫存的變更編號n)
-*$ git status  | 檢查狀態、本地分支、檢查變更. 若有異動, 則會提示.
+*$ git status  | 檢查狀態: 本地分支、檢查變更. 若有異動, 則會提示.
+*$ git status -s |  檢查狀態: 本地分支、檢查變更. 若有異動, 則會提示. -s = Short Format.
  $ git switch <branch> | 同 git checkout <branch> 
 *$ git version | 取得版本資訊. 例如: git version 2.31.1.windows.1
 *$ winget install --id Git.Git -e --source winget, 更新為最新版本的 git, 包含 git-gui, git bash 工具.
@@ -298,6 +313,21 @@ git config [<file-option>] --get-color name [default]
 git config [<file-option>] --get-colorbool name [stdout-is-tty]
 git config [<file-option>] -e | --edit	   
 
+usage from git bash help:
+git diff [<options>] [<commit>] [--] [<path>...]
+git diff [<options>] --cached [--merge-base] [<commit>] [--] [<path>...]
+git diff [<options>] [--merge-base] <commit> [<commit>...] <commit> [--] [<path>...]
+git diff [<options>] <commit>...<commit> [--] [<path>...]
+git diff [<options>] <blob> <blob>
+git diff [<options>] --no-index [--] <path> <path>
+
+git diff [<options>] [<commit>] [--] [<path>…​]
+git diff [<options>] --cached [--merge-base] [<commit>] [--] [<path>…​]
+git diff [<options>] [--merge-base] <commit> [<commit>…​] <commit> [--] [<path>…​]
+git diff [<options>] <commit>`…​__<commit>__ [{empty}--{empty}]{empty} [__<path>__...]{empty}
+{empty}`git diff [<options>] <blob> <blob>
+git diff [<options>] --no-index [--] <path> <path>
+
 git-fsck - Verifies the connectivity and validity of the objects in the database
 git fsck [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]
 	 [--[no-]full] [--strict] [--verbose] [--lost-found]
@@ -371,7 +401,114 @@ git switch [<options>] --orphan <new-branch>
 
 
 
+
 #### **** 常用(流程、設定、備忘)
+
+**** 常用流程: 查詢 commit 紀錄, 2025-04-28
+$ git blame [檔案], 查詢檔案中每一列的 commit 紀錄.
+$ git blame -L 5,10 [檔案], 查詢檔案中第5到10列的 commit 紀錄.
+$ git blame -L 40,+1 foo, 查詢檔案 foo 第 40 列的 commit 紀錄.
+$ git blame -L 40,+21 foo, 查詢檔案 foo 第 40 列到60列的 commit 紀錄.
+$ git blame -L 40,60 foo, 查詢檔案 foo 第 40 列到60列的 commit 紀錄.
+
+
+**** 常見問題: 查詢檔案變更, 2025-04-28
+- 查詢版本清單.
+$ git status -s
+$ git log --oneline --graph 
+
+- 查詢 最新 檔案變更差異清單.
+$ git diff --name-status HEAD (這個方式幾乎同 git status -s)
+
+- 查詢 最新與 指定版本 的檔案變更清單.
+$ git diff --name-status d54a0b4 HEAD
+
+- 查詢 最新 與 指定版本 的檔案變更清單, 並匯出為檔案.
+$ git diff --name-status d54a0b4 HEAD > c:\\temp\\ChangeList.txt
+
+
+- EXAMPLES from git help:
+Various ways to check your working tree
+$ git diff            (1)
+$ git diff --cached   (2)
+$ git diff HEAD       (3)
+$ git diff AUTO_MERGE (4)
+1. Changes in the working tree not yet staged for the next commit.
+2. Changes between the index and your last commit; 
+   what you would be committing if you run git commit without -a option.
+3. Changes in the working tree since your last commit; what you would be committing if you run git commit -a
+4. Changes in the working tree you’ve made to resolve textual conflicts so far.
+
+Comparing with arbitrary commits
+$ git diff test            (1)
+$ git diff HEAD -- ./test  (2)
+$ git diff HEAD^ HEAD      (3)
+1. Instead of using the tip of the current branch, compare with the tip of "test" branch.
+2. Instead of comparing with the tip of "test" branch, compare with the tip of the current branch, 
+   but limit the comparison to the file "test".
+3. Compare the version before the last commit and the last commit.
+
+Comparing branches
+$ git diff topic master    (1)
+$ git diff topic..master   (2)
+$ git diff topic...master  (3)
+1. Changes between the tips of the topic and the master branches.
+2. Same as above.
+3. Changes that occurred on the master branch since when the topic branch was started off it.
+
+Limiting the diff output
+$ git diff --diff-filter=MRC            (1)
+$ git diff --name-status                (2)
+$ git diff arch/i386 include/asm-i386   (3)
+1. Show only modification, rename, and copy, but not addition or deletion.
+2. Show only names and the nature of change, but not actual diff output.
+3. Limit diff output to named subtrees.
+
+Munging the diff output
+$ git diff --find-copies-harder -B -C  (1)
+$ git diff -R                          (2)
+1. Spend extra cycles to find renames, copies and complete rewrites (very expensive).
+2. Output diff in reverse.
+
+
+- case
+https://stackoverflow.com/questions/6050836/git-some-files-are-marked-as-changed-but-git-diff-doesnt-show-anything
+Do a git diff --cached - it compares the HEAD and index, ie stuff added for commit.
+
+Just a git diff is between index and working directory, so if all the changes have been staged for commit, 
+you won' see anything in git diff
+
+The third form is git diff <commit> which compares working directory and commit. 
+So doing git diff HEAD will also give you the diff that you want as well.
+
+
+**** 常用流程: 上傳最新的修改, 2025-04-22
+以下2種方式都可以使用, 建議畫面操作方式最簡單:
+- 使用指令: 檔案總管選擇目錄後按滑鼠右鍵. Open Git Bash Here.
+  1. git status -s, 檢查檔案狀態. 
+    例如: 已變更檔案 Changes not staged for commit, 未納管檔案 Untracked files...等.
+    a. git add <file>, 或 git add --all, 將未納管的檔案加入納管. 
+	  納管代表(commit 範圍內的檔案清單).
+	  
+  2. git commit -a -m "Commit Message". 將已變更的檔案, 存入本地資料庫. 若沒有輸入 Commit Message, 則會要求輸入
+  3. git push, 將(本地資料庫)上傳到(遠端資料庫). 
+    a. 或是 git push origin main, 上傳(本地資料庫 main) 到 (遠端資料庫 origin).
+	  (資料庫Repository)預設名稱, 習慣為(本地資料庫 main), (遠端資料庫 origin). 舊版的遠端資料庫為 master.
+
+- 畫面操作: 檔案總管選擇目錄後按滑鼠右鍵. Open Git GUI Here.
+  操作最簡單, 用久了會忘記指令該怎麼敲.
+  1. 啟動畫面後顯示
+   上面: 已變更檔案清單 Unstaged Changes).
+   下面: 已存入本地資料庫檔案清單(Staged Changes(Will Commit).
+   右上: (Portions staged for commit)為選擇(Unstaged Changes檔案)內容變更明細.
+    a. 按鍵 Rescan: 重新查詢最新檔案狀態. 若檔案有變更, 就隨時給他來按一下看看最新的狀態.
+    b. 按鍵 Stage Changed: 將上面(已變更檔案清單 Unstaged Changes), 存入下面(已存入本地資料庫檔案清單(Staged Changes(Will Commit)).
+    c. 按鍵 Sign Off: 不常用. Sign-off is requirement for getting patches into the Linux kernel, but most projects don't actually use it.
+    d. 按鍵 Commit: 將下面(已存入本地資料庫檔案清單(Staged Changes(Will Commit)), 存入本地資料庫.
+	                若沒有輸入 Commit Message, 則會要求輸入.
+    e. 按鍵 Push: 將將(本地資料庫)上傳到(遠端資料庫).
+
+
 
 **** 常用流程: 複製遠端資料庫 為 本機新子資料夾.  Clone/Fork, 2025-04-21
 git clone <url.git> | Clone/Fork 複製遠端資料庫 到 新子目錄(遠端資料庫名稱)中. 
@@ -407,16 +544,6 @@ License: GNC General Public License v2.0
 2. 複製遠端資料庫到新子目錄(專案名稱)中
 參考 (常用流程: Clone/Fork 複製遠端資料庫 為 本機新子資料夾)
 
-
-**** 取得不同版本的檔案變更清單
-- 檢視版本清單
-$ git log --oneline --graph 
-
-- 取得 最新檔案變更差異清單
-$ git diff --name-status HEAD
-
-- 取得 最新 與 指定版本 的檔案變更差異清單
-$ git diff --name-status d54a0b4 HEAD > c:\\temp\\ChangeList.txt
 
 **** 常用流程: fix a Git detached head 2023-01-23 
 https://stackoverflow.com/questions/10228760/how-do-i-fix-a-git-detached-head
@@ -738,32 +865,6 @@ $ git pull origin main
             待確認 Git Gui 的正確操作為何? 使用指令 git pull 則會下載新資料, 也會跳到最新下載的分支上.
   20210309, 因為 git pull 比 fetch 多了 fast-forward merge 動作, 若合併分支時沒有衝突, 則將變更併入目前的分支. 
 
-**** 常用流程: 上傳最新的修改 2022-05-02
-
-以下2種方式都可使用, 建議畫面操作方式最簡單:
-□ 使用指令: 檔案總管選擇目錄後按滑鼠右鍵.Git Bash Here.
-  ○ git status, 檢查檔案狀態. 
-    例如: 已變更檔案 Changes not staged for commit, 未納管檔案 Untracked files...等.
-    △ git add <file>, 或 git add --all, 將未納管的檔案加入納管. 
-	  納管代表(commit 範圍內的檔案清單).
-	  
-  ○ git commit -a -m "Commit Message". 將已變更的檔案, 存入本地資料庫. 若沒有輸入 Commit Message, 則會要求輸入
-  ○ git push, 將(本地資料庫)上傳到(遠端資料庫). 
-    △ 或是 git push origin main, 上傳(本地資料庫 main) 到 (遠端資料庫 origin).
-	  (資料庫Repository)預設名稱, 習慣為(本地資料庫 main), (遠端資料庫 origin). 舊版的遠端資料庫為 master.
-
-□ 畫面操作: 檔案總管選擇目錄後按滑鼠右鍵.Git GUI Here.
-  操作最簡單, 用久了會忘記指令該怎麼敲.
-  ○ 啟動畫面後顯示
-   上面(已變更檔案清單 Unstaged Changes), 及
-   下面(已存入本地資料庫檔案清單(Staged Changes(Will Commit)).
-   右上(Portions staged for commit)為選擇(Unstaged Changes檔案)內容變更明細.
-    △ 按鍵 Rescan: 重新查詢最新檔案狀態. 若檔案有變更, 就隨時給他來按一下看看最新的狀態.
-    △ 按鍵 Stage Changed: 將上面(已變更檔案清單 Unstaged Changes), 存入下面(已存入本地資料庫檔案清單(Staged Changes(Will Commit)).
-    △ 按鍵 Sign Off: 不常用. Sign-off is requirement for getting patches into the Linux kernel, but most projects don't actually use it.
-    △ 按鍵 Commit: 將下面(已存入本地資料庫檔案清單(Staged Changes(Will Commit)), 存入本地資料庫.
-	               若沒有輸入 Commit Message, 則會要求輸入.
-    △ 按鍵 Push: 將將(本地資料庫)上傳到(遠端資料庫).
 	
 **** 常用流程: 上傳最新的修改 及 相關指令. 2020-12-27
 
@@ -1090,13 +1191,6 @@ $ git merge dummy-kao/master
 這個步驟要不要做就看你自己決定了，畢竟在你電腦上已經是最新版本了，如果你希望你在 GitHub 上那個 Fork 的專案也跟到最新版，只要推上去就行了：
 $ git push origin master
 這樣一來，你電腦裡的專案，以及在 GitHub 上從原作那邊 Fork 過來的專案都會是最新進度了。
-
-**** 常用流程: 查詢是誰改的? 2020-12-27
-$ git blame [檔案名稱], 查詢檔案中每一列的 commit 紀錄.
-$ git blame -L 5,10 [檔案名稱], 查詢檔案中第5到10列的 commit 紀錄.
-$ git blame -L 40,+1 foo, 查詢檔案 foo 第 40 列的 commit 紀錄.
-$ git blame -L 40,+21 foo, 查詢檔案 foo 第 40 列到60列的 commit 紀錄.
-$ git blame -L 40,60 foo, 查詢檔案 foo 第 40 列到60列的 commit 紀錄.
 
 
 **** 常用流程: 合併分支 2020-12-27
