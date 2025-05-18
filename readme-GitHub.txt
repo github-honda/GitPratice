@@ -1,8 +1,9 @@
 From: 011netservice@gmail.com
-Date: 2025-04-22
+Date: 2025-05-17
 Subject: git, github 備忘
 File: https://github.com/github-honda/GitPratice/blob/main/readme-GitHub.txt
-CodeHelper\GitHub\readme-GitHub.txt
+      https://svc.011.idv.tw/CodeHelper/GitHub/readme-GitHub.txt
+	  
 歡迎來信交流, 訂購軟體需求.
 
 以下 #### 標記段落, **** 標記常用(流程、設定、備忘)
@@ -54,7 +55,7 @@ CodeHelper\GitHub\readme-GitHub.txt
 - HEAD 代表(目前最新的分支)的(最新 commit 的指標).
 
 
-#### git command reference, 2025-04-22
+#### git command reference, 2025-05-01
 *代表 常用
 - CLI (Command-Line Interface) 指令下載及使用方式, 可參考 https://cli.github.com/ 
 
@@ -83,7 +84,7 @@ git command reference
  $ git blame -L 40,60 <file>   | 查詢(<file> 第40列到60列)的修改.
  $ git blame -L 5,10 <file>    | 查詢(<file> 第5   到10列)的修改.
 *$ git branch                  | 查詢本地分支. 標示為綠色*就是目前的分支.
-*$ git branch <branch>         | 建立分支. 建立新分支後, 記得要切換到新分支(git checkout <branch>), 否則仍在原分支不變.
+*$ git branch <branch>         | 建立分支. 建立新分支後, 記得要切換到新分支, 否則仍在原分支不變.
  $ git branch -d <branch>      | 刪除分支. 
  $ git branch -f <branch>      | Shortcut for --force. 
  $ git branch --force <branch> | 強制建立分支 Reset <branch> to <startpoint>, even if <branch> exists already.
@@ -99,8 +100,8 @@ git command reference
 *$ git branch -vv | 檢視 upstream 設定, -vv = doubly verbose. 輸出綠色*代表本地分支, 藍色代表遠端分支. 範例: * master 28b359c1 [origin/master] CodeHelper memo. 以上綠色為(* master), 藍色為 origin/master.
  $ git checkout                   | 還原目前本地分支所有(已 commit)的檔案. Switch branches or restore working tree files
 *$ git checkout <commitId> <file> | 還原(指定版本)的檔案.
-*$ git checkout <branch>      | 切換到分支. Switch to a branch. 若分支不存在, 則錯誤訊息.
-*$ git checkout -b <newBranch>      | 切換到新分支, 若新分支不存在, 則建立新分支.
+*$ git checkout <branch>          | 切換到分支. Switch to a branch. 若分支不存在, 則錯誤訊息.
+*$ git checkout -b <newBranch>    | 切換到分支, 若分支不存在, 則建立新分支 <newBranch>.
  $ git checkout <file>            | 還原(已 commit)的檔案.
  $ git clean -f | 還原工作目錄檔案 Untracked files. -f=--force Cleans the working tree by recursively removing files that are not under version control, starting from the current directory.
  $ git clean -n | 查詢將被 git clean -f 還原的清單 Untracked files. -n=--dry-run Cleans the working tree by recursively removing files that are not under version control, starting from the current directory.
@@ -130,7 +131,7 @@ git command reference
 *$ git diff HEAD^ HEAD | 查詢(最後 Commit)與(前一版的)差異明細. Compare the version before the last commit and the last commit.
 *$ git diff --name-status HEAD | 查詢(最後 Commit 後的)檔案變更清單.
 *$ git diff --name-status <old commit id> HEAD > c:\\temp\\ChangeList.txt | 查詢(<old commit id>)版本與(最新)的檔案變更清單., 並匯出為檔案.
-
+待續
 
 *$ git fetch origin/master | 下載指定的分支, 但是不會 merge
 *$ git help <command> | Help command. 輔助文件, 存放位置: C:\Program Files\Git\mingw64\share\doc\git-doc\index.html
@@ -151,9 +152,10 @@ git command reference
  $ git mv <file1> <file2> | 變更檔案名稱並將變更移到 Staging Area. 等於先( $ mv <file1> <file2>), 再 $ git add -A).
  $ git prune [-n] [-v] [--progress] [--expire <time>] [--] [<head>…​] | 清理沒用的物件. 
  $ git prune | 清理沒用的物件. 例如: $ git prune $(cd ../another && git rev-parse --all) , To prune objects not used by your repository or another that borrows from your repository via its ".git/objects/info/alternates"
-*$ git pull | 下載(預設遠端分支)到本地資料庫, 同時合併分支, git pull = fetch + merge. 
-*$ git pull <RemoteBranch> <LocalBranch> | 下載(遠端分支<RemoteBranch>)到本地資料庫<LocalBranch>, 同時合併分支, git pull = fetch + merge. 例如: $ git pull origin master
-*$ git push    | 上傳本地資料庫到預設的遠端資料庫. 預設遠端資料庫設定請參考 git branch --set-upstream-to
+*$ git pull    | 下載遠端資料庫到本地資料庫, 並合併分支, git pull = fetch + merge, 執行後會多一個本地 commit.
+*$ git pull -r | 下載遠端資料庫到本地資料庫, 但是不合併分支. 等於 fetch + rebase, 執行後不會多一個本地 commit.
+ $ git pull <RemoteBranch> <LocalBranch> | 下載(遠端分支<RemoteBranch>)到本地資料庫<LocalBranch>, 同時合併分支, git pull = fetch + merge. 例如: $ git pull origin master
+*$ git push    | 上傳本地資料庫到預設的遠端資料庫.
 *$ git push -f | 強制上傳(本地資料庫)到(預設的遠端資料庫).
 *$ git push <RemoteBranch> <LocalBranch> | 上傳本地資料庫LocalBranch到遠端資料庫RemoteBranch. 
 *$ git push origin master                | 上傳本地資料庫master到遠端資料庫origin.
@@ -238,7 +240,7 @@ This makes valid modes (as binary and octal):
 1110000000000000 (160000): Gitlink
 
 
-#### SYNOPSIS/Syntax, 2025-04-21
+#### SYNOPSIS/Syntax, 2025-05-01
 git - the stupid content tracker
 git [--version] [--help] [-C <path>] [-c <name>=<value>]
     [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
@@ -404,6 +406,30 @@ git switch [<options>] --orphan <new-branch>
 
 #### **** 常用(流程、設定、備忘)
 
+**** 常用流程: 更新本地資料庫, 2025-05-17
+git branch     確認本地目前的 branch
+git log        確認本地目前的 HEAD.
+git stash      暫存本地資料夾的工作檔案.
+git pull -r    下載遠端資料庫到本地資料庫, 但是不合併分支. 等於 fetch + rebase, 執行後不會多一個本地 commit.
+git stash pop  取回暫存
+git log        確認本地目前的 HEAD.
+
+
+**** 常用流程: 切換到其他分支 <OtherBranch>. 2025-05-15 
+查詢目前本地分支, 標示為綠色*就是目前的分支.
+$ git branch
+* windows
+
+切換到分支 ubuntu, 若分支不存在
+$ git checkout ubuntu
+branch 'ubuntu' set up to track 'origin/ubuntu'.
+Switched to a new branch 'ubuntu'
+
+查詢目前本地分支, 標示為綠色*就是目前的分支.
+$ git branch
+* ubuntu
+  windows
+
 **** 常用流程: 查詢 commit 紀錄, 2025-04-28
 $ git blame [檔案], 查詢檔案中每一列的 commit 紀錄.
 $ git blame -L 5,10 [檔案], 查詢檔案中第5到10列的 commit 紀錄.
@@ -412,7 +438,7 @@ $ git blame -L 40,+21 foo, 查詢檔案 foo 第 40 列到60列的 commit 紀錄.
 $ git blame -L 40,60 foo, 查詢檔案 foo 第 40 列到60列的 commit 紀錄.
 
 
-**** 常見問題: 查詢檔案變更, 2025-04-28
+**** 常見問題: 查詢變更, 2025-04-28
 - 查詢版本清單.
 $ git status -s
 $ git log --oneline --graph 
@@ -425,7 +451,7 @@ $ git diff --name-status d54a0b4 HEAD
 
 - 查詢 最新 與 指定版本 的檔案變更清單, 並匯出為檔案.
 $ git diff --name-status d54a0b4 HEAD > c:\\temp\\ChangeList.txt
-
+待續
 
 - EXAMPLES from git help:
 Various ways to check your working tree
@@ -661,23 +687,6 @@ git fetch can update only the branch you are on, however not merge any changes i
 git pull can update and merge any remote changes of the present branch you are on.
 This would be the one you use to update a local branch.
 
-**** 常用流程: 更新本地資料庫, 2024-09-22 
-□ pull = fetch + merge 最簡單
-從 <RemoteBranch> 下載到 <LocalBranch>, 同時合併分支, git pull = fetch + merge. 
-若已設定(預設 upstream)
-$ git pull
-
-否則
-$ git pull <RemoteBranch> <LocalBranch>  
-例如: $ git pull origin main, 或 $ git pull origin master
-
-□ 分解步驟下載全部分支
-$ git remote update  <--- 下載全部分支, 無 merge.
-$ git merge <branch> <--- 合併分支. 快轉合併 fast-forward 將 <banch>分支併入目前的分支
-
-□ 分解步驟下載指定分支
-$ git fetch <RemoteBranch>  <--- 下載指定分支, 無 merge.
-$ git merge <branch> <--- 合併分支. 快轉合併 fast-forward 將 <banch>分支併入目前的分支
 
 
 **** 常用流程: Unable to obtain your identity
@@ -768,25 +777,6 @@ Changing the default branch
 切換到新分支, 若新分支不存在, 則建立新分支.
 *$ git checkout -b <newBranch>   <--- 切換到新分支, 若新分支不存在, 則建立新分支.
 
-**** 常用流程: 切換到其他 <OtherBranch> 工作後, 再回到自己的 <SelfBranch>. 2023-01-04 
-□ 查詢本地分支. 標示為綠色*就是目前的分支.
-$ git branch   <---- 查詢本地分支. 標示為綠色*就是目前的分支.
-* main
-
-□ 切換到<OtherBranch>工作.
-$ git checkout OtherBranch   <--- 切換到<OtherBranch>
-Switched to a new branch 'OtherBranch'
-Branch 'OtherBranch' set up to track remote branch 'OtherBranch' from 'origin'.
-
-若<OtherBranch>不存在, 要建立的話, 則參考 (常用流程: 建立 <NewBranch>).
-
-□ 查詢本地分支. 標示為綠色*就是目前的分支.
-$ git branch   <---- 查詢本地分支. 標示為綠色*就是目前的分支.
-* OtherBranch
-  main
-  
-□ 使用後, 切換回到自己的 <SelfBranch>
-$ git checkout main   <--- 切換回到自己的 <SelfBranch>
 
 
 
@@ -1279,7 +1269,7 @@ You can initialize this repository with code from a Subversion, Mercurial, or TF
 
 
 
-#### 以下舊資料, 確認後移到上面, 2025-04-11
+#### 以下舊資料, 確認後移到上面, 2025-05-07
 
 #### 遠端操作, 2025-04-11
 
