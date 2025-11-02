@@ -1,30 +1,26 @@
-From: 011netservice@gmail.com
-Date: 2025-05-17
+From: www.011.idv.tw
+Date: 2025-11-02
 Subject: git, github 備忘
-File: https://github.com/github-honda/GitPratice/blob/main/readme-GitHub.txt
-      https://svc.011.idv.tw/CodeHelper/GitHub/readme-GitHub.txt
-	  
-歡迎來信交流, 訂購軟體需求.
 
-以下 #### 標記段落, **** 標記常用(流程、設定、備忘)
+歡迎來信交流, 訂購軟體需求.
 
 #### 摘要
 - Resources:
   https://git-scm.com/ 本文使用這個工具 git-gui, 包含指令模式 git bash 工具 and Open source. 
     全新下載: 
-	  https://git-scm.com/downloads, 2.49.0
-	  https://git-scm.com/downloads/win, 2.49.0, 2025-04-21
-	版本更新指令: 
-	  winget install --id Git.Git -e --source winget, 更新 git-gui, git bash 工具
-    $ git --version
-      git version 2.39.0.windows.1, 2022-12-14
-      git version 2.36.0.windows.1
+	  https://git-scm.com/downloads
+	  https://git-scm.com/downloads/win, 2.51.0, 2025-08-25
 
-  https://github.com/
-  https://backlog.com/git-tutorial/tw/ 繁體中文(入門、進階、命令參考)
-  https://git-scm.com/docs
-  https://git-scm.com/download/gui/windows  推薦工具清單
-  https://sourcetreeapp.com/  網路上最常使用的工具.
+	安裝 git:
+		*$ git clone https://github/com/git/git | 下載更新 git 軟體為最新版本, 若需要一併更新 git-gui, git bash 工具, 則應使用 winget install 指令. 
+		*$ winget install --id Git.Git -e --source winget, 更新 git 為最新版本的 git, 包含 git-gui, git bash 工具. 必須有系統權限才能執行.
+		或
+		*$ winget install --id Git.Git -e --source winget --force | 如果系統已經安裝過 Git，但安裝損壞或版本不一致，可以嘗試強制重新安裝.
+
+	如果是 WinGet 本身出問題，可以嘗試修復:
+		Install-Module -Name Microsoft.WinGet.Client -Force -Repository PSGallery
+		Repair-WinGetPackageManager -Force -Latest
+
 
 - 啟動執行方式:
   檔案總管選擇目錄後, 按滑鼠右鍵, 選擇 Open Git Bash Here 或 Open Git GUI here.
@@ -100,13 +96,23 @@ git command reference
 *$ git branch -vv | 檢視 upstream 設定, -vv = doubly verbose. 輸出綠色*代表本地分支, 藍色代表遠端分支. 範例: * master 28b359c1 [origin/master] CodeHelper memo. 以上綠色為(* master), 藍色為 origin/master.
  $ git checkout                   | 還原目前本地分支所有(已 commit)的檔案. Switch branches or restore working tree files
 *$ git checkout <commitId> <file> | 還原(指定版本)的檔案.
-*$ git checkout <branch>          | 切換到分支. Switch to a branch. 若分支不存在, 則錯誤訊息.
+*$ git checkout <branch>          | 建議使用 git switch <branch>. 切換到分支. Switch to a branch. 若分支不存在, 則錯誤訊息.
 *$ git checkout -b <newBranch>    | 切換到分支, 若分支不存在, 則建立新分支 <newBranch>.
  $ git checkout <file>            | 還原(已 commit)的檔案.
  $ git clean -f | 還原工作目錄檔案 Untracked files. -f=--force Cleans the working tree by recursively removing files that are not under version control, starting from the current directory.
  $ git clean -n | 查詢將被 git clean -f 還原的清單 Untracked files. -n=--dry-run Cleans the working tree by recursively removing files that are not under version control, starting from the current directory.
 *$ git clone <url.git> | Clone/Fork 複製遠端資料庫 到 新子目錄(遠端資料庫名稱)中. Clone a repository into a new directory. 同一台電腦可將相同的遠端資料庫, 複製為多份各自獨立的版本, 互不影響.
+
+安裝 git:
 *$ git clone https://github/com/git/git | 下載更新 git 軟體為最新版本, 若需要一併更新 git-gui, git bash 工具, 則應使用 winget install 指令. 
+*$ winget install --id Git.Git -e --source winget, 更新 git 為最新版本的 git, 包含 git-gui, git bash 工具. 必須有系統權限才能執行.
+		或
+*$ winget install --id Git.Git -e --source winget --force | 如果系統已經安裝過 Git，但安裝損壞或版本不一致，可以嘗試強制重新安裝.
+
+	如果是 WinGet 本身出問題，可以嘗試修復:
+		Install-Module -Name Microsoft.WinGet.Client -Force -Repository PSGallery
+		Repair-WinGetPackageManager -Force -Latest
+
  $ git commit --amend --no-edit        | 將本次commit 併入最後一次 commit 中. --no-edit 代表不修改訊息.
 *$ git commit --amend -m "Message" | 修改最後一次提交的訊息.
  $ git commit --signoff | Sign-off is requirement for getting patches into the Linux kernel, but most projects don't actually use it.
@@ -187,22 +193,31 @@ git command reference
  $ git reset <commit id>^       | 還原工作目錄到 <commit id> 前1個版本.
  $ git reset <commit id>^^      | 還原工作目錄到 <commit id> 前2個版本. 
  $ git reset <commit id>~3      | 還原工作目錄到 <commit id> 前3個版本.
- $ git restore <file>          | 取消(工作目錄中)的檔案變更. Restore working tree files
- $ git restore --staged <file> | 取消(暫存區中的)檔案變更.
+*$ git restore <file>           | 還原檔案變更. Restore working tree files
+*$ git restore --staged <file>  | 還原(暫存區中的)檔案變更.
  $ git rm --cached <file> | 還原(工作目錄)為(暫存區檔案).
  $ git rm <file> |  移除檔案並將變更移到暫存區（工作區域 -> 暫存區. 等於 ($ rm <file> 後再 $ git add <file>).
- $ git stash      | 暫存工作目錄的檔案變更. 不含 untracked 檔案.
- $ git stash -u   | 暫存工作目錄的檔案變更. 包含 untracked 檔案.
- $ git stash clear | 清除暫存變更.
- $ git stash list  | 查詢暫存變更清單.
- $ git stash pop stash@{n}   | 取回(暫存的變更編號n), 到目前的分支上, 並刪除(暫存的變更編號n)
- $ git stash drop stash@{n}  | 刪除(暫存的變更編號n)
- $ git stash apply stash@{n} | 取用(暫存的變更編號n), 到目前的分支上, 並保留(暫存的變更編號n)
+*$ git stash      | 暫存工作區變更. 不含 untracked 檔案.
+ $ git stash -u   | 暫存工作區變更. 包含 untracked 檔案.
+ $ git stash clear | 清除暫存.
+ $ git stash list  | 查詢暫存清單.
+*$ git stash pop   | 取回暫存.
+ $ git stash pop stash@{n}   | 取回(暫存編號n), 到目前的分支上, 並刪除(暫存的變更編號n)
+ $ git stash drop stash@{n}  | 刪除(暫存編號n)
+ $ git stash apply stash@{n} | 取用(暫存編號n), 到目前的分支上, 並保留(暫存的變更編號n)
 *$ git status  | 檢查狀態: 本地分支、檢查變更. 若有異動, 則會提示.
 *$ git status -s |  檢查狀態: 本地分支、檢查變更. 若有異動, 則會提示. -s = Short Format.
- $ git switch <branch> | 同 git checkout <branch> 
-*$ git version | 取得版本資訊. 例如: git version 2.31.1.windows.1
-*$ winget install --id Git.Git -e --source winget, 更新為最新版本的 git, 包含 git-gui, git bash 工具.
+*$ git switch <branch> | 切換到分支. Switch to a branch. 若分支不存在, 則錯誤訊息.
+
+ $ git tag 相關指令:
+ $ git tag									| 查看所有 Tag
+ $ git tag <tag-name>						| 在目前的 commit 上加上標籤
+ $ git tag -a <tag-name> -m "Tag message"	| 在目前的 commit 上加上標籤
+ $ git tag v3.0.0-beta						| 在目前的 commit 上加上 v3.0.0-beta 的標籤
+ $ git show <tag-name>						| 查看該 <tag-name> 的 commit 詳細資訊。
+
+*$ git version | 取得 git 本身版本資訊. 例如: git version 2.49.0.windows.1
+*$ winget install --id Git.Git -e --source winget, 更新 git 為最新版本, 包含 git-gui, git bash 工具. 必須有系統權限才能執行.
  $ pwd         | 目前工作目錄
  $ gh repo create | CLI. 以詢問方式建立遠端資料庫並 push 目前資料夾已Commit的內容.
  $ gh repo create --source=. --public --push --remote <RepositoryName> | CLI. 建立遠端資料庫並 push 目前資料夾已Commit的內容.
@@ -402,26 +417,339 @@ git switch [<options>] (-c|-C) <new-branch> [<start-point>]
 git switch [<options>] --orphan <new-branch>
 
 
+#### **** 常用
+
+**** commit 最新修改, 2025-11-02
+以下2種方式都可以使用, 建議畫面操作方式最簡單.
+
+A. 使用指令
+檔案總管選擇目錄後按滑鼠右鍵. Open Git Bash Here.
+  1. git status -s, 檢查檔案狀態. 
+  2. 將 Untracked files 加入
+    git add <file>, 或 
+    git add --all, 將未納管的檔案加入納管. 
+	  
+  2. 將已變更的檔案, 存入本地資料庫. 
+     若沒有輸入 Commit Message, 則會要求輸入.
+    git commit -a -m "Commit Message".
+	
+  3. commit
+	git push
+	
+  4. 視需求加上版本編號 
+	$ git tag -a <tag-name> -m "Tag message"	| 在目前的 commit 上加上標籤
 
 
-#### **** 常用(流程、設定、備忘)
+B. 畫面操作
+畫面操作最簡單, 日子久了不常敲指令, 容易忘記指令!
+檔案總管選擇目錄後按滑鼠右鍵. Open Git GUI Here.
+  1. 啟動畫面後顯示
+   上面: 已變更檔案清單 Unstaged Changes).
+   下面: 已存入本地資料庫檔案清單(Staged Changes(Will Commit).
+   右上: (Portions staged for commit)為選擇(Unstaged Changes檔案)內容變更明細.
+    a. 按鍵 Rescan: 重新查詢最新檔案狀態. 若檔案有變更, 就隨時給他來按一下看看最新的狀態.
+    b. 按鍵 Stage Changed: 將上面(已變更檔案清單 Unstaged Changes), 存入下面(已存入本地資料庫檔案清單(Staged Changes(Will Commit)).
+    c. 按鍵 Sign Off: 不常用. Sign-off is requirement for getting patches into the Linux kernel, but most projects don't actually use it.
+    d. 按鍵 Commit: 將下面(已存入本地資料庫檔案清單(Staged Changes(Will Commit)), 存入本地資料庫.
+	                若沒有輸入 Commit Message, 則會要求輸入.
+    e. 按鍵 Push: 將將(本地資料庫)上傳到(遠端資料庫).
 
-**** 常用流程: 更新本地資料庫, 2025-05-17
-git branch     確認本地目前的 branch
-git log        確認本地目前的 HEAD.
-git stash      暫存本地資料夾的工作檔案.
-git pull -r    下載遠端資料庫到本地資料庫, 但是不合併分支. 等於 fetch + rebase, 執行後不會多一個本地 commit.
-git stash pop  取回暫存
-git log        確認本地目前的 HEAD.
+**** 安裝或更新 git 為最新版本, 2025-11-02
+	安裝 git:
+		*$ git clone https://github/com/git/git | 下載更新 git 軟體為最新版本, 若需要一併更新 git-gui, git bash 工具, 則應使用 winget install 指令. 
+		*$ winget install --id Git.Git -e --source winget, 更新 git 為最新版本的 git, 包含 git-gui, git bash 工具. 必須有系統權限才能執行.
+		或
+		*$ winget install --id Git.Git -e --source winget --force | 如果系統已經安裝過 Git，但安裝損壞或版本不一致，可以嘗試強制重新安裝.
+
+	如果是 WinGet 本身出問題，可以嘗試修復:
+		Install-Module -Name Microsoft.WinGet.Client -Force -Repository PSGallery
+		Repair-WinGetPackageManager -Force -Latest
 
 
-**** 常用流程: 切換到其他分支 <OtherBranch>. 2025-05-15 
+**** 檢視 git 太多的回傳訊息
+鍵盤上下左右 就可以移動.
+
+其他方法:
+1. 分頁
+git log | less
+git log --oneline --graph --decorate | less
+
+在 less 中：
+- 按 空白鍵 可以往下翻頁
+- 按 q 可以退出
+
+2. 將輸出導出成 .txt 檔案
+git log > git-log-output.txt
+
+或者導出某個 tag 的詳細資訊：
+git show v3.0.0-beta > v3.0.0-beta-details.txt
+
+會在目前資料夾中檔案。
+
+3. 使用 tail 或 head 查看部分內容
+git log | head -n 20   # 顯示前 20 行
+git log | tail -n 20   # 顯示最後 20 行
+
+
+**** 取得 tag 的版本, 2025-11-02
+git 如何取得 tag v3.0.0-beta 當時的版本 ?
+git checkout tags/v3.0.0-beta
+
+切換到該 tag 所指向的 commit，但會進入「detached HEAD」狀態.
+意思是你不是在任何分支上。
+
+如果想在這個版本上進行修改或建立新分支，可以再執行:
+git checkout -b new-branch-name
+
+補充說明：
+- `git tag` 可以列出所有 tag。
+- `git show v3.0.0-beta` 可以查看該 tag 的 commit 詳細資訊。
+
+
+**** 合併分支, 2025-11-02
+切換到目標分支
+   git checkout windows
+
+合併來源分支
+   git merge ubuntu
+
+如果不確定合併會不會造成衝突，可以先預覽差異：
+git diff windows..ubuntu
+
+或者，如果用 **rebase** 而不是 merge:
+git checkout windows
+git rebase ubuntu
+
+**** 常用流程: Tag 版本編號, 2025-11-02
+Tag 標籤有兩種: 
+Lightweight 輕量(只有名稱) vs Annotated 附註(可加入註解文字).
+常用於標註里程碑，如 v1.0.0、beta-release。
+
+git tag 相關指令:
+git tag									| 查看所有 Tag
+git tag <tag-name>						| 在目前的 commit 上加上標籤
+git tag -a <tag-name> -m "Tag message"	| 在目前的 commit 上加上標籤
+git tag v3.0.0-beta						| 在目前的 commit 上加上 v3.0.0-beta 的標籤
+git show <tag-name>						| 查看該 <tag-name> 的 commit 詳細資訊。
+
+
+**** 常見的 Tag 格式, 2025-11-02
+git tag <tag-name>
+git tag -a <tag-name> -m "Tag message"
+<tag-name> 是為某個 commit 所命名的版本標籤, 名稱可以自由定義.
+
+例如:
+1. 語義化版本號（Semantic Versioning）**
+格式：`v<主版本>.<次版本>.<修訂版本>`
+v1.0.0      # 初始穩定版本
+v2.1.3      # 主版本 2，次版本 1，修訂 3
+v3.0.0-beta # 測試版
+v1.2.0-rc.1 # 發行候選版本（Release Candidate）
+常見在開源專案或 CI/CD 流程中。
+
+2. 日期版本號
+格式：`YYYYMMDD` 或 `vYYYY.MM.DD`
+20251102       # 表示 2025 年 11 月 2 日的版本
+v2025.11.02    # 加上 v 前綴，更清楚是版本標籤
+適合每日部署或快速迭代的專案。
+
+3. 自訂名稱
+格式：自由命名，但建議有一致性
+release-1.0
+hotfix-login-bug
+milestone-2025Q4
+常用於特定目的，例如修補、里程碑、或特定功能版本。
+
+命名建議
+- 使用小寫或一致的大小寫風格
+- 避免空格（可用 `-` 或 `_` 取代）
+- 建議加上 `v` 前綴來表示版本（例如 `v1.0.0`）
+- 若有多種版本類型（正式版、測試版、RC），可用後綴區分
+
+
+**** 常用流程: 更新 Forked repository 跟上原始來源的最新修改. 2025-11-02
+- 在 Forked repository 首頁上, 找到 Sync fork, 可檢查是否為最新.
+  若按下 Sync fork 之後出現 This branch is not behind the upstream, 代表已是最新.
+  若按下 Sync fork 之後出現 This branch it out-of-date, 才可 Update branch.
+  
+- 若本地資料庫也需要最新的修改, 則可再更新本地資料庫
+	
+**** 常用流程: MergeBranch, 2025-08-28
+參考 SampleCase\MergeBranch.txt
+
+**** 常用流程: 更新本地資料庫, 2025-08-22
+** 簡單看這裡就好, 後面其他狀況想看再看
+git status		確認 branch is up to date with 'origin/branch'
+git branch		查詢目前本地分支正確, * 代表目前的 branch.
+	若需切換分支
+		$ git switch ubuntu		切換到分支. Switch to a branch. 若分支不存在, 則錯誤訊息.
+		branch 'ubuntu' set up to track 'origin/ubuntu'.
+		Switched to a new branch 'ubuntu'
+git stash		暫存(工作區的變更內容). 若有檔案 needs merge 時, 則要考慮是否要放棄該檔案的變更.
+git pull -r		下載遠端資料庫到本地資料庫, 但是不合併分支. 等於 fetch + rebase, 執行後不會多一個本地 commit.
+git stash pop	還原(工作區的變更內容).
+git log			確認本地目前的 HEAD.
+
+** 狀況題:
+git stash後, 出現需要 merge 的檔案, 
+若確認可以(最後 commit 的版本)為準.
+則可還原為(最後 commit 的版本), 避開 needs merge.
+例如:
+[user1]@ubuntu110:~/Projects/hc-api-server$ git pull -r
+error: Pulling is not possible because you have unmerged files.
+hint: Fix them up in the work tree, and then use 'git add/rm <file>'
+hint: as appropriate to mark resolution and make a commit.
+fatal: Exiting because of an unresolved conflict.
+[user1]@ubuntu110:~/Projects/hc-api-server$ git status
+On branch ubuntu
+Your branch is up to date with 'origin/ubuntu'.
+
+Unmerged paths:                                   ----> Unmerged導致無法 git pull -r
+  (use "git restore --staged <file>..." to unstage)
+  (use "git add <file>..." to mark resolution)
+        both modified:   src/prisma/seed.ts       ----> 這個檔案導致無法 git pull -r
+
+Changes not staged for commit:					  ----> 這些檔案可以 git stash 後就可以使用  git pull -r
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   .env                         
+        modified:   src/configurations/Config.ts 
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+[user1]@ubuntu110:~/Projects/hc-api-server$ git stash
+src/prisma/seed.ts: needs merge               ----> stash 中需要 merge 的檔案.
+
+[user1]@ubuntu110:~/Projects/hc-api-server$ git pull -r   ----> stash 中仍有需要 merge 的檔案, 無法 git pull -r.
+error: Pulling is not possible because you have unmerged files.
+hint: Fix them up in the work tree, and then use 'git add/rm <file>'
+hint: as appropriate to mark resolution and make a commit.
+fatal: Exiting because of an unresolved conflict.
+
+
+[user1]@ubuntu110:~/Projects/hc-api-server$ git restore --staged src/prisma/seed.ts ----> 將 stash 中的檔案還原為 (最後 commit 的版本)
+意思就是放棄 merge 本地的變更, 改用(最後 commit 的版本)
+
+[user1]@ubuntu110:~/Projects/hc-api-server$ git status
+On branch ubuntu
+Your branch is up to date with 'origin/ubuntu'.
+
+Changes not staged for commit:   ----> 這些檔案可以 git stash 後就可以使用  git pull -r
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   .env
+        modified:   src/configurations/Config.ts
+
+no changes added to commit (use "git add" and/or "git commit -a")
+[user1]@ubuntu110:~/Projects/hc-api-server$ git stash  ----> 暫存本地資料夾的工作檔案
+Saved working directory and index state WIP on ubuntu: e8f4eec add lack files
+
+[user1]@ubuntu110:~/Projects/hc-api-server$ git status --->  本地資料夾已恢復為最後 commit 的狀態(變更都暫存了!)
+On branch ubuntu
+Your branch is up to date with 'origin/ubuntu'.
+
+nothing to commit, working tree clean
+
+
+[user1]@ubuntu110:~/Projects/hc-api-server$ git pull -r  ----> 下載遠端資料庫到本地資料庫, 但是不合併分支. 
+remote: Enumerating objects: 37, done.
+remote: Counting objects: 100% (37/37), done.
+remote: Compressing objects: 100% (36/36), done.
+remote: Total 37 (delta 13), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (37/37), 14.46 KiB | 302.00 KiB/s, done.
+From api.[user1].com:[user1]/hc/hc-api-server
+   e8f4eec..390c393  ubuntu     -> origin/ubuntu
+   677555f..954698b  windows    -> origin/windows
+ * [new tag]         1.5.15     -> 1.5.15
+Updating e8f4eec..390c393
+Fast-forward
+ package.json                                                     |  2 +-
+ src/api/v1/handlers/EntireConfig.ts                              | 49 ++++++++++++++++++++++++++++++++-----------------
+ src/plugins/Mqtt2Plugin.ts                                       |  6 +++---
+ src/services/FGMakeSentence.ts                                   |  8 ++++----
+ src/services/[user1]/CrudTrackerStatus.ts                        | 24 ++++++++++++------------
+ src/services/[user1]/FGTrackerRawdataParserProcess/dIDprocess.ts | 30 +++++++++++++++---------------
+ 6 files changed, 67 insertions(+), 52 deletions(-)
+ 
+ 
+[user1]@ubuntu110:~/Projects/hc-api-server$ git stash pop
+On branch ubuntu
+Your branch is up to date with 'origin/ubuntu'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   .env
+        modified:   src/configurations/Config.ts
+
+no changes added to commit (use "git add" and/or "git commit -a")
+Dropped refs/stash@{0} (2fe2c06cd16df00a144daeee0460b45329ab9b0c)
+[user1]@ubuntu110:~/Projects/hc-api-server$ git status
+On branch ubuntu
+Your branch is up to date with 'origin/ubuntu'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   .env
+        modified:   src/configurations/Config.ts
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+
+
+**** 常用設定: 設定 Git Gui Client Encoding UTF-8 on Windows  2025-06-15
+ref: https://support.huaweicloud.com/intl/en-us/usermanual-codehub/devcloud_hlp_0954.html
+UTF-8 is the default encoding on Linux and code hosting websites, but not on Windows. Therefore, Chinese characters may become garbled on the Git client on Windows. Set the encoding to UTF-8 to address this problem.
+UTF-8 是 Linux 和代碼託管網站上的默認編碼，但在 Windows 上不是。 
+因此，在 Windows 的 Git 客戶端上，漢字可能會出現亂碼。 將編碼設置為 UTF-8 以解決此問題。
+
+以指令設定的方式:
+$ git config --global core.quotepath false # encoding of status output 
+$ git config --global gui.encoding utf-8 # GUI encoding
+$ git config --global i18n.commit.encoding utf-8 # encoding of commit messages
+$ git config --global i18n.logoutputencoding utf-8 # encoding of log outputs
+$ export LESSCHARSET=utf-8 # Git uses the less pager by default. This command is to convert the encoding of less commands to UTF-8.
+
+以操作方式同上設定:
+注意這兩個檔案(etc\gitconfig, /etc/profile) 都在 Git 安裝目錄下. 
+Alternately, you can perform the following operations to convert the encoding:
+Add the following lines to etc\gitconfig:
+[core]    quotepath = false 
+[gui]    encoding = utf-8 
+[i18n]    commitencoding = utf-8 
+          logoutputencoding = utf-8
+
+Add the following line to /etc/profile:
+export LESSCHARSET=utf-8
+
+以下說明相關設定參數:
+NOTE:
+gui.encoding = utf-8
+It addresses the garbled characters in Git GUI and Gitk. If comments in the code contain garbled characters, add [gui] encoding = utf-8 to git/config in the root directory of the project.
+
+i18n.commitencoding = utf-8
+It converts commit log messages to the UTF-8 format to avoid garbled characters on the server.
+
+i18n.logoutputencoding = utf-8
+It converts git logs to the UTF-8 format.
+
+export LESSCHARSET=utf-8 , together with i18n.logoutputencoding, ensures that Chinese characters are properly displayed in git logs.
+
+Add the following line to etc\git-completion.bash so that Chinese names can be properly displayed:
+alias ls="ls --show-control-chars --color
+
+**** 常用流程: 還原
+... todo
+
+
+**** 常用流程: 切換到其他分支 <OtherBranch>. 2025-06-12
 查詢目前本地分支, 標示為綠色*就是目前的分支.
 $ git branch
 * windows
 
 切換到分支 ubuntu, 若分支不存在
-$ git checkout ubuntu
+$ git switch ubuntu
 branch 'ubuntu' set up to track 'origin/ubuntu'.
 Switched to a new branch 'ubuntu'
 
@@ -508,31 +836,6 @@ The third form is git diff <commit> which compares working directory and commit.
 So doing git diff HEAD will also give you the diff that you want as well.
 
 
-**** 常用流程: 上傳最新的修改, 2025-04-22
-以下2種方式都可以使用, 建議畫面操作方式最簡單:
-- 使用指令: 檔案總管選擇目錄後按滑鼠右鍵. Open Git Bash Here.
-  1. git status -s, 檢查檔案狀態. 
-    例如: 已變更檔案 Changes not staged for commit, 未納管檔案 Untracked files...等.
-    a. git add <file>, 或 git add --all, 將未納管的檔案加入納管. 
-	  納管代表(commit 範圍內的檔案清單).
-	  
-  2. git commit -a -m "Commit Message". 將已變更的檔案, 存入本地資料庫. 若沒有輸入 Commit Message, 則會要求輸入
-  3. git push, 將(本地資料庫)上傳到(遠端資料庫). 
-    a. 或是 git push origin main, 上傳(本地資料庫 main) 到 (遠端資料庫 origin).
-	  (資料庫Repository)預設名稱, 習慣為(本地資料庫 main), (遠端資料庫 origin). 舊版的遠端資料庫為 master.
-
-- 畫面操作: 檔案總管選擇目錄後按滑鼠右鍵. Open Git GUI Here.
-  操作最簡單, 用久了會忘記指令該怎麼敲.
-  1. 啟動畫面後顯示
-   上面: 已變更檔案清單 Unstaged Changes).
-   下面: 已存入本地資料庫檔案清單(Staged Changes(Will Commit).
-   右上: (Portions staged for commit)為選擇(Unstaged Changes檔案)內容變更明細.
-    a. 按鍵 Rescan: 重新查詢最新檔案狀態. 若檔案有變更, 就隨時給他來按一下看看最新的狀態.
-    b. 按鍵 Stage Changed: 將上面(已變更檔案清單 Unstaged Changes), 存入下面(已存入本地資料庫檔案清單(Staged Changes(Will Commit)).
-    c. 按鍵 Sign Off: 不常用. Sign-off is requirement for getting patches into the Linux kernel, but most projects don't actually use it.
-    d. 按鍵 Commit: 將下面(已存入本地資料庫檔案清單(Staged Changes(Will Commit)), 存入本地資料庫.
-	                若沒有輸入 Commit Message, 則會要求輸入.
-    e. 按鍵 Push: 將將(本地資料庫)上傳到(遠端資料庫).
 
 
 
@@ -597,45 +900,6 @@ You should be on the master branch after running git checkout master.
 
    
 
-**** 常用設定: 設定 Git Gui Client Encoding UTF-8 on Windows  2022-10-09 
-ref: https://support.huaweicloud.com/intl/en-us/usermanual-codehub/devcloud_hlp_0954.html
-UTF-8 is the default encoding on Linux and code hosting websites, but not on Windows. Therefore, Chinese characters may become garbled on the Git client on Windows. Set the encoding to UTF-8 to address this problem.
-UTF-8 是 Linux 和代碼託管網站上的默認編碼，但在 Windows 上不是。 因此，在 Windows 的 Git 客戶端上，漢字可能會出現亂碼。 將編碼設置為 UTF-8 以解決此問題。
-
-以指令設定的方式:
-$ git config --global core.quotepath false # encoding of status output 
-$ git config --global gui.encoding utf-8 # GUI encoding
-$ git config --global i18n.commit.encoding utf-8 # encoding of commit messages
-$ git config --global i18n.logoutputencoding utf-8 # encoding of log outputs
-$ export LESSCHARSET=utf-8 # Git uses the less pager by default. This command is to convert the encoding of less commands to UTF-8.
-
-以操作方式同上設定:
-注意這兩個檔案(etc\gitconfig, /etc/profile) 都在 Git 安裝目錄下. 
-Alternately, you can perform the following operations to convert the encoding:
-Add the following lines to etc\gitconfig:
-[core]    quotepath = false 
-[gui]    encoding = utf-8 
-[i18n]    commitencoding = utf-8 
-          logoutputencoding = utf-8
-
-Add the following line to /etc/profile:
-export LESSCHARSET=utf-8
-
-以下說明相關設定參數:
-NOTE:
-gui.encoding = utf-8
-It addresses the garbled characters in Git GUI and Gitk. If comments in the code contain garbled characters, add [gui] encoding = utf-8 to git/config in the root directory of the project.
-
-i18n.commitencoding = utf-8
-It converts commit log messages to the UTF-8 format to avoid garbled characters on the server.
-
-i18n.logoutputencoding = utf-8
-It converts git logs to the UTF-8 format.
-
-export LESSCHARSET=utf-8 , together with i18n.logoutputencoding, ensures that Chinese characters are properly displayed in git logs.
-
-Add the following line to etc\git-completion.bash so that Chinese names can be properly displayed:
-alias ls="ls --show-control-chars --color
 
 **** 常用設定: 指定程式語言
 .gitattributes 設定如下:
@@ -777,34 +1041,6 @@ Changing the default branch
 切換到新分支, 若新分支不存在, 則建立新分支.
 *$ git checkout -b <newBranch>   <--- 切換到新分支, 若新分支不存在, 則建立新分支.
 
-
-
-
-**** 常用流程: 更新 Forked repository 跟上原始來源的最新修改. 2024-09-29
-- 在 Forked repository 首頁上, 找到 Sync fork.Update branch 按下去就更新.
-  若按下 Sync fork 之後出現 This branch it out-of-date, 才可 Update branch.
-  
-- 若本地資料庫也需要最新的修改, 則可再更新本地資料庫:
-  $ git pull
-	
-□ 舊方法: 
-先在本地資料庫上, 跟上原始來源的最新修改後, 再更新到Forked的遠端資料庫.
-○ 確認已增加(遠端原始來源分支) 
-  檢查是否已有(遠端原始來源分支)
-  $ git remote -v
-    習慣上:
-      origin = Forked repository. (你自己的遠端分支 origin).
-      upstream = Original source repository. (遠端原始來源分支).
-	  資料庫分支可以為任意名稱, 可以自訂名稱, 不需要叫做upstream.
-
-  若沒有的話, 則須新增 upstream
-  $ git remote add upstream https://github.com/github-honda/LiteDB.git 
- 
-○ 從(遠端原始來源分支 upstream)下載到(本地資料庫 master).
-  $ git pull upstream master 
-
-○ 從(本地資料庫 master) 上傳到 (你自己的遠端分支 origin)
-  $ git push origin master 
 
 
 
@@ -1480,9 +1716,9 @@ If you use the latter construction, you’ll have to type your github password e
 2020-11-02
 
 git mode 請參考 GitMode.txt, 例如以下 git commit 的顯示:
- create mode 100644 QuandicLib/ZLibMySql/Properties/AssemblyInfo.cs
- create mode 100644 QuandicLib/ZLibMySql/ZLibMySql.csproj
- create mode 100644 QuandicLib/ZLibMySql/packages.config
+ create mode 100644 [user1]Lib/ZLibMySql/Properties/AssemblyInfo.cs
+ create mode 100644 [user1]Lib/ZLibMySql/ZLibMySql.csproj
+ create mode 100644 [user1]Lib/ZLibMySql/packages.config
  create mode 100644 README.md
 
 
